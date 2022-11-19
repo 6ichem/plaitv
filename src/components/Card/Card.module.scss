@@ -1,0 +1,22 @@
+.AuthCard {
+  @apply bg-primary px-12 py-8 flex flex-col w-auto md:w-[541px] mx-auto mt-12 text-center rounded;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.05);
+  .header {
+    h1 {
+      @apply text-white text-2xl mb-3.5;
+    }
+    span {
+      @apply text-[#9CA3AF];
+      a {
+        @apply transition-all duration-500 ease-in-out hover:opacity-80;
+        color: rgba(204, 142, 69, 1);
+      }
+    }
+  }
+  form {
+    @apply flex flex-col mb-8;
+  }
+  a {
+    @apply text-[#8380A5] font-normal text-sm transition-all duration-500 ease-in-out hover:opacity-80;
+  }
+}

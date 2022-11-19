@@ -1,0 +1,13 @@
+.Input {
+  @apply flex flex-col;
+  label {
+    @apply text-left text-[#ffffff99] mb-1;
+  }
+  input {
+    @apply bg-[#262628] rounded-[3px] py-3 px-5 text-[#ffffff99] outline-none transition-all duration-500 ease-in-out hover:opacity-80;
+    &:focus {
+      @apply opacity-80;
+      filter: drop-shadow(0 0 0.3rem #cc8d456d);
+    }
+  }
+}
