@@ -1,0 +1,19 @@
+import { AUTH } from "./constants";
+
+export const SET_REGISTER_CREDS = `${AUTH}/SET_REGISTER_CREDS`;
+export const SET_REGISTER_DATA = `${AUTH}/SET_REGISTER_DATA`;
+
+export const SET_LOGIN_CREDS = `${AUTH}/SET_LOGIN_CREDS`;
+export const SET_LOGIN_DATA = `${AUTH}/SET_LOGIN_DATA`;
+
+export const SET_FORGOT_CREDS = `${AUTH}/SET_FORGOT_CREDS`;
+export const SET_FORGOT_DATA = `${AUTH}/SET_FORGOT_DATA`;
+
+export const SET_VALIDATE_DATA = `${AUTH}/SET_VALIDATE_DATA`;
+export const SET_RESET_DATA = `${AUTH}/SET_VALIDATE_DATA`;
+
+export const POST_REGISTER = `${AUTH}/POST_REGISTER`;
+export const POST_LOGIN = `${AUTH}/POST_LOGIN`;
+export const POST_FORGOT = `${AUTH}/POST_FORGOT`;
+export const POST_VALIDATE = `${AUTH}/POST_VALIDATE`;
+export const POST_RESET = `${AUTH}/POST_RESET`;

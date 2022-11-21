@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { loginReducer } from "../plaitv/Login/reducer";
+import { authReducer } from "../plaitv/Auth/reducer";
 
 export default combineReducers({
-  login: loginReducer,
+  auth: authReducer,
 });

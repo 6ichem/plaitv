@@ -1,0 +1,33 @@
+.Loader {
+  .carousel {
+    @apply text-gray-400 bg-gray-400 mx-auto;
+    position: relative;
+    left: -9999px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    animation: dotsSpinner 1.5s infinite linear;
+  }
+
+  @keyframes dotsSpinner {
+    0% {
+      box-shadow: 9984px 0 0 -1px #e5e7eb, 9999px 0 0 1px #e5e7eb,
+        10014px 0 0 -1px #e5e7eb;
+    }
+    50% {
+      box-shadow: 10014px 0 0 -1px #e5e7eb, 9984px 0 0 -1px #e5e7eb,
+        9999px 0 0 1px #e5e7eb;
+    }
+    100% {
+      box-shadow: 9999px 0 0 1px #e5e7eb, 10014px 0 0 -1px #e5e7eb,
+        9984px 0 0 -1px #e5e7eb;
+    }
+  }
+
+  .spinner {
+    @apply text-center;
+    svg {
+      @apply w-12 h-12;
+    }
+  }
+}
