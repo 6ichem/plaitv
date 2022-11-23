@@ -45,7 +45,7 @@ export default function Register() {
 
   const RenderView = () =>
     isConfirmEmail ? (
-      <ConfirmEmail />
+      <ConfirmEmail registerData={registerData} dispatch={dispatch} />
     ) : (
       <SignUp
         submitRegister={submitRegister}

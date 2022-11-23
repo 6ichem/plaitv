@@ -7,3 +7,12 @@ export const createUser = async (payload: createUserPayload) => {
 
   return data;
 };
+
+export const resendVerificationMail = async (payload: createUserPayload) => {
+  const { data } = await axios.post(
+    `${BASE_URL}/users/resend-email-verification_link`,
+    payload
+  );
+
+  return data;
+};

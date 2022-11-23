@@ -8,6 +8,7 @@ const initialState = {
     confirmPassword: "",
   },
   registerData: null,
+  resendData: null,
 };
 
 const registerStrategies = {
@@ -21,6 +22,12 @@ const registerStrategies = {
     return {
       ...state,
       registerData: payload,
+    };
+  },
+  [Types.POST_RESEND_MAIL]: (state: any, payload: any) => {
+    return {
+      ...state,
+      resendData: payload,
     };
   },
   __default__: (state: any) => state,

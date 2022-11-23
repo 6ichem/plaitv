@@ -5,6 +5,11 @@ export const postRegister = (payload: any) => ({
   payload,
 });
 
+export const postResendMail = (payload: any) => ({
+  type: Types.POST_RESEND_MAIL,
+  payload,
+});
+
 export const setRegisterCreds = (payload: any) => ({
   type: Types.SET_REGISTER_CREDS,
   payload,

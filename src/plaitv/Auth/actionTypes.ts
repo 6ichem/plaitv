@@ -17,3 +17,5 @@ export const POST_LOGIN = `${AUTH}/POST_LOGIN`;
 export const POST_FORGOT = `${AUTH}/POST_FORGOT`;
 export const POST_VALIDATE = `${AUTH}/POST_VALIDATE`;
 export const POST_RESET = `${AUTH}/POST_RESET`;
+export const POST_CHECK_RESET = `${AUTH}/POST_CHECK_RESET`;
+export const POST_RESEND_MAIL = `${AUTH}/POST_RESEND_MAIL`;
