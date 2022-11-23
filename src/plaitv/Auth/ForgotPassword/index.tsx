@@ -3,7 +3,7 @@ import Card from "../../../components/Card";
 import Input from "../../../components/Input";
 import Logo from "../../../assets/logo-main.svg";
 import AuthLayout from "../../../components/AuthLayout";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { postForgot, setForgotCreds } from "./actions";
@@ -19,7 +19,7 @@ export default function ForgotPasswrod() {
     (state: any) => state.auth.forgotState.forgotData
   );
 
-  const submitForgot = (e: any) => {
+  const submitForgot = (e: SyntheticEvent) => {
     setLoading(true);
     e.preventDefault();
 

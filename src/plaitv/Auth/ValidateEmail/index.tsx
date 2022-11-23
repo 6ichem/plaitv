@@ -31,13 +31,8 @@ export default function ValidateEmail() {
   };
 
   useEffect(() => {
-    if (isTokenAvail) {
-      validateToken();
-    }
+    if (isTokenAvail) validateToken();
   }, []);
-
-  console.log("is email token", isTokenAvail);
-  console.log(validateData);
 
   return (
     <AuthLayout>

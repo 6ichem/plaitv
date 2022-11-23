@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
@@ -24,16 +24,16 @@ export default function Login() {
     (state: any) => state.auth.loginState.loginData
   );
 
-  const updateCreds = (cred: string, e: any) => {
+  const updateCreds = (cred: string, e: SyntheticEvent) => {
     const credsToUpdate = {
       ...creds,
-      [cred]: e.target.value,
+      [cred]: (e.target as HTMLInputElement).value,
     };
 
     dispatch(setLoginCreds(credsToUpdate));
   };
 
-  const submitLogin = (e: any) => {
+  const submitLogin = (e: SyntheticEvent) => {
     setLoading(true);
 
     e.preventDefault();

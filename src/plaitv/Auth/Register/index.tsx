@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 import Logo from "../../../assets/logo-main.svg";
-import Card from "../../../components/Card";
-import Input from "../../../components/Input";
-import Button from "../../../components/Button";
 import ConfirmEmail from "./components/ConfirmEmail";
 import AuthLayout from "../../../components/AuthLayout";
 import { postRegister, setRegisterCreds } from "./actions";
-import { CREDS } from "./constants";
 import toast from "react-hot-toast";
 import SignUp from "./components/SignUp";
 
@@ -26,16 +22,16 @@ export default function Register() {
     (state: any) => state.auth.registerState.registerData
   );
 
-  const updateCreds = (cred: string, e: any) => {
+  const updateCreds = (cred: string, e: SyntheticEvent) => {
     const credsToUpdate = {
       ...creds,
-      [cred]: e.target.value,
+      [cred]: (e.target as HTMLInputElement).value,
     };
 
     dispatch(setRegisterCreds(credsToUpdate));
   };
 
-  const submitRegister = (e: any) => {
+  const submitRegister = (e: SyntheticEvent) => {
     setLoading(true);
 
     e.preventDefault();

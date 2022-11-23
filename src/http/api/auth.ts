@@ -1,6 +1,8 @@
 import {
   forgotPasswordPayload,
   loginUserPayload,
+  resetPasswordPayload,
+  resetTokenPayload,
   validateEmailPayload,
 } from "../types";
 import axios from "axios";
@@ -32,6 +34,22 @@ export const validateEmail = async (params: validateEmailPayload) => {
       params,
     }
   );
+
+  return data;
+};
+
+export const checkResetToken = async (params: resetTokenPayload) => {
+  const { data } = await axios.get(`${BASE_URL}/auth/check-reset-token`, {
+    params,
+  });
+
+  return data;
+};
+
+export const resetPassword = async (params: resetPasswordPayload) => {
+  const { data } = await axios.post(`${BASE_URL}/auth/reset-password`, null, {
+    params,
+  });
 
   return data;
 };

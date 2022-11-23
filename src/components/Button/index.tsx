@@ -17,7 +17,7 @@ export default function Button({
 }: propTypes) {
   return (
     <button
-      className={`${styles[color]} ${(loading && "opacity-80") || ""} ${
+      className={`${styles[color]} ${(loading && "opacity-40") || ""} ${
         className || ""
       }`}
       {...rest}

@@ -4,6 +4,7 @@ import * as Types from "../actionTypes";
 const initialState = {
   isTokenValid: null,
   resetPasswordData: null,
+  checkTokenData: null,
 };
 
 const resetStrategies = {
@@ -11,6 +12,12 @@ const resetStrategies = {
     return {
       ...state,
       resetPasswordData: payload,
+    };
+  },
+  [Types.SET_CHECK_TOKEN_DATA]: (state: any, payload: any) => {
+    return {
+      ...state,
+      checkTokenData: payload,
     };
   },
   __default__: (state: any) => state,
