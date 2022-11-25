@@ -7,6 +7,7 @@ import Save from "../assets/save.svg?component";
 import MobileMenu from "../assets/mobile-menu.svg?component";
 import MobileSearch from "../assets/mobile-search.svg?component";
 import MobilePlus from "../assets/mobile-plus.svg?component";
+import Close from "../assets/close.svg?component";
 
 const icons = {
   edit: Edit,
@@ -18,6 +19,7 @@ const icons = {
   "mobile-menu": MobileMenu,
   "mobile-search": MobileSearch,
   "mobile-plus": MobilePlus,
+  close: Close,
 };
 
 export const iconNames = Object.keys(icons);

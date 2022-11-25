@@ -14,10 +14,11 @@ export default function Navigation() {
         <div className="p-6 w-[50%]">
           <SearchInput />
         </div>
-        <div className="w-[339px]">
+        <div className={styles.Playlist__Desktop}>
           <Playlist />
         </div>
       </div>
+
       <div className={styles.Navigation__Mobile}>
         <div>
           <Icon name="mobile-menu" />

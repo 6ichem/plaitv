@@ -2,14 +2,16 @@ import styles from "./Menu.module.scss";
 import MenuButton from "../../../../assets/menu.svg";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { useDispatch } from "react-redux";
+import { setNewPlaylistModal } from "../../actions";
 
 export default function MenuDropdown() {
+  const dispatch = useDispatch();
+
   const MenuItems = [
     {
       label: "New Playlist",
-      click: () => {
-        console.log("new playlist");
-      },
+      click: () => dispatch(setNewPlaylistModal(true)),
     },
     {
       label: "Profile",

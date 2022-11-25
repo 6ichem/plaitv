@@ -1,0 +1,30 @@
+.Modal {
+  @apply relative z-10;
+  .Modal__Overlay {
+    @apply fixed inset-0 bg-black bg-opacity-70;
+  }
+  .Modal__Inner {
+    @apply fixed inset-0 overflow-y-auto;
+    .Modal__InnerContent {
+      @apply flex h-full md:h-auto min-h-full items-center justify-center p-0 md:p-4 text-center;
+      .Modal__InnerPanel {
+        @apply w-full h-full md:h-auto max-w-6xl transform overflow-hidden rounded bg-tertiary text-left align-middle shadow-xl transition-all;
+        .Modal__Close {
+          @apply flex place-content-end px-5 pt-5;
+          button {
+            @apply flex justify-center place-content-end;
+          }
+        }
+        .Modal__InnerLayout {
+          @apply px-5 pb-12 md:px-12 md:mt-0 mt-32;
+          h1 {
+            @apply font-bold text-lg text-white;
+          }
+          div:first-child {
+            @apply mt-10;
+          }
+        }
+      }
+    }
+  }
+}
