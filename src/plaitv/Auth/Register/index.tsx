@@ -2,7 +2,6 @@ import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
-import Logo from "../../../assets/logo-main.svg";
 import ConfirmEmail from "./components/ConfirmEmail";
 import AuthLayout from "../../../components/AuthLayout";
 import { postRegister, setRegisterCreds } from "./actions";
@@ -68,10 +67,5 @@ export default function Register() {
     }
   }, [registerData]);
 
-  return (
-    <AuthLayout>
-      <img src={Logo} alt="" />
-      {RenderView()}
-    </AuthLayout>
-  );
+  return <AuthLayout>{RenderView()}</AuthLayout>;
 }

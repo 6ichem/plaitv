@@ -1,0 +1,18 @@
+.Menu {
+  .Menu__Header {
+    @apply relative inline-block text-left;
+  }
+  .Menu__Button {
+    @apply inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 text-sm font-medium text-white focus:outline-none;
+    img {
+      @apply transition-all duration-500 ease-in-out hover:opacity-70;
+    }
+  }
+  .Menu__Items {
+    @apply absolute left-0 w-56 origin-top-right rounded-md bg-secondary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none;
+    color: rgba(255, 255, 255, 0.6);
+    button {
+      @apply flex w-full items-center rounded-md px-4 py-3 text-sm hover:bg-tertiary;
+    }
+  }
+}

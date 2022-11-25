@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+.Playlist {
+  @apply bg-black p-5 h-screen;
+  .Playlist__Header {
+    @apply flex justify-between items-center mb-3.5;
+    span {
+      @apply uppercase text-xs font-bold;
+      color: rgba(255, 255, 255, 0.2);
+    }
+    button {
+      @apply flex items-center;
+      color: rgba(255, 255, 255, 0.8);
+      svg {
+        @apply mx-2.5;
+      }
+    }
+  }
+  .Playlist__Sub {
+    h1 {
+      color: rgba(255, 255, 255, 0.6);
+      @apply font-bold text-sm mb-7;
+    }
+    span {
+      color: rgba(255, 255, 255, 0.2);
+      @apply text-xs font-bold block uppercase;
+    }
+    button {
+      @apply flex items-center;
+      color: rgba(255, 255, 255, 0.8);
+      svg {
+        @apply mx-2.5;
+      }
+    }
+  }
+  .Playlist__Inner {
+  }
+  .Playlist__Edit {
+    @apply flex place-content-end text-white;
+  }
+}

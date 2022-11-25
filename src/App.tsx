@@ -7,6 +7,7 @@ import { ROUTE_PATHS } from "./router/constants";
 import { Toaster } from "react-hot-toast";
 import ValidateEmail from "./plaitv/Auth/ValidateEmail";
 import ResetPassword from "./plaitv/Auth/ResetPassword";
+import Dashboard from "./plaitv/Dashboard";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         />
         <Route path={ROUTE_PATHS.VALIDATE_EMAIL} element={<ValidateEmail />} />
         <Route path={ROUTE_PATHS.RESET_PASSWORD} element={<ResetPassword />} />
+        <Route path={ROUTE_PATHS.DASHBOARD} element={<Dashboard />} />
       </Routes>
     </Router>
   );

@@ -1,4 +1,3 @@
-import Logo from "../../../assets/logo-main.svg";
 import AuthLayout from "../../../components/AuthLayout";
 import { useEffect, useState } from "react";
 import EmailConfirmed from "./components/EmailConfirmed";
@@ -36,8 +35,6 @@ export default function ValidateEmail() {
 
   return (
     <AuthLayout>
-      <img src={Logo} alt="" />
-
       <div className="mt-12">
         {!isTokenAvail && <InvalidLink />}
 

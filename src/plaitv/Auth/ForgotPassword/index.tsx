@@ -1,7 +1,6 @@
 import Button from "../../../components/Button";
 import Card from "../../../components/Card";
 import Input from "../../../components/Input";
-import Logo from "../../../assets/logo-main.svg";
 import AuthLayout from "../../../components/AuthLayout";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -54,11 +53,5 @@ export default function ForgotPasswrod() {
       </Card>
     );
 
-  return (
-    <AuthLayout>
-      <img src={Logo} alt="" />
-
-      {RenderView()}
-    </AuthLayout>
-  );
+  return <AuthLayout>{RenderView()}</AuthLayout>;
 }

@@ -2,7 +2,6 @@ import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
-import Logo from "../../../assets/logo-main.svg";
 import Card from "../../../components/Card";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
@@ -10,6 +9,7 @@ import AuthLayout from "../../../components/AuthLayout";
 import { postLogin, setLoginCreds } from "./actions";
 import { CREDS } from "../Register/constants";
 import toast from "react-hot-toast";
+import Icon from "../../../components/Icon";
 
 export default function Login() {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -64,7 +64,6 @@ export default function Login() {
 
   return (
     <AuthLayout>
-      <img src={Logo} alt="" />
       <Card
         title="Sign in"
         description={

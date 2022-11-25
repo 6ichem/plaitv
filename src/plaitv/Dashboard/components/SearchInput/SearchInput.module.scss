@@ -1,0 +1,20 @@
+.SearchInput {
+  .SearchInput__Inner {
+    @apply relative;
+    input {
+      @apply block w-full text-sm text-gray-900 rounded bg-secondary h-9 p-5 transition-all duration-500 ease-in-out hover:opacity-80;
+      color: rgba(255, 255, 255, 0.6);
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      &:focus {
+        @apply opacity-80;
+        outline: none;
+        filter: drop-shadow(0 0 0.3rem #cc8d456d);
+      }
+    }
+    .SearchInput__Icon {
+      @apply absolute inset-y-0 right-0 flex items-center mr-5;
+    }
+  }
+}

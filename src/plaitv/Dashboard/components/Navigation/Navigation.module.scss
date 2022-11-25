@@ -1,0 +1,8 @@
+.Navigation {
+  .Navigation__Desktop {
+    @apply hidden md:flex justify-between;
+  }
+  .Navigation__Mobile {
+    @apply bg-primary p-5 fixed bottom-0 h-[82px] w-full flex md:hidden justify-between items-center;
+  }
+}
