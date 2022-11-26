@@ -3,6 +3,7 @@ import * as Types from "./actionTypes";
 
 const initialState = {
   newPlaylistModal: false,
+  addVideoModal: false,
 };
 
 const modalStrategies = {
@@ -10,6 +11,12 @@ const modalStrategies = {
     return {
       ...state,
       newPlaylistModal: payload,
+    };
+  },
+  [Types.SET_ADD_VIDEO_MODAL]: (state: any, payload: any) => {
+    return {
+      ...state,
+      addVideoModal: payload,
     };
   },
   __default__: (state: any) => state,

@@ -3,7 +3,8 @@ import styles from "./Dashboard.module.scss";
 
 import Navigation from "./components/Navigation";
 import Playlist from "./components/Playlist";
-import CreatePlaylist from "./components/Modals/CreatePlaylist";
+import CreatePlaylist from "./components/Overlays/CreatePlaylist";
+import AddVideo from "./components/Overlays/AddVideo";
 
 export default function Dashboard() {
   useEffect(() => {
@@ -21,6 +22,7 @@ export default function Dashboard() {
       </div>
 
       <CreatePlaylist />
+      <AddVideo />
     </div>
   );
 }

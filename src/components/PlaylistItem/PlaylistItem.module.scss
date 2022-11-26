@@ -1,8 +1,5 @@
 .PlaylistItem {
-  @apply flex mb-5 relative;
-  div:first-child {
-    @apply mr-5;
-  }
+  @apply flex gap-3  mb-5 relative;
   div:nth-child(2) {
     @apply pb-6;
     h1 {

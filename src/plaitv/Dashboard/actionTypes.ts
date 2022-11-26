@@ -1,3 +1,4 @@
 import { DASHBOARD } from "./constants";
 
 export const SET_NEW_PLAYTLIST_MODAL = `${DASHBOARD}/SET_NEW_PLAYTLIST_MODAL`;
+export const SET_ADD_VIDEO_MODAL = `${DASHBOARD}/SET_ADD_VIDEO_MODAL`;

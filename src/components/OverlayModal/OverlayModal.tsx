@@ -9,12 +9,18 @@ type DialogParameters = Parameters<typeof Dialog>[0];
 type propTypes = DialogParameters & {
   title: string;
   children: JSX.Element;
+  desc?: string;
+  appendContent?: JSX.Element;
+  innerLayoutStyles?: string;
 };
 
 export default function OverlayModal({
   title,
   children,
   open,
+  desc,
+  appendContent,
+  innerLayoutStyles,
   ...rest
 }: propTypes) {
   return (
@@ -49,9 +55,26 @@ export default function OverlayModal({
                     <Icon name="close" />
                   </button>
                 </div>
-                <div className={styles.Modal__InnerLayout}>
-                  <Dialog.Title as="h1">{title}</Dialog.Title>
-                  <div>{children}</div>
+                <div
+                  className={`${styles.Modal__InnerLayout} ${
+                    (innerLayoutStyles && innerLayoutStyles) || ""
+                  }`}
+                >
+                  <div
+                    className={`${
+                      (appendContent && "flex justify-between items-start") ||
+                      ""
+                    }`}
+                  >
+                    <div>
+                      <Dialog.Title as="h1">{title}</Dialog.Title>
+                      {desc && <span>{desc}</span>}
+                    </div>
+                    {appendContent && <div>{appendContent}</div>}
+                  </div>
+                  <div className={styles.Modal__InnerLayoutContent}>
+                    {children}
+                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

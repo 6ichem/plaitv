@@ -1,8 +1,5 @@
-import { Fragment, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNewPlaylistModal } from "../../actions";
-import Icon from "../../../../components/Icon";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import OverlayModal from "../../../../components/OverlayModal/OverlayModal";
