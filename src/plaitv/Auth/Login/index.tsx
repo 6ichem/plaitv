@@ -10,11 +10,13 @@ import { postLogin, setLoginCreds } from "./actions";
 import { CREDS } from "../Register/constants";
 import toast from "react-hot-toast";
 import Icon from "../../../components/Icon";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [isLoading, setLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const creds = useSelector(
     (state: any) => state.auth.loginState.loginCredentials
@@ -50,9 +52,11 @@ export default function Login() {
       const { access_token, user } = loginData;
 
       localStorage.setItem("access_token", access_token);
-      localStorage.setItem("user", user);
+      localStorage.setItem("user", JSON.stringify(user));
 
       setLoading(false);
+
+      navigate("home");
     } else if (loginData?.detail) {
       toast.error(loginData.detail, {
         style: { background: "#333", color: "#fff" },
