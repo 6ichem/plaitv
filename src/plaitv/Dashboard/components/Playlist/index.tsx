@@ -92,14 +92,17 @@ export default function Playlist() {
           UI. Get Hostinger Discount: http://hostinger.com/lamadev Coupon Code:
           LAMADEV If it is valuable to you, you can support Lama Dev. Show more"
           active={true}
+          isEditState={isEdit}
         />
         <PlaylistItem
           title="React Admin Panel Tutorial | React Admin Dashboard Template Design"
           link="youtube.com"
+          isEditState={isEdit}
         />
         <PlaylistItem
           title="React Admin Panel Tutorial | React Admin Dashboard Template Design"
           link="youtube.com"
+          isEditState={isEdit}
         />
       </div>
     </div>

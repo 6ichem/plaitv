@@ -13,6 +13,7 @@ import Youtube from "../assets/youtube.svg?component";
 import PlayActive from "../assets/play-active.svg?component";
 import PlayInactve from "../assets/play-inactive.svg?component";
 import PlayCircle from "../assets/play-circle.svg?component";
+import DeleteIcon from "../assets/delete-icon.svg?component";
 
 const icons = {
   edit: Edit,
@@ -30,6 +31,7 @@ const icons = {
   "play-active": PlayActive,
   "play-inactive": PlayInactve,
   "play-circle": PlayCircle,
+  "delete-icon": DeleteIcon,
 };
 
 export const iconNames = Object.keys(icons);
