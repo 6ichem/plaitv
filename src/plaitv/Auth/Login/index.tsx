@@ -16,7 +16,6 @@ export default function Login() {
   const [isLoading, setLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const creds = useSelector(
     (state: any) => state.auth.loginState.loginCredentials
@@ -56,7 +55,7 @@ export default function Login() {
 
       setLoading(false);
 
-      navigate("home");
+      window?.location.replace("/home");
     } else if (loginData?.detail) {
       toast.error(loginData.detail, {
         style: { background: "#333", color: "#fff" },
