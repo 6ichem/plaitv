@@ -1,19 +1,19 @@
-import Edit from "../assets/edit.svg?component";
-import Logo from "../assets/logo.svg?component";
-import Menu from "../assets/menu.svg?component";
-import Search from "../assets/search.svg?component";
-import Plus from "../assets/plus.svg?component";
-import Save from "../assets/save.svg?component";
-import MobileMenu from "../assets/mobile-menu.svg?component";
-import MobileSearch from "../assets/mobile-search.svg?component";
-import MobilePlus from "../assets/mobile-plus.svg?component";
-import Close from "../assets/close.svg?component";
-import SearchIcon from "../assets/search-icon.svg?component";
-import Youtube from "../assets/youtube.svg?component";
-import PlayActive from "../assets/play-active.svg?component";
-import PlayInactve from "../assets/play-inactive.svg?component";
-import PlayCircle from "../assets/play-circle.svg?component";
-import DeleteIcon from "../assets/delete-icon.svg?component";
+import { ReactComponent as Edit } from "../assets/edit.svg";
+import { ReactComponent as Logo } from "../assets/logo.svg";
+import { ReactComponent as Menu } from "../assets/menu.svg";
+import { ReactComponent as Search } from "../assets/search.svg";
+import { ReactComponent as Plus } from "../assets/plus.svg";
+import { ReactComponent as Save } from "../assets/save.svg";
+import { ReactComponent as MobileMenu } from "../assets/mobile-menu.svg";
+import { ReactComponent as MobileSearch } from "../assets/mobile-search.svg";
+import { ReactComponent as MobilePlus } from "../assets/mobile-plus.svg";
+import { ReactComponent as Close } from "../assets/close.svg";
+import { ReactComponent as SearchIcon } from "../assets/search-icon.svg";
+import { ReactComponent as Youtube } from "../assets/youtube.svg";
+import { ReactComponent as PlayActive } from "../assets/play-active.svg";
+import { ReactComponent as PlayInactve } from "../assets/play-inactive.svg";
+import { ReactComponent as PlayCircle } from "../assets/play-circle.svg";
+import { ReactComponent as DeleteIcon } from "../assets/delete-icon.svg";
 
 const icons = {
   edit: Edit,
