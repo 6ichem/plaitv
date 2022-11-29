@@ -15,10 +15,10 @@ import ResetPassword from "./plaitv/Auth/ResetPassword";
 import Dashboard from "./plaitv/Dashboard";
 import AuthRoute from "./router/AuthRoute";
 import PublicRoute from "./router/PublicRoute";
-import { getToken } from "./http/utils";
+import { getLocalAccessToken } from "./http/utils";
 
 function App() {
-  const isAuthenticated = getToken();
+  const isAuthenticated = getLocalAccessToken();
 
   return (
     <Router>
