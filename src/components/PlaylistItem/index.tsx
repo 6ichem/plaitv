@@ -34,11 +34,15 @@ export default function PlaylistItem({
         }`}
       >
         <div>
-          <h1 className={`${isEditState && "!text-[#ffffff80] !font-normal"}`}>
+          <h1
+            className={`${styles.h1} ${
+              (isEditState && "!text-[#ffffff80] !font-normal") || ""
+            }`}
+          >
             {title}
           </h1>
-          <span>{link}</span>
-          <p>{desc}</p>
+          <span className={styles.span}>{link}</span>
+          <p className={styles.p}>{desc}</p>
         </div>
         {searchItem && (
           <div>

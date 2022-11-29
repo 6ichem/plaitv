@@ -17,15 +17,15 @@
     }
   }
   .Playlist__Sub {
-    h1 {
+    .title1 {
       color: rgba(255, 255, 255, 0.6);
       @apply font-bold text-sm mb-7;
     }
-    span {
+    .descspan {
       color: rgba(255, 255, 255, 0.2);
       @apply text-xs font-bold block uppercase;
     }
-    button {
+    .descbutton {
       @apply flex items-center;
       color: rgba(255, 255, 255, 0.8);
       svg {
@@ -33,9 +33,14 @@
       }
     }
   }
-  .Playlist__Inner {
-  }
+
   .Playlist__Edit {
     @apply flex place-content-end text-white;
+  }
+  .Playlist__NoContent {
+    @apply flex text-white text-sm justify-center my-auto;
+    button {
+      @apply text-[#CC8E45] font-bold mr-1;
+    }
   }
 }

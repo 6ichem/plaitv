@@ -32,3 +32,20 @@ export interface resetTokenPayload {
 export interface resetPasswordPayload extends resetTokenPayload {
   new_password: string;
 }
+
+export interface getRefreshTokenPayload {
+  access_token: string;
+}
+
+export interface issueAccessTokenPayload {
+  refresh_token: string;
+}
+
+export interface getPlaylistMediaPayload {
+  playlist_id: string;
+}
+
+export interface newPlaylistPayload {
+  title: string;
+  description: string;
+}

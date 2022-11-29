@@ -7,6 +7,7 @@ const initialState = {
   userPlaylists: null,
   playlistMedia: null,
   currentPlaylist: null,
+  newPlaylist: null,
 };
 
 const modalStrategies = {
@@ -46,6 +47,18 @@ const userPlaylistsStrategies = {
     return {
       ...state,
       currentPlaylist: payload,
+    };
+  },
+  [Types.SET_NEW_PLAYLIST]: (state: any, payload: any) => {
+    return {
+      ...state,
+      newPlaylist: payload,
+    };
+  },
+  [Types.CLEAN_NEW_PLAYLIST]: (state: any) => {
+    return {
+      ...state,
+      newPlaylist: null,
     };
   },
   __default__: (state: any) => state,

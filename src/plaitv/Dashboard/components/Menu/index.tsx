@@ -4,6 +4,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { setNewPlaylistModal } from "../../actions";
+import { userLogout } from "../../../Auth/Login/actions";
 
 export default function MenuDropdown() {
   const dispatch = useDispatch();
@@ -21,9 +22,7 @@ export default function MenuDropdown() {
     },
     {
       label: "Log out",
-      click: () => {
-        console.log("log out");
-      },
+      click: () => dispatch(userLogout()),
     },
   ];
 

@@ -1,5 +1,7 @@
 import {
   forgotPasswordPayload,
+  getRefreshTokenPayload,
+  issueAccessTokenPayload,
   loginUserPayload,
   resetPasswordPayload,
   resetTokenPayload,
@@ -7,6 +9,7 @@ import {
 } from "../types";
 import axios from "axios";
 import { BASE_URL } from "../constants";
+import { instance } from "../config";
 
 export const loginUser = async (payload: loginUserPayload) => {
   const { data } = await axios.post(`${BASE_URL}/auth/login`, payload, {
@@ -50,6 +53,24 @@ export const resetPassword = async (params: resetPasswordPayload) => {
   const { data } = await axios.post(`${BASE_URL}/auth/reset-password`, null, {
     params,
   });
+
+  return data;
+};
+
+export const getRefreshToken = async (params: getRefreshTokenPayload) => {
+  const { data } = await instance.get(`${BASE_URL}/auth/get-refresh-token`, {
+    params,
+  });
+
+  return data;
+};
+
+export const issueAccessToken = async (params: issueAccessTokenPayload) => {
+  const { data } = await instance.post(
+    `${BASE_URL}/auth/issue-new-access-token`,
+    null,
+    { params }
+  );
 
   return data;
 };

@@ -6,11 +6,14 @@ import Card from "../../../components/Card";
 import Input from "../../../components/Input";
 import Button from "../../../components/Button";
 import AuthLayout from "../../../components/AuthLayout";
-import { postLogin, setLoginCreds } from "./actions";
+import { postLogin, postRefreshToken, setLoginCreds } from "./actions";
 import { CREDS } from "../Register/constants";
 import toast from "react-hot-toast";
-import Icon from "../../../components/Icon";
-import { useNavigate } from "react-router-dom";
+import {
+  setLocalAccessToken,
+  setLocalAccessTokenExpiry,
+  setLocalUser,
+} from "../../../http/utils";
 
 export default function Login() {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -48,12 +51,15 @@ export default function Login() {
         style: { background: "#333", color: "#fff" },
       });
 
-      const { access_token, user } = loginData;
+      const { access_token, user, access_token_expiry } = loginData;
 
-      localStorage.setItem("access_token", access_token);
-      localStorage.setItem("user", JSON.stringify(user));
+      setLocalAccessToken(access_token);
+      setLocalAccessTokenExpiry(access_token_expiry);
+      setLocalUser(user);
 
       setLoading(false);
+
+      dispatch(postRefreshToken(access_token));
 
       window?.location.replace("/home");
     } else if (loginData?.detail) {

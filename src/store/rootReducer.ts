@@ -1,8 +1,29 @@
 import { combineReducers } from "redux";
+import { AUTH } from "../plaitv/Auth/constants";
 import { authReducer } from "../plaitv/Auth/reducer";
-import { modalState } from "../plaitv/Dashboard/reducer";
+import {
+  modalState,
+  userPlaylistsState,
+  // userState,
+} from "../plaitv/Dashboard/reducer";
 
-export default combineReducers({
+const rootReducer = combineReducers({
   auth: authReducer,
   modal: modalState,
+  userPlaylists: userPlaylistsState,
+  // user: userState,
 });
+
+export default (state: any, action: any) => {
+  if (action.type === `${AUTH}/USER_LOGOUT`) {
+    localStorage.removeItem("user");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+
+    window.location.href = "/";
+
+    return rootReducer(undefined, action);
+  }
+
+  return rootReducer(state, action);
+};

@@ -1,16 +1,10 @@
 import axios from "axios";
-import { getRefreshToken, issueAccessToken } from "./api/auth";
-import {
-  getLocalAccessToken,
-  getLocalRefreshToken,
-  isRefreshExpired,
-  setLocalAccessToken,
-} from "./utils";
+import { issueAccessToken } from "./api/auth";
+import { getLocalAccessToken, isRefreshExpired, newAccessToken } from "./utils";
 import store from "../store/store";
 import { userLogout } from "../plaitv/Auth/Login/actions";
 
-const access_token = getLocalAccessToken();
-const refresh_token = getLocalRefreshToken();
+const access_token = localStorage.getItem("access_token") ?? "";
 
 export const instance = axios.create({
   headers: {
@@ -22,14 +16,7 @@ instance.interceptors.response.use(
   (response) => response,
   async (e) => {
     if (e?.response?.status == 403) {
-      const data = await issueAccessToken({ refresh_token });
-      const { access_token } = data;
-
-      // setLocalAccessToken(access_token);
-
-      console.log(e.config);
-
-      instance.request(e.config);
+      newAccessToken();
     } else if (isRefreshExpired(e)) {
       store.dispatch(userLogout());
     }

@@ -11,10 +11,6 @@ export default function ConfirmEmail({ registerData, dispatch }: any) {
     dispatch(postResendMail(registerData));
   };
 
-  useEffect(() => {
-    console.log("resendData", resendData);
-  }, [resendData]);
-
   return (
     <Card
       title="Confirm your email."

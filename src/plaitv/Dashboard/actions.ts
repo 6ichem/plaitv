@@ -33,3 +33,17 @@ export const setCurrentPlaylist = (payload: any) => ({
   type: Types.SET_CURRENT_PLAYLIST,
   payload,
 });
+
+export const setNewPlaylist = (payload: any) => ({
+  type: Types.SET_NEW_PLAYLIST,
+  payload,
+});
+
+export const postNewPlaylist = (payload: any) => ({
+  type: Types.POST_NEW_PLAYLIST,
+  payload,
+});
+
+export const cleanNewPlaylist = () => ({
+  type: Types.CLEAN_NEW_PLAYLIST,
+});

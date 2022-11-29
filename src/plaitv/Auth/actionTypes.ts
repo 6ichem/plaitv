@@ -20,3 +20,6 @@ export const POST_VALIDATE = `${AUTH}/POST_VALIDATE`;
 export const POST_RESET = `${AUTH}/POST_RESET`;
 export const POST_CHECK_RESET = `${AUTH}/POST_CHECK_RESET`;
 export const POST_RESEND_MAIL = `${AUTH}/POST_RESEND_MAIL`;
+export const POST_REFRESH_TOKEN = `${AUTH}/POST_REFRESH_TOKEN`;
+
+export const USER_LOGOUT = `${AUTH}/USER_LOGOUT`;
