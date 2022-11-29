@@ -4,6 +4,9 @@ import * as Types from "./actionTypes";
 const initialState = {
   newPlaylistModal: false,
   addVideoModal: false,
+  userPlaylists: null,
+  playlistMedia: null,
+  currentPlaylist: null,
 };
 
 const modalStrategies = {
@@ -25,3 +28,43 @@ const modalStrategies = {
 export const modalState = createReducer(modalStrategies, {
   ...initialState,
 });
+
+const userPlaylistsStrategies = {
+  [Types.SET_USER_PLAYLIST]: (state: any, payload: any) => {
+    return {
+      ...state,
+      userPlaylists: payload,
+    };
+  },
+  [Types.SET_PLAYLIST_MEDIA]: (state: any, payload: any) => {
+    return {
+      ...state,
+      playlistMedia: payload,
+    };
+  },
+  [Types.SET_CURRENT_PLAYLIST]: (state: any, payload: any) => {
+    return {
+      ...state,
+      currentPlaylist: payload,
+    };
+  },
+  __default__: (state: any) => state,
+};
+
+export const userPlaylistsState = createReducer(userPlaylistsStrategies, {
+  ...initialState,
+});
+
+// const userStrategies = {
+//   [Types.RESET_APP_STATE]: () => {
+//     return {
+//       ...initialState,
+//     };
+//   },
+
+//   __default__: (state: any) => state,
+// };
+
+// export const userState = createReducer(userStrategies, {
+//   ...initialState,
+// });

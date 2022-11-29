@@ -1,19 +1,36 @@
-import { takeLatest, all } from "redux-saga/effects";
+import { takeLatest, all, call, put } from "redux-saga/effects";
+import { httpGetUserPlaylistMedia } from "../../http/api/media";
+import { getUserPlaylists } from "../../http/api/playlist";
+import { ResponseGenerator } from "../../http/types";
+import { setPlaylistMedia, setUserPlaylists } from "./actions";
 import * as Types from "./actionTypes";
-import { postForgot } from "./ForgotPassword/saga";
-import { postLogin } from "./Login/saga";
-import { postRegister, postResendMail } from "./Register/saga";
-import { postCheckToken, postResetPassword } from "./ResetPassword/saga";
-import { postValidate } from "./ValidateEmail/saga";
 
-function* watcher() {
-  yield all([takeLatest(Types.POST_REGISTER, postRegister)]);
-  yield all([takeLatest(Types.POST_LOGIN, postLogin)]);
-  yield all([takeLatest(Types.POST_FORGOT, postForgot)]);
-  yield all([takeLatest(Types.POST_VALIDATE, postValidate)]);
-  yield all([takeLatest(Types.POST_RESEND_MAIL, postResendMail)]);
-  yield all([takeLatest(Types.POST_CHECK_RESET, postCheckToken)]);
-  yield all([takeLatest(Types.POST_RESET, postResetPassword)]);
+function* getAllUserPlaylists({ payload }: any) {
+  try {
+    const resp: ResponseGenerator = yield call(getUserPlaylists);
+
+    yield put(setUserPlaylists(resp));
+  } catch (e: any) {
+    yield put(setUserPlaylists(e?.response?.data));
+  }
 }
 
-export const authSaga = watcher;
+function* getUserPlaylistMedia({ payload }: any) {
+  try {
+    const resp: ResponseGenerator = yield call(
+      httpGetUserPlaylistMedia,
+      payload
+    );
+
+    yield put(setPlaylistMedia(resp));
+  } catch (e: any) {
+    yield put(setPlaylistMedia(e?.response?.data));
+  }
+}
+
+function* watcher() {
+  yield all([takeLatest(Types.GET_USER_PLAYLISTS, getAllUserPlaylists)]);
+  yield all([takeLatest(Types.GET_PLAYLIST_MEDIA, getUserPlaylistMedia)]);
+}
+
+export const dashboardSaga = watcher;
