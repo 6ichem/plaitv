@@ -9,7 +9,6 @@ import toast from "react-hot-toast";
 import SignUp from "./components/SignUp";
 
 export default function Register() {
-  const [isLoading, setLoading] = useState<boolean>(false);
   const [isConfirmEmail, setConfirmEmail] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -20,6 +19,7 @@ export default function Register() {
   const registerData = useSelector(
     (state: any) => state.auth.registerState.registerData
   );
+  const isLoading = useSelector((state: any) => state.loaders.registerLoader);
 
   const updateCreds = (cred: string, e: SyntheticEvent) => {
     const credsToUpdate = {
@@ -31,8 +31,6 @@ export default function Register() {
   };
 
   const submitRegister = (e: SyntheticEvent) => {
-    setLoading(true);
-
     e.preventDefault();
 
     dispatch(postRegister(creds));
@@ -52,10 +50,6 @@ export default function Register() {
   useEffect(() => {
     if (registerData?.user_id) {
       if (!registerData.is_active) setConfirmEmail(true);
-
-      setLoading(false);
-    } else if (registerData?.detail) {
-      setLoading(false);
     }
   }, [registerData]);
 

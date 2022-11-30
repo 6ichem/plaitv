@@ -16,17 +16,15 @@ import {
 } from "../../../http/utils";
 
 export default function Login() {
-  const [isLoading, setLoading] = useState<boolean>(false);
-
   const dispatch = useDispatch();
 
   const creds = useSelector(
     (state: any) => state.auth.loginState.loginCredentials
   );
-
   const loginData = useSelector(
     (state: any) => state.auth.loginState.loginData
   );
+  const isLoading = useSelector((state: any) => state.loaders.loginLoader);
 
   const updateCreds = (cred: string, e: SyntheticEvent) => {
     const credsToUpdate = {
@@ -38,20 +36,10 @@ export default function Login() {
   };
 
   const submitLogin = (e: SyntheticEvent) => {
-    setLoading(true);
-
     e.preventDefault();
 
     dispatch(postLogin(creds));
   };
-
-  useEffect(() => {
-    if (loginData?.access_token) {
-      setLoading(false);
-    } else if (loginData?.detail) {
-      setLoading(false);
-    }
-  }, [loginData]);
 
   return (
     <AuthLayout>

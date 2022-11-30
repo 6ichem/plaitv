@@ -1,7 +1,11 @@
 import { Fragment, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { setAddVideoModal } from "../../actions";
+import {
+  postLambdaMedia,
+  setAddVideoModal,
+  setLambdaMedia,
+} from "../../actions";
 import Icon from "../../../../components/Icon";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
@@ -10,16 +14,30 @@ import PlaylistItem from "../../../../components/PlaylistItem";
 
 export default function AddVideo() {
   const [foundResults, setFoundResults] = useState<boolean>(false);
+  const [videoURL, setVideoURL] = useState<string>("");
+
   const dispatch = useDispatch();
 
   const isModalOpen = useSelector((state: any) => state.modal.addVideoModal);
+  const lambdaLoader = useSelector((state: any) => state.loaders.lambdaLoader);
+  const lambdaMedia = useSelector((state: any) => state.media.lambdaMedia);
+
+  const getVideo = () => {
+    dispatch(postLambdaMedia({ url: videoURL }));
+  };
+
+  const onClose = () => {
+    dispatch(setLambdaMedia(null));
+    dispatch(setAddVideoModal(false));
+    setVideoURL("");
+  };
 
   const _initialView = () => (
     <OverlayModal
       title="Add new video"
       desc="Find supported videos from any link."
       open={isModalOpen}
-      onClose={() => dispatch(setAddVideoModal(false))}
+      onClose={onClose}
     >
       <div className="flex flex-col md:flex-row md:justify-between items-center gap-5 !my-5 pb-5">
         <Input
@@ -29,11 +47,14 @@ export default function AddVideo() {
           withLabel={false}
           className="!m-0 !h-[35px]"
           wrapperStyle="!m-0 w-full"
+          value={videoURL}
+          onChange={(e) => setVideoURL(e.target.value)}
         />
         <div className="w-full md:w-auto md:block flex place-content-end">
           <Button
             title="Find"
-            onClick={() => setFoundResults(true)}
+            onClick={getVideo}
+            loading={lambdaLoader}
             color="primary"
             className="!w-[82px] !capitalize"
           />
@@ -47,7 +68,7 @@ export default function AddVideo() {
       title="Videos"
       desc="Find supported videos from any link."
       open={isModalOpen}
-      onClose={() => dispatch(setAddVideoModal(false))}
+      onClose={onClose}
       innerLayoutStyles="!mt-5 md:mt-0"
       appendContent={
         <button
@@ -60,62 +81,19 @@ export default function AddVideo() {
       }
     >
       <div className="!mb-0 pb-5 pr-5 max-h-96 overflow-auto">
-        <PlaylistItem
-          title="React Admin Panel Tutorial | React Admin Dashboard Template Design"
-          link="youtube.com"
-          desc="React admin dashboard from scratch for beginners. React Admin Panel
-      UI. Get Hostinger Discount: http://hostinger.com/lamadev Coupon Code:
-      LAMADEV If it is valuable to you, you can support Lama Dev. Show more"
-          searchItem
-        />
-        <PlaylistItem
-          title="React Admin Panel Tutorial | React Admin Dashboard Template Design"
-          link="youtube.com"
-          searchItem
-        />
-        <PlaylistItem
-          title="React Admin Panel Tutorial | React Admin Dashboard Template Design"
-          link="youtube.com"
-          searchItem
-        />
-        <PlaylistItem
-          title="React Admin Panel Tutorial | React Admin Dashboard Template Design"
-          link="youtube.com"
-          searchItem
-        />
-        <PlaylistItem
-          title="React Admin Panel Tutorial | React Admin Dashboard Template Design"
-          link="youtube.com"
-          searchItem
-        />
-        <PlaylistItem
-          title="React Admin Panel Tutorial | React Admin Dashboard Template Design"
-          link="youtube.com"
-          searchItem
-        />
-        <PlaylistItem
-          title="React Admin Panel Tutorial | React Admin Dashboard Template Design"
-          link="youtube.com"
-          searchItem
-        />
-        <PlaylistItem
-          title="React Admin Panel Tutorial | React Admin Dashboard Template Design"
-          link="youtube.com"
-          searchItem
-        />
-        <PlaylistItem
-          title="React Admin Panel Tutorial | React Admin Dashboard Template Design"
-          link="youtube.com"
-          searchItem
-        />
-        <PlaylistItem
-          title="React Admin Panel Tutorial | React Admin Dashboard Template Design"
-          link="youtube.com"
-          searchItem
-        />
+        {lambdaMedia &&
+          lambdaMedia.results.map((i: any) => (
+            <PlaylistItem
+              key={i._id}
+              title={i.title}
+              link={i.source}
+              desc={i.description}
+              searchItem
+            />
+          ))}
       </div>
     </OverlayModal>
   );
 
-  return foundResults ? _resultsView() : _initialView();
+  return lambdaMedia?.status === "Success" ? _resultsView() : _initialView();
 }

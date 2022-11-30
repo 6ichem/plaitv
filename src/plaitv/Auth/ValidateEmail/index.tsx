@@ -12,8 +12,6 @@ import Card from "../../../components/Card";
 import ExpiredLink from "./components/ExpiredLink";
 
 export default function ValidateEmail() {
-  const [isLoading, setLoading] = useState<boolean>(false);
-
   const [params] = useSearchParams();
   const dispatch = useDispatch();
 
@@ -25,7 +23,6 @@ export default function ValidateEmail() {
   const isTokenAvail = email_token && email_token?.trim().length !== 0;
 
   const validateToken = () => {
-    setLoading(true);
     dispatch(postValidate(email_token));
   };
 

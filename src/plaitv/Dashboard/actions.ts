@@ -62,3 +62,13 @@ export const postLambdaMedia = (payload: any) => ({
   type: Types.POST_LAMBDA_MEDIA,
   payload,
 });
+
+export const postDeleteMedia = (payload: any) => ({
+  type: Types.POST_DELETE_MEDIA,
+  payload,
+});
+
+export const showLambdaResults = (payload: any) => ({
+  type: Types.SHOW_LAMBA_RESULTS,
+  payload,
+});

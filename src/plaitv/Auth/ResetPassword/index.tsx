@@ -12,20 +12,18 @@ import ExpiredLink from "../ValidateEmail/components/ExpiredLink";
 import ResetForm from "./components/ResetForm";
 
 export default function ResetPassword() {
-  const [isLoading, setLoading] = useState<boolean>(false);
-
   const [params] = useSearchParams();
   const dispatch = useDispatch();
 
   const password_reset_token = params.get("token");
   const isTokenAvail =
     password_reset_token && password_reset_token?.trim().length !== 0;
+
   const checkTokenData = useSelector(
     (state: any) => state.auth.resetState.checkTokenData
   );
 
   const checkToken = () => {
-    setLoading(true);
     dispatch(postCheckToken(password_reset_token));
   };
 

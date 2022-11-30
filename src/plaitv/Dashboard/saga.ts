@@ -1,6 +1,10 @@
 import toast from "react-hot-toast";
-import { takeLatest, all, call, put, select } from "redux-saga/effects";
-import { getLambdaMedia, httpGetUserPlaylistMedia } from "../../http/api/media";
+import { takeLatest, all, call, put, select, delay } from "redux-saga/effects";
+import {
+  getLambdaMedia,
+  httpDeleteMedia,
+  httpGetUserPlaylistMedia,
+} from "../../http/api/media";
 import {
   getUserPlaylists,
   httpUpdatePlaylist,
@@ -54,6 +58,8 @@ function* getAllUserPlaylists() {
 
 function* createNewPlaylist({ payload }: any) {
   try {
+    yield put({ type: Types.SET_CREATE_PLAYLIST_LOADER, payload: true });
+
     const {
       userPlaylists: { userPlaylists },
     } = yield select(state);
@@ -69,9 +75,11 @@ function* createNewPlaylist({ payload }: any) {
         style: { background: "#333", color: "#fff" },
       });
 
+      yield put({ type: Types.SET_CREATE_PLAYLIST_LOADER, payload: false });
       yield put({ type: Types.SET_NEW_PLAYTLIST_MODAL, payload: false });
     }
   } catch (e: any) {
+    yield put({ type: Types.SET_CREATE_PLAYLIST_LOADER, payload: false });
     yield put(setNewPlaylist(e?.response?.data));
   }
 }
@@ -90,13 +98,70 @@ function* updatePlaylist({ payload }: any) {
   }
 }
 
-function* findMedia({ payload }: any) {
-  try {
-    const resp: ResponseGenerator = yield call(getLambdaMedia, payload);
+function* findMedia({ payload }: any): any {
+  yield put({ type: Types.SET_LAMBDA_MEDIA, payload: null });
 
-    yield put(setLambdaMedia(resp));
+  try {
+    yield put({ type: Types.SET_LAMBDA_LOADER, payload: true });
+
+    toast.loading("Fetching data...", {
+      style: { background: "#333", color: "#fff" },
+    });
+
+    const resp: ResponseGenerator = yield call(getLambdaMedia, payload);
+    const { request_id }: any = resp;
+
+    let isResolved = false;
+
+    do {
+      const resp: any = yield call(getLambdaMedia, {
+        request_id,
+      });
+
+      const { status } = resp;
+
+      if (status === "failed") {
+        isResolved = true;
+
+        yield put(setLambdaMedia(resp));
+        yield put({ type: Types.SET_LAMBDA_LOADER, payload: false });
+        toast.dismiss();
+        toast.error("Failed to fetch data", {
+          style: { background: "#333", color: "#fff" },
+        });
+      } else if (status === "Success") {
+        isResolved = true;
+
+        yield put(setLambdaMedia(resp));
+        yield put({ type: Types.SET_LAMBDA_LOADER, payload: false });
+
+        toast.dismiss();
+        toast.success("Fetched data!", {
+          style: { background: "#333", color: "#fff" },
+        });
+      }
+
+      yield delay(10000);
+    } while (isResolved == false);
   } catch (e: any) {
     yield put(setLambdaMedia(e?.response?.data));
+  }
+}
+
+function* deleteMedia({ payload }: any) {
+  try {
+    const {
+      userPlaylists: { playlistMedia },
+    } = yield select(state);
+
+    const resp: ResponseGenerator = yield call(httpDeleteMedia, payload);
+
+    const updatedData = playlistMedia.filter(
+      (i: any) => i.playlist_id !== payload.playlist_id
+    );
+    yield put(setPlaylistMedia(updatedData));
+  } catch (e: any) {
+    yield put(setPlaylistMedia(e?.response?.data));
   }
 }
 

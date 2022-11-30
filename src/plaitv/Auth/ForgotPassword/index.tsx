@@ -9,7 +9,6 @@ import { postForgot, setForgotCreds } from "./actions";
 import ResetSent from "./components/ResetSent";
 
 export default function ForgotPasswrod() {
-  const [isLoading, setLoading] = useState<boolean>(false);
   const [isResetSent, setResetSent] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -17,9 +16,9 @@ export default function ForgotPasswrod() {
   const forgotData = useSelector(
     (state: any) => state.auth.forgotState.forgotData
   );
+  const isLoading = useSelector((state: any) => state.loaders.forgotPassLoader);
 
   const submitForgot = (e: SyntheticEvent) => {
-    setLoading(true);
     e.preventDefault();
 
     dispatch(postForgot());
@@ -29,7 +28,6 @@ export default function ForgotPasswrod() {
     const { status_code, detail } = forgotData ?? {};
     if (status_code && detail) {
       if (status_code === 200) setResetSent(true);
-      setLoading(false);
     }
   }, [forgotData]);
 

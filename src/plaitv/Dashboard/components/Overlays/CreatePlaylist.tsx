@@ -13,7 +13,6 @@ import toast from "react-hot-toast";
 export default function CreatePlaylist() {
   const dispatch = useDispatch();
 
-  const [isLoading, setLoading] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
@@ -21,9 +20,11 @@ export default function CreatePlaylist() {
   const newPlaylistData = useSelector(
     (state: any) => state.userPlaylists.newPlaylist
   );
+  const isLoading = useSelector(
+    (state: any) => state.loaders.createPlaylistLoader
+  );
 
   const newPlaylist = () => {
-    setLoading(true);
     dispatch(
       postNewPlaylist({
         title,
@@ -31,12 +32,6 @@ export default function CreatePlaylist() {
       })
     );
   };
-
-  useEffect(() => {
-    if (newPlaylistData && "playlist_id" in newPlaylistData) {
-      setLoading(false);
-    }
-  }, [newPlaylistData]);
 
   return (
     <OverlayModal

@@ -13,12 +13,15 @@ import {
   setLocalRefreshToken,
   setLocalUser,
 } from "../../../http/utils";
+import { SET_LOGIN_LOADER } from "../../Dashboard/actionTypes";
 import { POST_REFRESH_TOKEN } from "../actionTypes";
 
 import { setLoginData } from "./actions";
 
 export function* postLogin({ payload }: any) {
   try {
+    yield put({ type: SET_LOGIN_LOADER, payload: true });
+
     const resp: ResponseGenerator = yield call(loginUser, payload);
 
     yield put(setLoginData(resp));
@@ -35,8 +38,12 @@ export function* postLogin({ payload }: any) {
 
     yield put({ type: POST_REFRESH_TOKEN, payload: access_token });
 
+    yield put({ type: SET_LOGIN_LOADER, payload: false });
+
     window?.location.replace("/home");
   } catch (e: any) {
+    yield put({ type: SET_LOGIN_LOADER, payload: false });
+
     toast.error(e?.response?.data, {
       style: { background: "#333", color: "#fff" },
     });

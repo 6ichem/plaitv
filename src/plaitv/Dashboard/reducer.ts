@@ -73,6 +73,7 @@ export const userPlaylistsState = createReducer(userPlaylistsStrategies, {
 
 const initialMediaState = {
   lambdaMedia: null,
+  lambdaResults: null,
 };
 
 const mediaStrategies = {
@@ -82,10 +83,62 @@ const mediaStrategies = {
       lambdaMedia: payload,
     };
   },
-
+  [Types.SHOW_LAMBA_RESULTS]: (state: any, payload: any) => {
+    return {
+      ...state,
+      lambdaMedia: payload,
+    };
+  },
   __default__: (state: any) => state,
 };
 
 export const mediaState = createReducer(mediaStrategies, {
   ...initialMediaState,
+});
+
+const initialLoaderState = {
+  lambdaLoader: false,
+  forgotPassLoader: false,
+  loginLoader: false,
+  registerLoader: false,
+  createPlaylistLoader: false,
+  playlistLoader: false,
+};
+
+const loaderStrategies = {
+  [Types.SET_LAMBDA_LOADER]: (state: any, payload: any) => {
+    return {
+      ...state,
+      lambdaLoader: payload,
+    };
+  },
+  [Types.SET_FORGOT_PASS_LOADER]: (state: any, payload: any) => {
+    return {
+      ...state,
+      forgotPassLoader: payload,
+    };
+  },
+  [Types.SET_LOGIN_LOADER]: (state: any, payload: any) => {
+    return {
+      ...state,
+      loginLoader: payload,
+    };
+  },
+  [Types.SET_REGISTER_LOADER]: (state: any, payload: any) => {
+    return {
+      ...state,
+      registerLoader: payload,
+    };
+  },
+  [Types.SET_CREATE_PLAYLIST_LOADER]: (state: any, payload: any) => {
+    return {
+      ...state,
+      createPlaylistLoader: payload,
+    };
+  },
+  __default__: (state: any) => state,
+};
+
+export const loaderState = createReducer(loaderStrategies, {
+  ...initialLoaderState,
 });
