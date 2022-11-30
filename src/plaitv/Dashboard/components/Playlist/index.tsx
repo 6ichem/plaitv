@@ -5,12 +5,7 @@ import { Fragment, ReactNode, useEffect, useState } from "react";
 import Input from "../../../../components/Input";
 import { Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getPlaylistMedia,
-  postUpdatePlaylist,
-  setAddVideoModal,
-  setCurrentPlaylist,
-} from "../../actions";
+import { postUpdatePlaylist, setAddVideoModal } from "../../actions";
 import Loader from "../../../../components/Loader";
 
 export default function Playlist({ userPlaylists }: any) {
@@ -169,13 +164,14 @@ export default function Playlist({ userPlaylists }: any) {
     );
 
   useEffect(() => {
-    if (currentPlaylist && "playlist_id" in currentPlaylist && playlistMedia)
+    if (currentPlaylist && "playlist_id" in currentPlaylist && playlistMedia) {
       setLoading(false);
+    } else {
+      setLoading(true);
+    }
   }, [currentPlaylist, playlistMedia]);
 
   useEffect(() => {
-    dispatch(getPlaylistMedia({ playlist_id: currentPlaylist?.playlist_id }));
-
     setPlaylistInfo({
       ...playlistInfo,
       title: currentPlaylist?.title,

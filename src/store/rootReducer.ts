@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { AUTH } from "../plaitv/Auth/constants";
 import { authReducer } from "../plaitv/Auth/reducer";
 import {
+  mediaState,
   modalState,
   userPlaylistsState,
   // userState,
@@ -11,7 +12,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   modal: modalState,
   userPlaylists: userPlaylistsState,
-  // user: userState,
+  media: mediaState,
 });
 
 export default (state: any, action: any) => {

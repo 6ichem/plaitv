@@ -5,7 +5,7 @@ import { Fragment, useEffect, useState } from "react";
 import { CheckmarkIcon } from "react-hot-toast";
 import { Combobox, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPlaylist } from "../../actions";
+import { getPlaylistMedia, setCurrentPlaylist } from "../../actions";
 
 export default function SearchInput() {
   const dispatch = useDispatch();
@@ -19,18 +19,20 @@ export default function SearchInput() {
   );
 
   useEffect(() => {
-    dispatch(setCurrentPlaylist(userPlaylists && userPlaylists[0]));
+    if (!currentPlaylist)
+      dispatch(setCurrentPlaylist(userPlaylists && userPlaylists[0]));
+
     if (userPlaylists && userPlaylists.length > 0) setLoading(false);
   }, [userPlaylists]);
 
   const [isLoading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
-  const [selecred, setSelected] = useState({});
 
-  useEffect(() => {
-    dispatch(setCurrentPlaylist(selecred));
-  }, [selecred]);
+  const setPlaylist = (playlist: any) => {
+    dispatch(setCurrentPlaylist(playlist));
+    dispatch(getPlaylistMedia({ playlist_id: playlist?.playlist_id }));
+  };
 
   const filteredPlaylists =
     query === ""
@@ -47,7 +49,7 @@ export default function SearchInput() {
       <div className="relative w-full">
         <Combobox
           value={currentPlaylist}
-          onChange={setSelected}
+          onChange={setPlaylist}
           disabled={isLoading}
         >
           <div className="relative">

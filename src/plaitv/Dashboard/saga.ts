@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { takeLatest, all, call, put, select } from "redux-saga/effects";
-import { httpGetUserPlaylistMedia } from "../../http/api/media";
+import { getLambdaMedia, httpGetUserPlaylistMedia } from "../../http/api/media";
 import {
   getUserPlaylists,
   httpUpdatePlaylist,
@@ -13,6 +13,7 @@ import {
   setUserPlaylists,
   setCurrentPlaylist,
   setNewPlaylistModal,
+  setLambdaMedia,
 } from "./actions";
 import * as Types from "./actionTypes";
 
@@ -20,6 +21,8 @@ export const state = (state: any) => state;
 
 function* getUserPlaylistMedia({ payload }: any) {
   try {
+    yield put(setPlaylistMedia(null));
+
     const resp: ResponseGenerator = yield call(
       httpGetUserPlaylistMedia,
       payload
@@ -87,11 +90,22 @@ function* updatePlaylist({ payload }: any) {
   }
 }
 
+function* findMedia({ payload }: any) {
+  try {
+    const resp: ResponseGenerator = yield call(getLambdaMedia, payload);
+
+    yield put(setLambdaMedia(resp));
+  } catch (e: any) {
+    yield put(setLambdaMedia(e?.response?.data));
+  }
+}
+
 function* watcher() {
   yield all([takeLatest(Types.GET_USER_PLAYLISTS, getAllUserPlaylists)]);
   yield all([takeLatest(Types.GET_PLAYLIST_MEDIA, getUserPlaylistMedia)]);
   yield all([takeLatest(Types.POST_NEW_PLAYLIST, createNewPlaylist)]);
   yield all([takeLatest(Types.POST_UPDATE_PLAYLIST, updatePlaylist)]);
+  yield all([takeLatest(Types.POST_LAMBDA_MEDIA, findMedia)]);
 }
 
 export const dashboardSaga = watcher;

@@ -1,13 +1,9 @@
 import { createReducer } from "../../store/utils";
 import * as Types from "./actionTypes";
 
-const initialState = {
+const initialModalState = {
   newPlaylistModal: false,
   addVideoModal: false,
-  userPlaylists: null,
-  playlistMedia: null,
-  currentPlaylist: null,
-  newPlaylist: null,
 };
 
 const modalStrategies = {
@@ -27,8 +23,15 @@ const modalStrategies = {
 };
 
 export const modalState = createReducer(modalStrategies, {
-  ...initialState,
+  ...initialModalState,
 });
+
+const initialPlaylistState = {
+  userPlaylists: null,
+  playlistMedia: null,
+  currentPlaylist: null,
+  newPlaylist: null,
+};
 
 const userPlaylistsStrategies = {
   [Types.SET_USER_PLAYLIST]: (state: any, payload: any) => {
@@ -65,19 +68,24 @@ const userPlaylistsStrategies = {
 };
 
 export const userPlaylistsState = createReducer(userPlaylistsStrategies, {
-  ...initialState,
+  ...initialPlaylistState,
 });
 
-// const userStrategies = {
-//   [Types.RESET_APP_STATE]: () => {
-//     return {
-//       ...initialState,
-//     };
-//   },
+const initialMediaState = {
+  lambdaMedia: null,
+};
 
-//   __default__: (state: any) => state,
-// };
+const mediaStrategies = {
+  [Types.SET_LAMBDA_MEDIA]: (state: any, payload: any) => {
+    return {
+      ...state,
+      lambdaMedia: payload,
+    };
+  },
 
-// export const userState = createReducer(userStrategies, {
-//   ...initialState,
-// });
+  __default__: (state: any) => state,
+};
+
+export const mediaState = createReducer(mediaStrategies, {
+  ...initialMediaState,
+});
