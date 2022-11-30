@@ -5,13 +5,15 @@ import { Fragment, ReactNode, useEffect, useState } from "react";
 import Input from "../../../../components/Input";
 import { Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPlaylistMedia, setAddVideoModal } from "../../actions";
+import {
+  getPlaylistMedia,
+  postUpdatePlaylist,
+  setAddVideoModal,
+  setCurrentPlaylist,
+} from "../../actions";
 import Loader from "../../../../components/Loader";
 
 export default function Playlist({ userPlaylists }: any) {
-  const [isEdit, setEdit] = useState<boolean>(false);
-  const [isLoading, setLoading] = useState<boolean>(true);
-
   const dispatch = useDispatch();
 
   const currentPlaylist = useSelector(
@@ -22,9 +24,25 @@ export default function Playlist({ userPlaylists }: any) {
     (state: any) => state.userPlaylists.playlistMedia
   );
 
-  const newPlaylistData = useSelector(
-    (state: any) => state.userPlaylists.newPlaylist
-  );
+  const [isEdit, setEdit] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(true);
+  const [isEditLoading, setEditLoading] = useState<boolean>(false);
+
+  const [playlistInfo, setPlaylistInfo] = useState({
+    title: "",
+    description: "",
+  });
+
+  const updatePlaylist = () => {
+    setEditLoading(true);
+
+    dispatch(
+      postUpdatePlaylist({
+        ...playlistInfo,
+        playlist_id: currentPlaylist.playlist_id,
+      })
+    );
+  };
 
   const _editView = () => (
     <Transition
@@ -39,9 +57,15 @@ export default function Playlist({ userPlaylists }: any) {
     >
       <div>
         <div className={styles.Playlist__Edit}>
-          <button>
-            <Icon name="save" />
-          </button>
+          {isEditLoading ? (
+            <div className="pt-3 pr-5">
+              <Loader />
+            </div>
+          ) : (
+            <button onClick={updatePlaylist}>
+              <Icon name="save" />
+            </button>
+          )}
         </div>
         <Input
           type="text"
@@ -50,6 +74,10 @@ export default function Playlist({ userPlaylists }: any) {
           withLabel
           label="Name"
           required
+          value={playlistInfo.title}
+          onChange={(e) =>
+            setPlaylistInfo({ ...playlistInfo, title: e.target.value })
+          }
         />
         <Input
           type="text"
@@ -58,6 +86,10 @@ export default function Playlist({ userPlaylists }: any) {
           withLabel
           label="Description (optional)"
           required
+          value={playlistInfo.description}
+          onChange={(e) =>
+            setPlaylistInfo({ ...playlistInfo, description: e.target.value })
+          }
         />
       </div>
     </Transition>
@@ -143,6 +175,15 @@ export default function Playlist({ userPlaylists }: any) {
 
   useEffect(() => {
     dispatch(getPlaylistMedia({ playlist_id: currentPlaylist?.playlist_id }));
+
+    setPlaylistInfo({
+      ...playlistInfo,
+      title: currentPlaylist?.title,
+      description: currentPlaylist?.description,
+    });
+
+    if (isEdit) setEdit(false);
+    if (isEditLoading) setEditLoading(false);
   }, [currentPlaylist]);
 
   return (

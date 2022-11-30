@@ -20,10 +20,6 @@ export default function Dashboard() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserPlaylists());
-  }, []);
-
-  useEffect(() => {
     const tokenExpireDate = new Date(getLocalAccessTokenExpiry()).valueOf();
     const currDate = new Date().valueOf();
     if (
@@ -32,6 +28,10 @@ export default function Dashboard() {
     ) {
       newAccessToken();
     }
+  }, []);
+
+  useEffect(() => {
+    dispatch(getUserPlaylists());
   }, []);
 
   return (

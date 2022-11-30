@@ -19,7 +19,7 @@ export default (state: any, action: any) => {
     localStorage.removeItem("user");
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-
+    localStorage.removeItem("access_token_expiry");
     window.location.href = "/";
 
     return rootReducer(undefined, action);

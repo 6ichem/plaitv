@@ -62,7 +62,8 @@ export default function SearchInput() {
                   displayValue={(playlist: any) => playlist?.title}
                   onChange={(event) => setQuery(event.target.value)}
                   className={`${
-                    (isLoading && "cursor-progress opacity-50") || ""
+                    (isLoading && "cursor-progress opacity-50") ||
+                    "cursor-pointer"
                   }`}
                 />
               </div>

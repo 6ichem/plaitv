@@ -51,18 +51,10 @@ export default function Register() {
 
   useEffect(() => {
     if (registerData?.user_id) {
-      toast.success("Signed up successfully!", {
-        style: { background: "#333", color: "#fff" },
-      });
-
       if (!registerData.is_active) setConfirmEmail(true);
 
       setLoading(false);
     } else if (registerData?.detail) {
-      toast.error(registerData.detail, {
-        style: { background: "#333", color: "#fff" },
-      });
-
       setLoading(false);
     }
   }, [registerData]);

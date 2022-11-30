@@ -47,3 +47,8 @@ export const postNewPlaylist = (payload: any) => ({
 export const cleanNewPlaylist = () => ({
   type: Types.CLEAN_NEW_PLAYLIST,
 });
+
+export const postUpdatePlaylist = (payload: any) => ({
+  type: Types.POST_UPDATE_PLAYLIST,
+  payload,
+});

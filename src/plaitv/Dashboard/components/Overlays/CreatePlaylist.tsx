@@ -34,15 +34,7 @@ export default function CreatePlaylist() {
 
   useEffect(() => {
     if (newPlaylistData && "playlist_id" in newPlaylistData) {
-      dispatch(getUserPlaylists());
-
       setLoading(false);
-
-      toast.success("Playlist created", {
-        style: { background: "#333", color: "#fff" },
-      });
-
-      dispatch(setNewPlaylistModal(false));
     }
   }, [newPlaylistData]);
 

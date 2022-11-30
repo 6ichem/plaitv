@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { put, call } from "redux-saga/effects";
 import {
   getRefreshToken,
@@ -8,8 +9,11 @@ import { ResponseGenerator } from "../../../http/types";
 import {
   getLocalRefreshToken,
   setLocalAccessToken,
+  setLocalAccessTokenExpiry,
   setLocalRefreshToken,
+  setLocalUser,
 } from "../../../http/utils";
+import { POST_REFRESH_TOKEN } from "../actionTypes";
 
 import { setLoginData } from "./actions";
 
@@ -18,7 +22,25 @@ export function* postLogin({ payload }: any) {
     const resp: ResponseGenerator = yield call(loginUser, payload);
 
     yield put(setLoginData(resp));
+
+    toast.success("Logged in successfully!", {
+      style: { background: "#333", color: "#fff" },
+    });
+
+    const { access_token, user, access_token_expiry }: any = resp;
+
+    setLocalAccessToken(access_token);
+    setLocalAccessTokenExpiry(access_token_expiry);
+    setLocalUser(user);
+
+    yield put({ type: POST_REFRESH_TOKEN, payload: access_token });
+
+    window?.location.replace("/home");
   } catch (e: any) {
+    toast.error(e?.response?.data, {
+      style: { background: "#333", color: "#fff" },
+    });
+
     yield put(setLoginData(e?.response?.data));
   }
 }

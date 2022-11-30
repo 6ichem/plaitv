@@ -47,26 +47,8 @@ export default function Login() {
 
   useEffect(() => {
     if (loginData?.access_token) {
-      toast.success("Logged in successfully!", {
-        style: { background: "#333", color: "#fff" },
-      });
-
-      const { access_token, user, access_token_expiry } = loginData;
-
-      setLocalAccessToken(access_token);
-      setLocalAccessTokenExpiry(access_token_expiry);
-      setLocalUser(user);
-
       setLoading(false);
-
-      dispatch(postRefreshToken(access_token));
-
-      window?.location.replace("/home");
     } else if (loginData?.detail) {
-      toast.error(loginData.detail, {
-        style: { background: "#333", color: "#fff" },
-      });
-
       setLoading(false);
     }
   }, [loginData]);

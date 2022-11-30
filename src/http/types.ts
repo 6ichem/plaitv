@@ -49,3 +49,7 @@ export interface newPlaylistPayload {
   title: string;
   description: string;
 }
+
+export interface editPlaylistPayload extends newPlaylistPayload {
+  playlist_id: string;
+}
