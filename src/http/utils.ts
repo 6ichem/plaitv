@@ -7,6 +7,8 @@ export const setLocalUser = (data: any) => {
   localStorage.setItem("user", JSON.stringify(data));
 };
 
+export const getLocalUser = () => localStorage.getItem("user") ?? "";
+
 export const setLocalAccessToken = (token: string) => {
   localStorage.setItem("access_token", token);
 };

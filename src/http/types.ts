@@ -12,6 +12,11 @@ export interface createUserPayload {
   password: string;
 }
 
+export interface userProfilePayload {
+  first_name: string;
+  last_name: string;
+}
+
 export interface loginUserPayload {
   username: string;
   password: string;
@@ -30,6 +35,11 @@ export interface resetTokenPayload {
 }
 
 export interface resetPasswordPayload extends resetTokenPayload {
+  new_password: string;
+}
+
+export interface changePasswordPayload {
+  current_password: string;
   new_password: string;
 }
 

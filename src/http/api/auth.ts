@@ -1,4 +1,5 @@
 import {
+  changePasswordPayload,
   forgotPasswordPayload,
   getRefreshTokenPayload,
   issueAccessTokenPayload,
@@ -70,6 +71,15 @@ export const issueAccessToken = async (params: issueAccessTokenPayload) => {
     `${BASE_URL}/auth/issue-new-access-token`,
     null,
     { params }
+  );
+
+  return data;
+};
+
+export const httpChangePassword = async (payload: changePasswordPayload) => {
+  const { data } = await instance.post(
+    `${BASE_URL}/auth/change-password`,
+    payload
   );
 
   return data;

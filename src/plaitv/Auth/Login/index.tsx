@@ -8,12 +8,6 @@ import Button from "../../../components/Button";
 import AuthLayout from "../../../components/AuthLayout";
 import { postLogin, postRefreshToken, setLoginCreds } from "./actions";
 import { CREDS } from "../Register/constants";
-import toast from "react-hot-toast";
-import {
-  setLocalAccessToken,
-  setLocalAccessTokenExpiry,
-  setLocalUser,
-} from "../../../http/utils";
 
 export default function Login() {
   const dispatch = useDispatch();

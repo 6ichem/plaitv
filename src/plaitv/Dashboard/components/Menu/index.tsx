@@ -3,7 +3,7 @@ import MenuButton from "../../../../assets/menu.svg";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useDispatch } from "react-redux";
-import { setNewPlaylistModal } from "../../actions";
+import { setNewPlaylistModal, setProfileModal } from "../../actions";
 import { userLogout } from "../../../Auth/Login/actions";
 
 export default function MenuDropdown() {
@@ -16,9 +16,7 @@ export default function MenuDropdown() {
     },
     {
       label: "Profile",
-      click: () => {
-        console.log("profile");
-      },
+      click: () => dispatch(setProfileModal(true)),
     },
     {
       label: "Log out",

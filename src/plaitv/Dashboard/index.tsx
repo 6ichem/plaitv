@@ -6,8 +6,8 @@ import Playlist from "./components/Playlist";
 import CreatePlaylist from "./components/Overlays/CreatePlaylist";
 import AddVideo from "./components/Overlays/AddVideo";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserPlaylists, setCurrentPlaylist } from "./actions";
-import { getLocalAccessTokenExpiry, newAccessToken } from "../../http/utils";
+import { getUserPlaylists } from "./actions";
+import Profile from "./components/Overlays/Profile";
 
 export default function Dashboard() {
   const userPlaylists =
@@ -22,17 +22,6 @@ export default function Dashboard() {
   }, []);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const tokenExpireDate = new Date(getLocalAccessTokenExpiry()).valueOf();
-    const currDate = new Date().valueOf();
-    if (
-      tokenExpireDate === currDate ||
-      currDate - tokenExpireDate > 1 * 60 * 1000
-    ) {
-      newAccessToken();
-    }
-  }, []);
 
   useEffect(() => {
     dispatch(getUserPlaylists());
@@ -50,6 +39,7 @@ export default function Dashboard() {
 
       <CreatePlaylist />
       <AddVideo />
+      <Profile />
     </div>
   );
 }

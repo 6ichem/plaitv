@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 import { takeLatest, all, call, put, select, delay } from "redux-saga/effects";
+import { httpChangePassword } from "../../http/api/auth";
 import {
   getLambdaMedia,
   httpAddMedia,
@@ -11,7 +12,9 @@ import {
   httpUpdatePlaylist,
   newPlaylist,
 } from "../../http/api/playlist";
+import { httpUpdateUserProfile } from "../../http/api/users";
 import { ResponseGenerator } from "../../http/types";
+import { getLocalUser, setLocalUser } from "../../http/utils";
 import {
   setNewPlaylist,
   setPlaylistMedia,
@@ -144,7 +147,7 @@ function* findMedia({ payload }: any): any {
         });
       }
 
-      yield delay(10000);
+      yield delay(5000);
     } while (isResolved == false);
   } catch (e: any) {
     yield put(setLambdaMedia(e?.response?.data));
@@ -212,6 +215,54 @@ function* addMediaToPlaylist({ payload }: any): any {
   }
 }
 
+function* updateUserProfile({ payload }: any): any {
+  try {
+    yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: true });
+
+    const resp: any = yield call(httpUpdateUserProfile, payload);
+    const currentUser = JSON.parse(getLocalUser());
+    setLocalUser({ ...currentUser, payload });
+
+    toast.success(`Updated profile`, {
+      style: { background: "#333", color: "#fff" },
+    });
+
+    yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: false });
+    yield put({ type: Types.SET_PROFILE_MODAL, payload: false });
+  } catch (e: any) {
+    toast.error(e?.response?.data, {
+      style: { background: "#333", color: "#fff" },
+    });
+
+    yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: false });
+
+    yield put(setPlaylistMedia(e?.response?.data));
+  }
+}
+
+function* changeUserPassword({ payload }: any): any {
+  try {
+    yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: true });
+
+    const resp: any = yield call(httpChangePassword, payload);
+
+    toast.success(`Updated password`, {
+      style: { background: "#333", color: "#fff" },
+    });
+
+    yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: false });
+    yield put({ type: Types.SET_PROFILE_MODAL, payload: false });
+  } catch (e: any) {
+    toast.error(e?.response?.data, {
+      style: { background: "#333", color: "#fff" },
+    });
+
+    yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: false });
+
+    yield put(setPlaylistMedia(e?.response?.data));
+  }
+}
+
 function* watcher() {
   yield all([takeLatest(Types.GET_USER_PLAYLISTS, getAllUserPlaylists)]);
   yield all([takeLatest(Types.GET_PLAYLIST_MEDIA, getUserPlaylistMedia)]);
@@ -220,6 +271,8 @@ function* watcher() {
   yield all([takeLatest(Types.POST_LAMBDA_MEDIA, findMedia)]);
   yield all([takeLatest(Types.POST_DELETE_MEDIA, deleteMedia)]);
   yield all([takeLatest(Types.POST_ADD_MEDIA, addMediaToPlaylist)]);
+  yield all([takeLatest(Types.POST_UPDATE_USER_PROFILE, updateUserProfile)]);
+  yield all([takeLatest(Types.POST_CHANGE_PASSWORD, changeUserPassword)]);
 }
 
 export const dashboardSaga = watcher;

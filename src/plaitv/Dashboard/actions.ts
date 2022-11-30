@@ -10,6 +10,11 @@ export const setAddVideoModal = (payload: any) => ({
   payload,
 });
 
+export const setProfileModal = (payload: any) => ({
+  type: Types.SET_PROFILE_MODAL,
+  payload,
+});
+
 export const getUserPlaylists = () => ({
   type: Types.GET_USER_PLAYLISTS,
 });
@@ -75,5 +80,15 @@ export const showLambdaResults = (payload: any) => ({
 
 export const postAddMedia = (payload: any) => ({
   type: Types.POST_ADD_MEDIA,
+  payload,
+});
+
+export const postUpdateUserProfile = (payload: any) => ({
+  type: Types.POST_UPDATE_USER_PROFILE,
+  payload,
+});
+
+export const postChangePassword = (payload: any) => ({
+  type: Types.POST_CHANGE_PASSWORD,
   payload,
 });

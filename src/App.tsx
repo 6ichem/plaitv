@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,10 +15,21 @@ import ResetPassword from "./plaitv/Auth/ResetPassword";
 import Dashboard from "./plaitv/Dashboard";
 import AuthRoute from "./router/AuthRoute";
 import PublicRoute from "./router/PublicRoute";
-import { getLocalAccessToken } from "./http/utils";
+import { getLocalAccessToken, newAccessToken } from "./http/utils";
 
 function App() {
   const isAuthenticated = getLocalAccessToken();
+
+  useEffect(() => {
+    const tokenExpireDate = new Date(getLocalAccessToken()).valueOf();
+    const currDate = new Date().valueOf();
+    if (
+      tokenExpireDate === currDate ||
+      currDate - tokenExpireDate > 1 * 60 * 1000
+    ) {
+      newAccessToken();
+    }
+  }, []);
 
   return (
     <Router>

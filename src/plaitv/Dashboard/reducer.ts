@@ -4,6 +4,7 @@ import * as Types from "./actionTypes";
 const initialModalState = {
   newPlaylistModal: false,
   addVideoModal: false,
+  profileModal: false,
 };
 
 const modalStrategies = {
@@ -17,6 +18,12 @@ const modalStrategies = {
     return {
       ...state,
       addVideoModal: payload,
+    };
+  },
+  [Types.SET_PROFILE_MODAL]: (state: any, payload: any) => {
+    return {
+      ...state,
+      profileModal: payload,
     };
   },
   __default__: (state: any) => state,
@@ -112,6 +119,7 @@ const initialLoaderState = {
   playlistLoader: false,
   addMediaLoader: false,
   deleteMediaLoader: false,
+  userProfileLoader: false,
 };
 
 const loaderStrategies = {
@@ -155,6 +163,12 @@ const loaderStrategies = {
     return {
       ...state,
       deleteMediaLoader: payload,
+    };
+  },
+  [Types.SET_USER_PROFILE_LOADER]: (state: any, payload: any) => {
+    return {
+      ...state,
+      userProfileLoader: payload,
     };
   },
   __default__: (state: any) => state,

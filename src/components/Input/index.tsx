@@ -18,7 +18,7 @@ export default function Input({
   return (
     <div className={`${styles.Input} ${(wrapperStyle && wrapperStyle) || ""}`}>
       {withLabel && <label htmlFor={label}>{label}</label>}
-      <input type={type} name={label} {...rest} />
+      <input type={type} name={label} autoComplete={label} {...rest} />
     </div>
   );
 }
