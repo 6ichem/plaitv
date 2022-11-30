@@ -2,6 +2,8 @@ import { Fragment, useState } from "react";
 import { Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  postAddMedia,
+  postDeleteMedia,
   postLambdaMedia,
   setAddVideoModal,
   setLambdaMedia,
@@ -13,7 +15,6 @@ import OverlayModal from "../../../../components/OverlayModal/OverlayModal";
 import PlaylistItem from "../../../../components/PlaylistItem";
 
 export default function AddVideo() {
-  const [foundResults, setFoundResults] = useState<boolean>(false);
   const [videoURL, setVideoURL] = useState<string>("");
 
   const dispatch = useDispatch();
@@ -21,6 +22,12 @@ export default function AddVideo() {
   const isModalOpen = useSelector((state: any) => state.modal.addVideoModal);
   const lambdaLoader = useSelector((state: any) => state.loaders.lambdaLoader);
   const lambdaMedia = useSelector((state: any) => state.media.lambdaMedia);
+  const addMediaLoader = useSelector(
+    (state: any) => state.loaders.addMediaLoader
+  );
+  const currentPlaylist = useSelector(
+    (state: any) => state.userPlaylists.currentPlaylist
+  );
 
   const getVideo = () => {
     dispatch(postLambdaMedia({ url: videoURL }));
@@ -30,6 +37,10 @@ export default function AddVideo() {
     dispatch(setLambdaMedia(null));
     dispatch(setAddVideoModal(false));
     setVideoURL("");
+  };
+
+  const editSearch = () => {
+    dispatch(setLambdaMedia(null));
   };
 
   const _initialView = () => (
@@ -73,7 +84,7 @@ export default function AddVideo() {
       appendContent={
         <button
           className="flex items-center gap-3 mr-0 md:mr-5"
-          onClick={() => setFoundResults(false)}
+          onClick={editSearch}
         >
           <Icon name="search-icon" />
           <p className="text-[#ffffffcc] text-sm">Edit search</p>
@@ -89,6 +100,18 @@ export default function AddVideo() {
               link={i.source}
               desc={i.description}
               searchItem
+              onDelete={() =>
+                dispatch(postDeleteMedia({ media_id: i.media_id }))
+              }
+              onAdd={() =>
+                dispatch(
+                  postAddMedia({
+                    ...i,
+                    playlist_id: currentPlaylist.playlist_id,
+                  })
+                )
+              }
+              isAddLoading={addMediaLoader}
             />
           ))}
       </div>

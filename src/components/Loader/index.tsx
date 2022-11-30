@@ -1,6 +1,6 @@
 import styles from "./Loader.module.scss";
 
-export default function Loader({ type = "carousel" }: any) {
+export default function Loader({ type = "carousel", small = false }: any) {
   return (
     <div className={styles.Loader}>
       {type === "spinner" ? (
@@ -8,7 +8,7 @@ export default function Loader({ type = "carousel" }: any) {
           <svg
             aria-hidden="true"
             role="status"
-            className="inline text-gray-200 animate-spin dark:text-gray-600"
+            className={`${(small && styles.small) || ""}`}
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

@@ -62,3 +62,11 @@ export interface lambdaMediaPayload {
 export interface mediaControllerPayload {
   media_id: string;
 }
+
+export interface addMediaPayload {
+  title: string;
+  description: string;
+  embed_url: string;
+  source: string;
+  playlist_id: string;
+}

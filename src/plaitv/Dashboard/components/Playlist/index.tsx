@@ -5,7 +5,11 @@ import { Fragment, ReactNode, useEffect, useState } from "react";
 import Input from "../../../../components/Input";
 import { Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { postUpdatePlaylist, setAddVideoModal } from "../../actions";
+import {
+  postDeleteMedia,
+  postUpdatePlaylist,
+  setAddVideoModal,
+} from "../../actions";
 import Loader from "../../../../components/Loader";
 
 export default function Playlist({ userPlaylists }: any) {
@@ -14,9 +18,11 @@ export default function Playlist({ userPlaylists }: any) {
   const currentPlaylist = useSelector(
     (state: any) => state.userPlaylists.currentPlaylist
   );
-
   const playlistMedia = useSelector(
     (state: any) => state.userPlaylists.playlistMedia
+  );
+  const deleteMediaLoader = useSelector(
+    (state: any) => state.loaders.deleteMediaLoader
   );
 
   const [isEdit, setEdit] = useState<boolean>(false);
@@ -94,15 +100,20 @@ export default function Playlist({ userPlaylists }: any) {
     !isEdit && (
       <div className={styles.Playlist__Header}>
         <span>Selected Playlist</span>
-        <button onClick={() => setEdit(true)}>
-          <Icon name="edit" />
-          Edit
-        </button>
+        {!isLoading && (
+          <button onClick={() => setEdit(true)}>
+            <Icon name="edit" />
+            Edit
+          </button>
+        )}
       </div>
     );
 
   const _playlistView = () =>
-    currentPlaylist && "playlist_id" in currentPlaylist ? (
+    currentPlaylist &&
+    "playlist_id" in currentPlaylist &&
+    playlistMedia &&
+    playlistMedia.length > 0 ? (
       <>
         <div
           className={`${
@@ -141,6 +152,12 @@ export default function Playlist({ userPlaylists }: any) {
                 desc={i.description}
                 active={true}
                 isEditState={isEdit}
+                onDelete={() =>
+                  dispatch(
+                    postDeleteMedia({ media_id: i.media_id, title: i.title })
+                  )
+                }
+                isDeleteLoading={deleteMediaLoader}
               />
             ))}
         </div>

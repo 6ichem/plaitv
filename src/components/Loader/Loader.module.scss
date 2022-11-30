@@ -27,7 +27,11 @@
   .spinner {
     @apply text-center;
     svg {
-      @apply w-12 h-12;
+      @apply w-12 h-12 inline text-gray-200 animate-spin dark:text-gray-600;
+      &.small {
+        height: 24px !important;
+        width: 24px !important;
+      }
     }
   }
 }

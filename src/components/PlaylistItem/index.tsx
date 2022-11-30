@@ -1,4 +1,5 @@
 import Icon from "../Icon";
+import Loader from "../Loader";
 import styles from "./PlaylistItem.module.scss";
 
 interface propTypes {
@@ -8,6 +9,10 @@ interface propTypes {
   active?: boolean;
   searchItem?: boolean;
   isEditState?: boolean;
+  onDelete?: () => void;
+  isAddLoading?: boolean;
+  onAdd?: () => void;
+  isDeleteLoading?: boolean;
 }
 
 export default function PlaylistItem({
@@ -17,6 +22,10 @@ export default function PlaylistItem({
   active,
   searchItem = false,
   isEditState = false,
+  onDelete = () => {},
+  isAddLoading = false,
+  onAdd = () => {},
+  isDeleteLoading = false,
 }: propTypes) {
   const renderActiveIcon = () =>
     active ? <Icon name="play-active" /> : <Icon name="play-inactive" />;
@@ -48,13 +57,23 @@ export default function PlaylistItem({
         </div>
         {searchItem && (
           <div>
-            <Icon name="play-circle" />
+            {isAddLoading ? (
+              <Loader type="spinner" small />
+            ) : (
+              <button onClick={onAdd}>
+                <Icon name="play-circle" />
+              </button>
+            )}
           </div>
         )}
         {isEditState && (
-          <div className="pl-5">
-            <Icon name="delete-icon" />
-          </div>
+          <button className="pl-5" onClick={onDelete}>
+            {isDeleteLoading ? (
+              <Loader type="spinner" small />
+            ) : (
+              <Icon name="delete-icon" />
+            )}
+          </button>
         )}
       </div>
     </div>

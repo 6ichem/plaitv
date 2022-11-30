@@ -2,6 +2,7 @@ import axios from "axios";
 import { instance } from "../config";
 import { BASE_URL } from "../constants";
 import {
+  addMediaPayload,
   getPlaylistMediaPayload,
   lambdaMediaPayload,
   mediaControllerPayload,
@@ -30,6 +31,12 @@ export const getLambdaMedia = async (payload: lambdaMediaPayload) => {
     `${BASE_URL}/media/get_lambda_media/`,
     payload
   );
+
+  return data;
+};
+
+export const httpAddMedia = async (payload: addMediaPayload) => {
+  const { data } = await instance.post(`${BASE_URL}/media/create`, payload);
 
   return data;
 };

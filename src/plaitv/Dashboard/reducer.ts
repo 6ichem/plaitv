@@ -103,6 +103,8 @@ const initialLoaderState = {
   registerLoader: false,
   createPlaylistLoader: false,
   playlistLoader: false,
+  addMediaLoader: false,
+  deleteMediaLoader: false,
 };
 
 const loaderStrategies = {
@@ -134,6 +136,18 @@ const loaderStrategies = {
     return {
       ...state,
       createPlaylistLoader: payload,
+    };
+  },
+  [Types.SET_ADD_MEDIA_LOADER]: (state: any, payload: any) => {
+    return {
+      ...state,
+      addMediaLoader: payload,
+    };
+  },
+  [Types.SET_DELETE_MEDIA_LOADER]: (state: any, payload: any) => {
+    return {
+      ...state,
+      deleteMediaLoader: payload,
     };
   },
   __default__: (state: any) => state,

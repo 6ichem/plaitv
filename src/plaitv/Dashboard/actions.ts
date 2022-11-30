@@ -72,3 +72,8 @@ export const showLambdaResults = (payload: any) => ({
   type: Types.SHOW_LAMBA_RESULTS,
   payload,
 });
+
+export const postAddMedia = (payload: any) => ({
+  type: Types.POST_ADD_MEDIA,
+  payload,
+});
