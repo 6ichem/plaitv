@@ -111,7 +111,7 @@ export default function Playlist({ userPlaylists }: any) {
       <>
         <div
           className={`${
-            isEdit ? "flex justify-between items-center mb-5" : ""
+            isEdit ? "flex justify-between items-center mb-12" : ""
           }`}
         >
           <span className={`${styles.descspan} ${!isEdit ? "mb-5" : ""}`}>

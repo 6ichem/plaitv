@@ -30,7 +30,9 @@ export default function PlaylistItem({
       </div>
       <div
         className={`${
-          ((searchItem || isEditState) && "flex justify-between w-full") || ""
+          ((searchItem || isEditState) &&
+            "flex justify-between w-full items-center") ||
+          ""
         }`}
       >
         <div>
@@ -50,7 +52,7 @@ export default function PlaylistItem({
           </div>
         )}
         {isEditState && (
-          <div>
+          <div className="pl-5">
             <Icon name="delete-icon" />
           </div>
         )}
