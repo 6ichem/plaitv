@@ -6,12 +6,16 @@ import Playlist from "./components/Playlist";
 import CreatePlaylist from "./components/Overlays/CreatePlaylist";
 import AddVideo from "./components/Overlays/AddVideo";
 import { useDispatch, useSelector } from "react-redux";
-import { getPlaylistMedia, getUserPlaylists } from "./actions";
+import { getUserPlaylists, setCurrentPlaylist } from "./actions";
 import { getLocalAccessTokenExpiry, newAccessToken } from "../../http/utils";
 
 export default function Dashboard() {
   const userPlaylists =
     useSelector((state: any) => state.userPlaylists.userPlaylists) ?? [];
+
+  const currentPlaylist = useSelector(
+    (state: any) => state.userPlaylists.currentPlaylist
+  );
 
   useEffect(() => {
     document.body.style.backgroundColor = "#18181A";

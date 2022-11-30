@@ -18,16 +18,13 @@ export default function SearchInput() {
     (state: any) => state.userPlaylists.currentPlaylist
   );
 
-  useEffect(() => {
-    if (!currentPlaylist)
-      dispatch(setCurrentPlaylist(userPlaylists && userPlaylists[0]));
-
-    if (userPlaylists && userPlaylists.length > 0) setLoading(false);
-  }, [userPlaylists]);
-
   const [isLoading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (userPlaylists && userPlaylists.length > 0) setLoading(false);
+  }, [userPlaylists]);
 
   const setPlaylist = (playlist: any) => {
     dispatch(setCurrentPlaylist(playlist));

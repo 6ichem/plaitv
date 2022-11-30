@@ -19,15 +19,16 @@ import {
   setCurrentPlaylist,
   setNewPlaylistModal,
   setLambdaMedia,
+  getPlaylistMedia,
 } from "./actions";
 import * as Types from "./actionTypes";
 
 export const state = (state: any) => state;
 
 function* getUserPlaylistMedia({ payload }: any) {
-  try {
-    yield put(setPlaylistMedia(null));
+  yield put(setPlaylistMedia(null));
 
+  try {
     const resp: ResponseGenerator = yield call(
       httpGetUserPlaylistMedia,
       payload
@@ -39,19 +40,17 @@ function* getUserPlaylistMedia({ payload }: any) {
   }
 }
 
-function* getAllUserPlaylists() {
+function* getAllUserPlaylists(): any {
   try {
-    const {
-      userPlaylists: { currentPlaylist },
-    } = yield select(state);
-
-    const resp: ResponseGenerator = yield call(getUserPlaylists);
+    const resp: any = yield call(getUserPlaylists);
 
     yield put(setUserPlaylists(resp));
 
-    yield call(getUserPlaylistMedia, {
-      playlist_id: currentPlaylist?.playlist_id,
-    });
+    if (resp.length > 0) {
+      yield put(setCurrentPlaylist(resp[0]));
+
+      yield put(getPlaylistMedia({ playlist_id: resp[0].playlist_id }));
+    }
   } catch (e: any) {
     yield put(setUserPlaylists(e?.response?.data));
   }
