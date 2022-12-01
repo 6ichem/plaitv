@@ -20,14 +20,12 @@ export default function Navigation() {
       </div>
 
       <div className={styles.Navigation__Mobile}>
+        <div className="w-full mr-3">
+          <SearchInput />
+        </div>
+
         <div>
           <Icon name="mobile-menu" />
-        </div>
-        <div>
-          <Icon name="mobile-search" />
-        </div>
-        <div>
-          <Icon name="mobile-plus" />
         </div>
       </div>
     </div>

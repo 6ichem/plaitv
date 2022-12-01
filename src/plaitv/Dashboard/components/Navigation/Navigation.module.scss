@@ -6,6 +6,6 @@
     }
   }
   .Navigation__Mobile {
-    @apply z-20 bg-primary p-5 fixed bottom-0 h-[82px] w-full flex md:hidden justify-between items-center;
+    @apply z-20 bg-primary p-5 fixed bottom-0 h-16 w-full flex md:hidden justify-between items-center;
   }
 }
