@@ -17,6 +17,7 @@ instance.interceptors.response.use(
   async (e) => {
     if (e?.response?.status == 403) {
       newAccessToken();
+      location.reload();
     } else if (isRefreshExpired(e)) {
       store.dispatch(userLogout());
     }

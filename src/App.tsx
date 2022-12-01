@@ -28,6 +28,8 @@ function App() {
       currDate - tokenExpireDate > 1 * 60 * 1000
     ) {
       newAccessToken();
+
+      location.reload();
     }
   }, []);
 

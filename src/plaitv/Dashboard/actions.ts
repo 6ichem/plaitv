@@ -92,3 +92,8 @@ export const postChangePassword = (payload: any) => ({
   type: Types.POST_CHANGE_PASSWORD,
   payload,
 });
+
+export const setCurrentMedia = (payload: any) => ({
+  type: Types.SET_CURRENT_MEDIA,
+  payload,
+});

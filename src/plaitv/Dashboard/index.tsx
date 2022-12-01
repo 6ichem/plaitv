@@ -8,6 +8,7 @@ import AddVideo from "./components/Overlays/AddVideo";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserPlaylists } from "./actions";
 import Profile from "./components/Overlays/Profile";
+import RenderVideo from "./components/RenderVideo";
 
 export default function Dashboard() {
   const userPlaylists =
@@ -31,11 +32,11 @@ export default function Dashboard() {
     <div className={styles.Dashboard}>
       <Navigation />
 
-      <div className="w-full md:w-[80%] px-6"></div>
-
       <div className="block md:hidden">
         <Playlist userPlaylists={userPlaylists} />
       </div>
+
+      <RenderVideo />
 
       <CreatePlaylist />
       <AddVideo />

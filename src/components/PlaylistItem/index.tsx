@@ -1,3 +1,4 @@
+import { ButtonHTMLAttributes } from "react";
 import Icon from "../Icon";
 import Loader from "../Loader";
 import styles from "./PlaylistItem.module.scss";
@@ -13,6 +14,7 @@ interface propTypes {
   isAddLoading?: boolean;
   onAdd?: () => void;
   isDeleteLoading?: boolean;
+  onClick?: () => void;
 }
 
 export default function PlaylistItem({
@@ -26,12 +28,13 @@ export default function PlaylistItem({
   isAddLoading = false,
   onAdd = () => {},
   isDeleteLoading = false,
+  onClick = () => {},
 }: propTypes) {
   const renderActiveIcon = () =>
     active ? <Icon name="play-active" /> : <Icon name="play-inactive" />;
 
   return (
-    <div className={styles.PlaylistItem}>
+    <div className={styles.PlaylistItem} onClick={onClick}>
       <div>
         {searchItem
           ? !isEditState && <Icon name="youtube" />

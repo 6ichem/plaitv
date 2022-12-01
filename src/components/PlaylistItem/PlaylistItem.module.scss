@@ -1,5 +1,5 @@
 .PlaylistItem {
-  @apply flex gap-3 mb-5 relative cursor-pointer;
+  @apply flex gap-3 mb-5 relative cursor-pointer transition-all duration-500 ease-in-out;
   div:nth-child(2) {
     @apply pb-6;
     word-break: break-all;
@@ -14,7 +14,7 @@
       line-height: 12px;
     }
     .p {
-      @apply font-bold line-clamp-3;
+      @apply line-clamp-3;
       color: rgba(255, 255, 255, 0.5);
       font-size: 10px;
       line-height: 12px;

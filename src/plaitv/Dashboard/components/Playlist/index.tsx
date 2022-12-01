@@ -9,6 +9,7 @@ import {
   postDeleteMedia,
   postUpdatePlaylist,
   setAddVideoModal,
+  setCurrentMedia,
 } from "../../actions";
 import Loader from "../../../../components/Loader";
 
@@ -24,6 +25,7 @@ export default function Playlist({ userPlaylists }: any) {
   const deleteMediaLoader = useSelector(
     (state: any) => state.loaders.deleteMediaLoader
   );
+  const currentMedia = useSelector((state: any) => state.media.currentMedia);
 
   const [isEdit, setEdit] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(true);
@@ -43,6 +45,12 @@ export default function Playlist({ userPlaylists }: any) {
         playlist_id: currentPlaylist.playlist_id,
       })
     );
+  };
+
+  const chooseMedia = (item: any) => {
+    if (item.media_id !== currentMedia.media_id) {
+      dispatch(setCurrentMedia(item));
+    }
   };
 
   const _editView = () => (
@@ -115,32 +123,16 @@ export default function Playlist({ userPlaylists }: any) {
     playlistMedia &&
     playlistMedia.length > 0 ? (
       <>
-        <div
-          className={`${
-            isEdit ? "flex justify-between items-center mb-12" : ""
-          }`}
-        >
-          <span className={`${styles.descspan} ${!isEdit ? "mb-5" : ""}`}>
-            Videos
-          </span>
-          <Transition
-            show={isEdit}
-            as={Fragment}
-            enter="transition duration-700 ease-out"
-            enterFrom="transform scale-95 opacity-0"
-            enterTo="transform scale-100 opacity-100"
-            leave="transition duration-700 ease-out"
-            leaveFrom="transform scale-100 opacity-100"
-            leaveTo="transform scale-95 opacity-0"
+        <div className="flex justify-between items-center mb-12">
+          <span className={styles.descspan}>Videos</span>
+
+          <button
+            className={styles.descbutton}
+            onClick={() => dispatch(setAddVideoModal(true))}
           >
-            <button
-              className={styles.descbutton}
-              onClick={() => dispatch(setAddVideoModal(true))}
-            >
-              <Icon name="plus" />
-              Add
-            </button>
-          </Transition>
+            <Icon name="plus" />
+            Add
+          </button>
         </div>
         <div className={styles.Playlist__Inner}>
           {playlistMedia &&
@@ -150,13 +142,14 @@ export default function Playlist({ userPlaylists }: any) {
                 title={i.title}
                 link={i.source}
                 desc={i.description}
-                active={true}
+                active={currentMedia.media_id === i.media_id}
                 isEditState={isEdit}
                 onDelete={() =>
                   dispatch(
                     postDeleteMedia({ media_id: i.media_id, title: i.title })
                   )
                 }
+                onClick={() => chooseMedia(i)}
                 isDeleteLoading={deleteMediaLoader}
               />
             ))}
@@ -182,6 +175,7 @@ export default function Playlist({ userPlaylists }: any) {
 
   useEffect(() => {
     if (currentPlaylist && "playlist_id" in currentPlaylist && playlistMedia) {
+      dispatch(setCurrentMedia(playlistMedia[0]));
       setLoading(false);
     } else {
       setLoading(true);

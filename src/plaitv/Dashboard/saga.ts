@@ -111,7 +111,7 @@ function* findMedia({ payload }: any): any {
     const { request_id }: any = resp;
 
     let isResolved = false;
-    let friendlyMessage = "We're getting your video";
+    const friendlyMessage = "We're getting your video.";
 
     toast.loading(friendlyMessage, {
       style: { background: "#333", color: "#fff" },
@@ -124,7 +124,12 @@ function* findMedia({ payload }: any): any {
 
       const { status, details } = resp;
 
-      friendlyMessage = details;
+      if (details !== friendlyMessage) {
+        toast.dismiss();
+        toast.loading(details, {
+          style: { background: "#333", color: "#fff" },
+        });
+      }
 
       if (status === "failed") {
         isResolved = true;
