@@ -155,6 +155,12 @@ function* findMedia({ payload }: any): any {
       yield delay(5000);
     } while (isResolved == false);
   } catch (e: any) {
+    yield put({ type: Types.SET_LAMBDA_LOADER, payload: false });
+    toast.dismiss();
+    toast.error(e?.response?.data, {
+      style: { background: "#333", color: "#fff" },
+    });
+
     yield put(setLambdaMedia(e?.response?.data));
   }
 }

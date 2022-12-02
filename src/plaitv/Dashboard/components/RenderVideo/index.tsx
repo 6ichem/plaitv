@@ -37,7 +37,7 @@ export default function RenderVideo() {
           />
         </div>
       ) : (
-        <div className="w-[80%] mt-52">
+        <div className="w-full md:w-[80%] my-52 md:my-0 md:mt-52">
           <Loader type="spinner" />
         </div>
       )}

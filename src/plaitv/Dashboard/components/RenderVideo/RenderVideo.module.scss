@@ -1,5 +1,5 @@
 .RenderVideo {
-  @apply p-0 md:p-6 h-[50vh] md:h-full min-w-max mr-0 md:mr-[21rem];
+  @apply relative p-0 md:p-6 h-[50vh] md:h-full min-w-max mr-0 md:mr-[21rem];
   iframe {
     @apply p-0 md:p-3;
   }
