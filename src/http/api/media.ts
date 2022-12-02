@@ -27,12 +27,16 @@ export const httpDeleteMedia = async (payload: mediaControllerPayload) => {
 };
 
 export const getLambdaMedia = async (payload: lambdaMediaPayload) => {
-  const { data } = await instance.post(
-    `${BASE_URL}/media/get_lambda_media/`,
-    payload
-  );
+  try {
+    const { data } = await instance.post(
+      `${BASE_URL}/media/get_lambda_media/`,
+      payload
+    );
 
-  return data;
+    return data;
+  } catch (e: any) {
+    return e.response;
+  }
 };
 
 export const httpAddMedia = async (payload: addMediaPayload) => {

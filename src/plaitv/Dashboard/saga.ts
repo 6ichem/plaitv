@@ -155,6 +155,8 @@ function* findMedia({ payload }: any): any {
       yield delay(5000);
     } while (isResolved == false);
   } catch (e: any) {
+    console.log(e);
+
     yield put({ type: Types.SET_LAMBDA_LOADER, payload: false });
     toast.dismiss();
     toast.error(e?.response?.data, {
