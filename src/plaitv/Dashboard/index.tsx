@@ -32,11 +32,11 @@ export default function Dashboard() {
     <div className={styles.Dashboard}>
       <Navigation />
 
+      <RenderVideo />
+
       <div className="block md:hidden">
         <Playlist userPlaylists={userPlaylists} />
       </div>
-
-      <RenderVideo />
 
       <CreatePlaylist />
       <AddVideo />

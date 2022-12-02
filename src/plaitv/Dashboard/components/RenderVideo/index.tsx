@@ -1,24 +1,40 @@
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import ReactPlayer from "react-player";
+import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../../../components/Loader";
+import { setCurrentMedia } from "../../actions";
 import styles from "./RenderVideo.module.scss";
 
 export default function RenderVideo() {
+  const dispatch = useDispatch();
+
+  const [isPlaying, setPlaying] = useState<boolean>(false);
+
   const currentMedia = useSelector((state: any) => state.media.currentMedia);
+  const playlistMedia = useSelector(
+    (state: any) => state.userPlaylists.playlistMedia
+  );
+
+  const indexOfItem = playlistMedia?.indexOf(currentMedia);
+
+  const playNextMedia = () => {
+    dispatch(setCurrentMedia(playlistMedia[indexOfItem + 1]));
+
+    setPlaying(true);
+  };
 
   return (
-    <div className="h-full">
+    <div className="h-auto md:h-full">
       {currentMedia && currentMedia.embed_url ? (
         <div className={styles.RenderVideo}>
-          <iframe
-            width="560"
-            className="w-full h-[80%]"
-            height="315"
-            src={currentMedia?.embed_url}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+          <ReactPlayer
+            url={currentMedia?.embed_url}
+            width="100%"
+            height="100%"
+            onEnded={playNextMedia}
+            controls={true}
+            playing={isPlaying}
+          />
         </div>
       ) : (
         <div className="w-[80%] mt-52">

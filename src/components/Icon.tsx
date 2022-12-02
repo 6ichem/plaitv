@@ -5,8 +5,6 @@ import { ReactComponent as Search } from "../assets/search.svg";
 import { ReactComponent as Plus } from "../assets/plus.svg";
 import { ReactComponent as Save } from "../assets/save.svg";
 import { ReactComponent as MobileMenu } from "../assets/mobile-menu.svg";
-import { ReactComponent as MobileSearch } from "../assets/mobile-search.svg";
-import { ReactComponent as MobilePlus } from "../assets/mobile-plus.svg";
 import { ReactComponent as Close } from "../assets/close.svg";
 import { ReactComponent as SearchIcon } from "../assets/search-icon.svg";
 import { ReactComponent as Youtube } from "../assets/youtube.svg";
@@ -23,8 +21,6 @@ const icons = {
   plus: Plus,
   save: Save,
   "mobile-menu": MobileMenu,
-  "mobile-search": MobileSearch,
-  "mobile-plus": MobilePlus,
   close: Close,
   "search-icon": SearchIcon,
   youtube: Youtube,

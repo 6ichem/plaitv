@@ -5,8 +5,9 @@ import { Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { setNewPlaylistModal, setProfileModal } from "../../actions";
 import { userLogout } from "../../../Auth/Login/actions";
+import Icon from "../../../../components/Icon";
 
-export default function MenuDropdown() {
+export default function MenuDropdown({ mobileView = false }) {
   const dispatch = useDispatch();
 
   const MenuItems = [
@@ -29,7 +30,7 @@ export default function MenuDropdown() {
       <Menu as="div" className={styles.Menu__Header}>
         <div>
           <Menu.Button className={styles.Menu__Button}>
-            <img src={MenuButton} alt="" />
+            {mobileView ? <Icon name="mobile-menu" /> : <Icon name="menu" />}
           </Menu.Button>
         </div>
         <Transition
@@ -41,7 +42,11 @@ export default function MenuDropdown() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className={styles.Menu__Items}>
+          <Menu.Items
+            className={`${styles.Menu__Items} ${
+              (mobileView && "bottom-12") || ""
+            }`}
+          >
             {MenuItems.map((i: any, idx) => (
               <Menu.Item key={idx}>
                 <button onClick={i.click}>{i.label}</button>

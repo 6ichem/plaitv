@@ -7,7 +7,7 @@ import { Combobox, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPlaylistMedia, setCurrentPlaylist } from "../../actions";
 
-export default function SearchInput() {
+export default function SearchInput({ mobileView = false }) {
   const dispatch = useDispatch();
 
   const userPlaylists = useSelector(
@@ -58,6 +58,7 @@ export default function SearchInput() {
                   placeholder={
                     isLoading ? "Loading Playlists..." : "Find playlist"
                   }
+                  autoComplete="off"
                   displayValue={(playlist: any) => playlist?.title}
                   onChange={(event) => setQuery(event.target.value)}
                   className={`${
@@ -82,7 +83,11 @@ export default function SearchInput() {
               leaveTo="transform scale-95 opacity-0"
               afterLeave={() => setQuery("")}
             >
-              <Combobox.Options className={styles.SearchInput__Items}>
+              <Combobox.Options
+                className={`${styles.SearchInput__Items} ${
+                  (mobileView && "bottom-12") || ""
+                }`}
+              >
                 {filteredPlaylists &&
                 filteredPlaylists.length === 0 &&
                 query !== "" ? (

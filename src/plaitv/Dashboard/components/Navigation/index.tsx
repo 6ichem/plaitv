@@ -21,12 +21,10 @@ export default function Navigation() {
 
       <div className={styles.Navigation__Mobile}>
         <div className="w-full mr-3">
-          <SearchInput />
+          <SearchInput mobileView={true} />
         </div>
 
-        <div>
-          <Icon name="mobile-menu" />
-        </div>
+        <MenuDropdown mobileView={true} />
       </div>
     </div>
   );
