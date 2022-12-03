@@ -131,7 +131,7 @@ function* findMedia({ payload }: any): any {
         });
       }
 
-      if (status === "failed") {
+      if (status === "Failed") {
         isResolved = true;
 
         yield put(setLambdaMedia(resp));
