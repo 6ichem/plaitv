@@ -1,3 +1,10 @@
 .RenderVideo {
   @apply px-0 md:px-5 relative h-[50vh] md:h-full min-w-max mr-0 md:mr-[21rem];
 }
+
+.RenderVideo__NoContent {
+  @apply flex text-white text-sm justify-center my-auto;
+  button {
+    @apply text-[#CC8E45] font-bold mr-1;
+  }
+}

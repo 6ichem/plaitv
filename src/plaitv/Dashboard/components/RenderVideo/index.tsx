@@ -2,7 +2,7 @@ import { useState } from "react";
 import ReactPlayer from "react-player";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../../../components/Loader";
-import { setCurrentMedia } from "../../actions";
+import { setAddVideoModal, setCurrentMedia } from "../../actions";
 import styles from "./RenderVideo.module.scss";
 
 export default function RenderVideo() {
@@ -36,9 +36,18 @@ export default function RenderVideo() {
             playing={isPlaying}
           />
         </div>
-      ) : (
+      ) : playlistMedia?.length > 0 ? (
         <div className="w-full md:w-[80%] my-52 md:my-0 md:mt-52">
           <Loader type="spinner" />
+        </div>
+      ) : (
+        <div className="w-full md:w-[80%] my-52 md:my-0 md:mt-52">
+          <div className={styles.RenderVideo__NoContent}>
+            <button onClick={() => dispatch(setAddVideoModal(true))}>
+              Add a video
+            </button>
+            to your playlist.
+          </div>
         </div>
       )}
     </div>
