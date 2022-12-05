@@ -18,14 +18,14 @@ export default function Navbar() {
           color="secondary"
           onClick={() => navigate("/login")}
           rounded
-          className="!min-h-[50px] min-w-[109.15px]"
+          className="!min-h-[50px] md:min-w-[109.15px] !w-[96.06px]"
         />
         <Button
           title="Sign Up"
           color="primary"
           onClick={() => navigate("/register")}
           rounded
-          className="!min-h-[50px] min-w-[109.15px]"
+          className="!min-h-[50px] md:min-w-[109.15px] !w-[96.06px]"
         />
       </div>
     </div>
