@@ -3,6 +3,7 @@ import ReactPlayer from "react-player";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../../../components/Loader";
 import { setAddVideoModal, setCurrentMedia } from "../../actions";
+import { MEDIA_PLAYER_PLATFORMS } from "../../constants";
 import styles from "./RenderVideo.module.scss";
 
 export default function RenderVideo() {
@@ -23,18 +24,33 @@ export default function RenderVideo() {
     setPlaying(true);
   };
 
+  const isMediaPlayer = MEDIA_PLAYER_PLATFORMS.some(
+    (i: any) => currentMedia && currentMedia.source.includes(i)
+  );
+  console.log(isMediaPlayer);
   return (
     <div className="h-auto md:h-full">
       {currentMedia && currentMedia.embed_url ? (
         <div className={styles.RenderVideo}>
-          <ReactPlayer
-            url={currentMedia?.embed_url}
-            width="100%"
-            height="100%"
-            onEnded={playNextMedia}
-            controls={true}
-            playing={isPlaying}
-          />
+          {isMediaPlayer ? (
+            <ReactPlayer
+              url={currentMedia?.embed_url}
+              width="100%"
+              height="100%"
+              onEnded={playNextMedia}
+              controls={true}
+              playing={isPlaying}
+            />
+          ) : (
+            <iframe
+              width="100%"
+              height="100%"
+              src={currentMedia?.embed_url}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          )}
         </div>
       ) : playlistMedia?.length > 0 ? (
         <div className="w-full md:w-[80%] my-52 md:my-0 md:mt-52">

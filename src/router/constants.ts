@@ -5,4 +5,5 @@ export const ROUTE_PATHS = {
   VALIDATE_EMAIL: "/validate",
   RESET_PASSWORD: "/reset-password",
   DASHBOARD: "/home",
+  LANDING: "/",
 };

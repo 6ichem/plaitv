@@ -16,6 +16,7 @@ import Dashboard from "./plaitv/Dashboard";
 import AuthRoute from "./router/AuthRoute";
 import PublicRoute from "./router/PublicRoute";
 import { getLocalAccessToken, newAccessToken } from "./http/utils";
+import Home from "./plaitv/Home";
 
 function App() {
   const isAuthenticated = getLocalAccessToken();
@@ -55,6 +56,7 @@ function App() {
             path={ROUTE_PATHS.RESET_PASSWORD}
             element={<ResetPassword />}
           />
+          <Route path={ROUTE_PATHS.LANDING} element={<Home />} />
         </Route>
 
         <Route element={<AuthRoute isAuthenticated={isAuthenticated} />}>

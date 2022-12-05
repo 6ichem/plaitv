@@ -64,6 +64,7 @@ export default function Profile() {
       title="Profile"
       open={isModalOpen}
       onClose={() => dispatch(setProfileModal(false))}
+      innerLayoutStyles="!mt-0"
     >
       <form onSubmit={(e) => updateProfile(e)}>
         <div>

@@ -122,7 +122,7 @@ function* findMedia({ payload }: any): any {
         request_id,
       });
 
-      const { status, details } = resp;
+      const { status, details, results } = resp;
 
       if (details !== friendlyMessage) {
         toast.dismiss();
@@ -140,6 +140,18 @@ function* findMedia({ payload }: any): any {
         toast.error(details, {
           style: { background: "#333", color: "#fff" },
         });
+      } else if (status === "Success" && results.length == 0) {
+        isResolved = true;
+
+        yield put(setLambdaMedia(resp));
+        yield put({ type: Types.SET_LAMBDA_LOADER, payload: false });
+        toast.dismiss();
+        toast.error(
+          "We weren't able to find any videos for the link provided",
+          {
+            style: { background: "#333", color: "#fff" },
+          }
+        );
       } else if (status === "Success") {
         isResolved = true;
 
