@@ -3,7 +3,7 @@
   .DynamicPlayer__Desktop {
     @apply hidden md:block bg-[#111111] w-full rounded-[10px] border-t border-b border-l border-[#ffffff80];
     .DynamicPlayer__Header {
-      @apply p-5;
+      @apply px-5 py-3;
     }
     .DynamicPlayer__Inner {
       @apply flex min-h-[521px];
