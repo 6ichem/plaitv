@@ -2,4 +2,8 @@ button {
   &.primary {
     @apply bg-[#CC8E45] min-h-[35px] rounded text-white uppercase text-sm font-normal transition-all duration-500 ease-in-out hover:opacity-80 w-full;
   }
+  &.secondary {
+    @apply bg-transparent min-h-[35px] text-white uppercase text-sm font-normal transition-all duration-500 ease-in-out hover:opacity-80 w-full;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+  }
 }

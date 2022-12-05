@@ -1,0 +1,24 @@
+.Hero {
+  @apply flex flex-col md:flex-row justify-between py-12;
+  div:first-child {
+    @apply px-3 md:px-6 w-full md:w-[500px] mt-12;
+    h1 {
+      @apply font-bold text-3xl md:text-[45px] text-white;
+    }
+    span {
+      @apply font-bold text-quaternary block mt-6 mb-10 md:mb-20;
+    }
+    .Hero__InnerContent {
+      @apply flex items-center gap-8 my-20;
+      div {
+        @apply w-full;
+        h3 {
+          @apply text-[#CC8E45] font-bold text-sm mb-1;
+        }
+        span {
+          @apply text-[#ffffff80] text-xs my-0;
+        }
+      }
+    }
+  }
+}

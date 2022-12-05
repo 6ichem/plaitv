@@ -118,7 +118,7 @@ export default function AddVideo() {
     </OverlayModal>
   );
 
-  return lambdaMedia?.status === "Success" && lambdaMedia?.results > 0
+  return lambdaMedia?.status === "Success" && lambdaMedia?.results.length > 0
     ? _resultsView()
     : _initialView();
 }

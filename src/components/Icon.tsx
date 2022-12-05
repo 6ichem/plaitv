@@ -12,6 +12,7 @@ import { ReactComponent as PlayActive } from "../assets/play-active.svg";
 import { ReactComponent as PlayInactve } from "../assets/play-inactive.svg";
 import { ReactComponent as PlayCircle } from "../assets/play-circle.svg";
 import { ReactComponent as DeleteIcon } from "../assets/delete-icon.svg";
+import { ReactComponent as NavbarLogo } from "../assets/navbar-logo.svg";
 
 const icons = {
   edit: Edit,
@@ -28,6 +29,7 @@ const icons = {
   "play-inactive": PlayInactve,
   "play-circle": PlayCircle,
   "delete-icon": DeleteIcon,
+  "navbar-logo": NavbarLogo,
 };
 
 export const iconNames = Object.keys(icons);

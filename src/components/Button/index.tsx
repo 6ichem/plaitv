@@ -4,8 +4,9 @@ import styles from "./Button.module.scss";
 
 interface propTypes extends ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
-  color: "primary";
+  color: "primary" | "secondary";
   loading?: boolean;
+  rounded?: boolean;
 }
 
 export default function Button({
@@ -13,13 +14,14 @@ export default function Button({
   color,
   className,
   loading = false,
+  rounded = false,
   ...rest
 }: propTypes) {
   return (
     <button
       className={`${styles[color]} ${(loading && "opacity-40") || ""} ${
         className || ""
-      }`}
+      }  ${(rounded && "!rounded-full") || ""}`}
       {...rest}
       disabled={loading}
     >
