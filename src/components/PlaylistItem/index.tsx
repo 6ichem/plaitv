@@ -5,7 +5,7 @@ import styles from "./PlaylistItem.module.scss";
 
 interface propTypes {
   title: string;
-  link: string;
+  link?: string;
   desc?: string;
   active?: boolean;
   searchItem?: boolean;

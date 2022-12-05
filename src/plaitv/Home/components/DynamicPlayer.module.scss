@@ -1,0 +1,32 @@
+.DynamicPlayer {
+  @apply w-full md:w-[60%];
+  .DynamicPlayer__Desktop {
+    @apply hidden md:block bg-[#111111] w-full rounded-[10px] border-t border-b border-l border-[#ffffff80];
+    .DynamicPlayer__Header {
+      @apply p-5;
+    }
+    .DynamicPlayer__Inner {
+      @apply flex min-h-[521px];
+      .DynamicPlayer__Controls {
+        @apply bg-black h-auto w-[30%] rounded-lg p-5;
+      }
+      .DynamicPlayer__Content {
+        @apply w-full;
+      }
+    }
+  }
+  .DynamicPlayer__Mobile {
+    @apply px-3 block md:hidden;
+    .DynamicPlayer__Header {
+      @apply flex gap-8 overflow-x-scroll mb-2 mx-2;
+      button {
+        @apply text-white text-xs;
+        text-overflow: ellipsis;
+        color: rgba(255, 255, 255, 0.5);
+        &.active {
+          @apply text-white;
+        }
+      }
+    }
+  }
+}
