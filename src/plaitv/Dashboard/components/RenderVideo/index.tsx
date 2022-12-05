@@ -57,7 +57,7 @@ export default function RenderVideo() {
           <Loader type="spinner" />
         </div>
       ) : (
-        <div className="w-full md:w-[80%] my-52 md:my-0 md:mt-52">
+        <div className="w-full md:w-[80%] py-52 md:py-0 md:pt-52">
           <div className={styles.RenderVideo__NoContent}>
             <button onClick={() => dispatch(setAddVideoModal(true))}>
               Add a video

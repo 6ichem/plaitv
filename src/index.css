@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --app-height: 100%;
+}
+
 body,
 html {
   margin: 0;
@@ -12,8 +16,11 @@ html {
   -moz-osx-font-smoothing: grayscale;
   background-color: #000000;
   @apply font-medium text-base;
-  height: 100%;
-  padding: 0;
+  height: 100vh;
+
+  @media not all and (hover: hover) {
+    height: var(--app-height);
+  }
 }
 
 code {
