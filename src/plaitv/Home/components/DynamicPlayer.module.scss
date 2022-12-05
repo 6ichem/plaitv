@@ -8,7 +8,7 @@
     .DynamicPlayer__Inner {
       @apply flex min-h-[521px];
       .DynamicPlayer__Controls {
-        @apply bg-black h-auto w-[30%] rounded-lg p-5;
+        @apply bg-black h-auto w-[30%] rounded-lg px-5 py-20;
       }
       .DynamicPlayer__Content {
         @apply w-full;
@@ -16,7 +16,7 @@
     }
   }
   .DynamicPlayer__Mobile {
-    @apply px-3 block md:hidden;
+    @apply px-3 block md:hidden pb-12;
     .DynamicPlayer__Header {
       @apply flex gap-8 overflow-x-scroll mb-2 mx-2;
       button {
