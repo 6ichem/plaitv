@@ -44,7 +44,7 @@ export function* postLogin({ payload }: any) {
   } catch (e: any) {
     yield put({ type: SET_LOGIN_LOADER, payload: false });
 
-    toast.error(e?.response?.data, {
+    toast.error(e?.response?.data?.detail, {
       style: { background: "#333", color: "#fff" },
     });
 

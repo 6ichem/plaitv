@@ -18,6 +18,7 @@ export default function Login() {
   const loginData = useSelector(
     (state: any) => state.auth.loginState.loginData
   );
+
   const isLoading = useSelector((state: any) => state.loaders.loginLoader);
 
   const updateCreds = (cred: string, e: SyntheticEvent) => {

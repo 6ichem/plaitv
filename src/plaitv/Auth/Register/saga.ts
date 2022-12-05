@@ -21,7 +21,7 @@ export function* postRegister({ payload }: any) {
   } catch (e: any) {
     yield put({ type: SET_REGISTER_LOADER, payload: false });
 
-    toast.error(e?.response?.data, {
+    toast.error(e?.response?.data?.detail, {
       style: { background: "#333", color: "#fff" },
     });
     yield put(setRegisterData(e?.response?.data));
