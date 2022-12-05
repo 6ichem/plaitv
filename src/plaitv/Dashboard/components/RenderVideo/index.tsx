@@ -27,9 +27,9 @@ export default function RenderVideo() {
   const isMediaPlayer = MEDIA_PLAYER_PLATFORMS.some(
     (i: any) => currentMedia && currentMedia.source.includes(i)
   );
-  console.log(isMediaPlayer);
+
   return (
-    <div className="h-auto md:h-full">
+    <div className="h-auto lg:h-full">
       {currentMedia && currentMedia.embed_url ? (
         <div className={styles.RenderVideo}>
           {isMediaPlayer ? (
@@ -53,11 +53,11 @@ export default function RenderVideo() {
           )}
         </div>
       ) : playlistMedia?.length > 0 ? (
-        <div className="w-full md:w-[80%] my-52 md:my-0 md:mt-52">
+        <div className="w-full lg:w-[80%] my-52 lg:my-0 lg:mt-52">
           <Loader type="spinner" />
         </div>
       ) : (
-        <div className="w-full md:w-[80%] py-52 md:py-0 md:pt-52">
+        <div className="w-full lg:w-[80%] py-52 lg:py-0 lg:pt-52">
           <div className={styles.RenderVideo__NoContent}>
             <button onClick={() => dispatch(setAddVideoModal(true))}>
               Add a video

@@ -65,7 +65,7 @@ export default function DynamicPlayer() {
       <ReactPlayer
         url={currentMedia.content}
         width="100%"
-        height="323px"
+        className="h-full"
         controls={true}
       />
     </div>

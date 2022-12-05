@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <div className={styles.Hero}>
       <div className={styles.Hero__Inner}>
-        <h1 className="!leading-[65px] md:!leading-[72px]">
+        <h1 className="!leading-[65px] lg:!leading-[72px]">
           Create Playlists Of Your Favourite Videos From Any Site.
         </h1>
         <span>

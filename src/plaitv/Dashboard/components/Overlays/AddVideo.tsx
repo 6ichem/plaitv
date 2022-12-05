@@ -50,7 +50,7 @@ export default function AddVideo() {
       open={isModalOpen}
       onClose={onClose}
     >
-      <div className="flex flex-col md:flex-row md:justify-between items-center gap-5 !my-5 pb-5">
+      <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-5 !my-5 pb-5">
         <Input
           type="text"
           placeholder="Paste video url"
@@ -61,7 +61,7 @@ export default function AddVideo() {
           value={videoURL}
           onChange={(e) => setVideoURL(e.target.value)}
         />
-        <div className="w-full md:w-auto md:block flex place-content-end">
+        <div className="w-full lg:w-auto lg:block flex place-content-end">
           <Button
             title="Find"
             onClick={getVideo}
@@ -80,10 +80,10 @@ export default function AddVideo() {
       desc="Find supported videos from any link."
       open={isModalOpen}
       onClose={onClose}
-      innerLayoutStyles="!mt-5 md:mt-0"
+      innerLayoutStyles="!mt-5 lg:mt-0"
       appendContent={
         <button
-          className="flex items-center gap-3 mr-0 md:mr-5"
+          className="flex items-center gap-3 mr-0 lg:mr-5"
           onClick={editSearch}
         >
           <Icon name="search-icon" />

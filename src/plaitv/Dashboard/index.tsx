@@ -34,7 +34,7 @@ export default function Dashboard() {
 
       <RenderVideo />
 
-      <div className="block md:hidden">
+      <div className="block lg:hidden">
         <Playlist userPlaylists={userPlaylists} />
       </div>
 

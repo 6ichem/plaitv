@@ -1,11 +1,11 @@
 .Navigation {
   .Navigation__Desktop {
-    @apply hidden md:flex justify-between w-[60%];
+    @apply hidden lg:flex justify-between w-[60%];
     .Playlist__Desktop {
       @apply w-[339px] absolute right-0;
     }
   }
   .Navigation__Mobile {
-    @apply z-20 bg-primary p-5 fixed bottom-0 h-16 w-full flex md:hidden justify-between items-center;
+    @apply z-20 bg-primary p-5 fixed bottom-0 h-16 w-full flex lg:hidden justify-between items-center;
   }
 }
