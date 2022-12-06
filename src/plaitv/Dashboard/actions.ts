@@ -97,3 +97,13 @@ export const setCurrentMedia = (payload: any) => ({
   type: Types.SET_CURRENT_MEDIA,
   payload,
 });
+
+export const setDeletePlaylistModal = (payload: any) => ({
+  type: Types.SET_DELETE_PLAYLIST_MODAL,
+  payload,
+});
+
+export const deletePlaylist = (payload: any) => ({
+  type: Types.POST_DELETE_PLAYLIST,
+  payload,
+});

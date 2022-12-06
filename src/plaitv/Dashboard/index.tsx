@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserPlaylists } from "./actions";
 import Profile from "./components/Overlays/Profile";
 import RenderVideo from "./components/RenderVideo";
+import DeletePlaylist from "./components/Overlays/DeletePlaylist";
 
 export default function Dashboard() {
   const userPlaylists =
@@ -41,6 +42,7 @@ export default function Dashboard() {
       <CreatePlaylist />
       <AddVideo />
       <Profile />
+      <DeletePlaylist />
     </div>
   );
 }

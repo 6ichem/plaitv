@@ -24,3 +24,13 @@ export const httpUpdatePlaylist = async (payload: editPlaylistPayload) => {
 
   return data;
 };
+
+export const httpDeletePlaylist = async (payload: any) => {
+  const { playlist_id } = payload;
+  const { data } = await instance.delete(
+    `${BASE_URL}/playlist/${playlist_id}`,
+    { params: { playlist_id } }
+  );
+
+  return data;
+};

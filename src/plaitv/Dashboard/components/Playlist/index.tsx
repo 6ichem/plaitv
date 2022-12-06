@@ -10,6 +10,7 @@ import {
   postUpdatePlaylist,
   setAddVideoModal,
   setCurrentMedia,
+  setDeletePlaylistModal,
 } from "../../actions";
 import Loader from "../../../../components/Loader";
 
@@ -198,7 +199,14 @@ export default function Playlist({ userPlaylists }: any) {
       {_editView()}
       {_listView()}
       <div className={`${styles.Playlist__Sub} ${isEdit ? "my-12" : ""}`}>
-        {!isEdit && <h1 className={styles.title1}>{currentPlaylist?.title}</h1>}
+        {!isEdit && currentPlaylist && (
+          <div className="flex justify-between items-center my-7">
+            <h1 className={styles.title1}>{currentPlaylist?.title}</h1>
+            <button onClick={() => dispatch(setDeletePlaylistModal(true))}>
+              <Icon name="delete" />
+            </button>
+          </div>
+        )}
         <RenderContent />
       </div>
     </div>

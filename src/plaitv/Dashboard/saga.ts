@@ -9,6 +9,7 @@ import {
 } from "../../http/api/media";
 import {
   getUserPlaylists,
+  httpDeletePlaylist,
   httpUpdatePlaylist,
   newPlaylist,
 } from "../../http/api/playlist";
@@ -288,6 +289,38 @@ function* changeUserPassword({ payload }: any): any {
   }
 }
 
+function* deletePlaylist({ payload }: any) {
+  try {
+    yield put({ type: Types.SET_DELETE_PLAYLIST_LOADER, payload: true });
+
+    const {
+      userPlaylists: { userPlaylists },
+    } = yield select(state);
+
+    const resp: ResponseGenerator = yield call(httpDeletePlaylist, payload);
+
+    const updatedData = userPlaylists.filter(
+      (i: any) => i.playlist_id !== payload.playlist_id
+    );
+
+    yield put(setUserPlaylists(updatedData));
+
+    yield put({ type: Types.SET_DELETE_PLAYLIST_LOADER, payload: false });
+
+    toast.success(`Deleted ${payload.title}`, {
+      style: { background: "#333", color: "#fff" },
+    });
+
+    yield put({ type: Types.SET_DELETE_PLAYLIST_MODAL, payload: false });
+  } catch (e: any) {
+    toast.error(e?.response?.data, {
+      style: { background: "#333", color: "#fff" },
+    });
+
+    yield put(setUserPlaylists(e?.response?.data));
+  }
+}
+
 function* watcher() {
   yield all([takeLatest(Types.GET_USER_PLAYLISTS, getAllUserPlaylists)]);
   yield all([takeLatest(Types.GET_PLAYLIST_MEDIA, getUserPlaylistMedia)]);
@@ -298,6 +331,7 @@ function* watcher() {
   yield all([takeLatest(Types.POST_ADD_MEDIA, addMediaToPlaylist)]);
   yield all([takeLatest(Types.POST_UPDATE_USER_PROFILE, updateUserProfile)]);
   yield all([takeLatest(Types.POST_CHANGE_PASSWORD, changeUserPassword)]);
+  yield all([takeLatest(Types.POST_DELETE_PLAYLIST, deletePlaylist)]);
 }
 
 export const dashboardSaga = watcher;

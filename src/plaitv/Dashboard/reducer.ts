@@ -5,6 +5,7 @@ const initialModalState = {
   newPlaylistModal: false,
   addVideoModal: false,
   profileModal: false,
+  deletePlaylistModal: false,
 };
 
 const modalStrategies = {
@@ -24,6 +25,12 @@ const modalStrategies = {
     return {
       ...state,
       profileModal: payload,
+    };
+  },
+  [Types.SET_DELETE_PLAYLIST_MODAL]: (state: any, payload: any) => {
+    return {
+      ...state,
+      deletePlaylistModal: payload,
     };
   },
   __default__: (state: any) => state,
@@ -120,6 +127,7 @@ const initialLoaderState = {
   addMediaLoader: false,
   deleteMediaLoader: false,
   userProfileLoader: false,
+  deletePlaylistLoader: false,
 };
 
 const loaderStrategies = {
@@ -169,6 +177,12 @@ const loaderStrategies = {
     return {
       ...state,
       userProfileLoader: payload,
+    };
+  },
+  [Types.SET_DELETE_PLAYLIST_LOADER]: (state: any, payload: any) => {
+    return {
+      ...state,
+      deletePlaylistLoader: payload,
     };
   },
   __default__: (state: any) => state,
