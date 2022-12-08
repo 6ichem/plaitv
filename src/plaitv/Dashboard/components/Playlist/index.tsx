@@ -101,6 +101,15 @@ export default function Playlist({ userPlaylists }: any) {
             setPlaylistInfo({ ...playlistInfo, description: e.target.value })
           }
         />
+
+        <div className="flex place-content-end">
+          <button
+            className="text-[#ffffff80] text-sm"
+            onClick={() => dispatch(setDeletePlaylistModal(true))}
+          >
+            <span>Delete Playlist</span>
+          </button>
+        </div>
       </div>
     </Transition>
   );
@@ -200,11 +209,12 @@ export default function Playlist({ userPlaylists }: any) {
       {_listView()}
       <div className={`${styles.Playlist__Sub} ${isEdit ? "my-12" : ""}`}>
         {!isEdit && currentPlaylist && (
-          <div className="flex justify-between items-center my-7">
+          <div
+            className={`${
+              (isEdit && "flex justify-between items-center") || ""
+            }my-7`}
+          >
             <h1 className={styles.title1}>{currentPlaylist?.title}</h1>
-            <button onClick={() => dispatch(setDeletePlaylistModal(true))}>
-              <Icon name="delete" />
-            </button>
           </div>
         )}
         <RenderContent />

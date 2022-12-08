@@ -2,7 +2,10 @@ import Button from "../../../components/Button";
 import styles from "./Hero.module.scss";
 import HeroImg from "../../../assets/hero.svg";
 import DynamicPlayer from "./DynamicPlayer";
+import { useNavigate } from "react-router-dom";
 export default function Hero() {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.Hero}>
       <div className={styles.Hero__Inner}>
@@ -17,6 +20,7 @@ export default function Hero() {
           <Button
             title="Create Playlist"
             color="primary"
+            onClick={() => navigate("/register")}
             rounded
             className="!h-[58px] !font-bold !capitalize !text-sm !font-semibold w-auto"
           />
