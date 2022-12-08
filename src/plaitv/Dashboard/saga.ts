@@ -24,6 +24,7 @@ import {
   setNewPlaylistModal,
   setLambdaMedia,
   getPlaylistMedia,
+  setCurrentMedia,
 } from "./actions";
 import * as Types from "./actionTypes";
 
@@ -221,7 +222,10 @@ function* addMediaToPlaylist({ payload }: any): any {
     const resp: any = yield call(httpAddMedia, payload);
 
     const cloneMedia = [...playlistMedia];
+
     cloneMedia.push(resp);
+
+    if (playlistMedia.length == 0) yield put(setCurrentMedia(cloneMedia[0]));
 
     yield put(setPlaylistMedia(cloneMedia));
 
@@ -304,6 +308,8 @@ function* deletePlaylist({ payload }: any) {
     );
 
     yield put(setUserPlaylists(updatedData));
+    yield put(setCurrentPlaylist(updatedData[0]));
+    yield put(getPlaylistMedia({ playlist_id: updatedData[0]?.playlist_id }));
 
     yield put({ type: Types.SET_DELETE_PLAYLIST_LOADER, payload: false });
 

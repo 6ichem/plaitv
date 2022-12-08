@@ -105,7 +105,10 @@ export default function Playlist({ userPlaylists }: any) {
         <div className="flex place-content-end">
           <button
             className="text-[#ffffff80] text-sm"
-            onClick={() => dispatch(setDeletePlaylistModal(true))}
+            onClick={() => {
+              dispatch(setDeletePlaylistModal(true));
+              setEdit(false);
+            }}
           >
             <span>Delete Playlist</span>
           </button>
