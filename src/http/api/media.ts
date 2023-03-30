@@ -11,7 +11,7 @@ import {
 export const httpGetUserPlaylistMedia = async (
   params: getPlaylistMediaPayload
 ) => {
-  const { data } = await instance.get(`${BASE_URL}/media`, {
+  const { data } = await instance.get(`${BASE_URL}/media/get-playlist-media`, {
     params,
   });
 

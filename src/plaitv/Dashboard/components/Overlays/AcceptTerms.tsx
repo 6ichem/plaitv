@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../../../components/Button";
 import Loader from "../../../../components/Loader";
@@ -6,6 +7,7 @@ import OverlayModal from "../../../../components/OverlayModal/OverlayModal";
 import { httpGetTerms } from "../../../../http/api/users";
 import {
   deletePlaylist,
+  postUpdateUserProfile,
   setDeletePlaylistModal,
   setTermsModal,
 } from "../../actions";
@@ -14,7 +16,8 @@ export default function AcceptTerms() {
   const dispatch = useDispatch();
   const isModalOpen = useSelector((state: any) => state.modal.acceptTermsModal);
   const [terms, setTerms] = useState<any>();
-  console.log(isModalOpen);
+  const [isLoading, setLoading] = useState(false);
+
   useEffect(() => {
     httpGetTerms().then((r) => setTerms(r.toString()));
   }, []);
@@ -23,15 +26,29 @@ export default function AcceptTerms() {
     (state: any) => state.userPlaylists.currentPlaylist
   );
 
-  const isLoading = useSelector(
-    (state: any) => state.loaders.deletePlaylistLoader
-  );
+  const acceptTerms = () => {
+    setLoading(true);
+
+    dispatch(
+      postUpdateUserProfile({
+        terms_accepted: true,
+      })
+    );
+
+    setLoading(false);
+
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 2000);
+  };
 
   return (
     <OverlayModal
       title="Before you continue to Plai.tv"
       open={isModalOpen}
-      onClose={() => dispatch(setTermsModal(false))}
+      onClose={() => {
+        return;
+      }}
     >
       <>
         {terms ? (
@@ -49,7 +66,8 @@ export default function AcceptTerms() {
             title="Accept"
             color="primary"
             className="!w-[82px] !capitalize !font-bold !text-white rounded mt-7"
-            onClick={() => dispatch(setDeletePlaylistModal(false))}
+            onClick={acceptTerms}
+            loading={isLoading}
           />
         </div>
       </>

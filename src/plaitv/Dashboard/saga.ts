@@ -251,11 +251,18 @@ function* updateUserProfile({ payload }: any): any {
 
     const resp: any = yield call(httpUpdateUserProfile, payload);
     const currentUser = JSON.parse(getLocalUser());
-    setLocalUser({ ...currentUser, payload });
 
-    toast.success(`Updated profile`, {
-      style: { background: "#333", color: "#fff" },
-    });
+    setLocalUser({ ...currentUser, ...resp });
+
+    if (payload.terms_accepted) {
+      toast.success(`Thank you, you will be redirected shortly...`, {
+        style: { background: "#333", color: "#fff" },
+      });
+    } else {
+      toast.success(`Updated profile`, {
+        style: { background: "#333", color: "#fff" },
+      });
+    }
 
     yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: false });
     yield put({ type: Types.SET_PROFILE_MODAL, payload: false });

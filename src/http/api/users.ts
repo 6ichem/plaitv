@@ -19,10 +19,7 @@ export const resendVerificationMail = async (payload: createUserPayload) => {
 };
 
 export const httpUpdateUserProfile = async (payload: userProfilePayload) => {
-  const { data } = await instance.put(
-    `${BASE_URL}/users/update-user-profile`,
-    payload
-  );
+  const { data } = await instance.put(`${BASE_URL}/users/update-user`, payload);
   return data;
 };
 
