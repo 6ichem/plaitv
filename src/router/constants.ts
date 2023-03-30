@@ -6,4 +6,6 @@ export const ROUTE_PATHS = {
   RESET_PASSWORD: "/reset-password",
   DASHBOARD: "/home",
   LANDING: "/",
+  EXPLORE: "/explore",
+  PROFILE: "/profile/:username",
 };

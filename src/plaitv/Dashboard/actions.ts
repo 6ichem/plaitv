@@ -107,3 +107,8 @@ export const deletePlaylist = (payload: any) => ({
   type: Types.POST_DELETE_PLAYLIST,
   payload,
 });
+
+export const setTermsModal = (payload: any) => ({
+  type: Types.SET_TERMS_MODAL,
+  payload,
+});

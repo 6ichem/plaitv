@@ -8,6 +8,7 @@ import {
   userPlaylistsState,
   // userState,
 } from "../plaitv/Dashboard/reducer";
+import { exploreState } from "../plaitv/Explore/reducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   userPlaylists: userPlaylistsState,
   media: mediaState,
   loaders: loaderState,
+  explore: exploreState,
 });
 
 export default (state: any, action: any) => {

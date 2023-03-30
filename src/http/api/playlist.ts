@@ -4,7 +4,9 @@ import { BASE_URL } from "../constants";
 import { editPlaylistPayload, newPlaylistPayload } from "../types";
 
 export const getUserPlaylists = async () => {
-  const { data } = await instance.get(`${BASE_URL}/playlist`);
+  const { data } = await instance.get(
+    `${BASE_URL}/playlist/get-user-playlists`
+  );
 
   return data;
 };
@@ -30,6 +32,14 @@ export const httpDeletePlaylist = async (payload: any) => {
   const { data } = await instance.delete(
     `${BASE_URL}/playlist/${playlist_id}`,
     { params: { playlist_id } }
+  );
+
+  return data;
+};
+
+export const httpGetPublicUserPlaylists = async (username: string) => {
+  const { data } = await instance.get(
+    `${BASE_URL}/playlist/get-user-playlists/public/u/${username}/`
   );
 
   return data;

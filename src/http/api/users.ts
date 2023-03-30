@@ -25,3 +25,23 @@ export const httpUpdateUserProfile = async (payload: userProfilePayload) => {
   );
   return data;
 };
+
+export const httpGetTerms = async () => {
+  const { data } = await instance.get(`${BASE_URL}/users/get-terms`);
+
+  return data;
+};
+
+export const httpSearchUser = async (username: string) => {
+  const { data } = await instance.get(`${BASE_URL}/users/search-username`, {
+    params: { username },
+  });
+  return data;
+};
+
+export const httpFindProfile = async (username: string) => {
+  const { data } = await instance.get(
+    `${BASE_URL}/users/get-public-profile/u/${username}/`
+  );
+  return data;
+};

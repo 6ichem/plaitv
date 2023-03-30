@@ -10,6 +10,7 @@ import { getUserPlaylists } from "./actions";
 import Profile from "./components/Overlays/Profile";
 import RenderVideo from "./components/RenderVideo";
 import DeletePlaylist from "./components/Overlays/DeletePlaylist";
+import AcceptTerms from "./components/Overlays/AcceptTerms";
 
 export default function Dashboard() {
   const userPlaylists =
@@ -43,6 +44,7 @@ export default function Dashboard() {
       <AddVideo />
       <Profile />
       <DeletePlaylist />
+      <AcceptTerms />
     </div>
   );
 }

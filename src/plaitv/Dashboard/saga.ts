@@ -13,7 +13,7 @@ import {
   httpUpdatePlaylist,
   newPlaylist,
 } from "../../http/api/playlist";
-import { httpUpdateUserProfile } from "../../http/api/users";
+import { httpGetTerms, httpUpdateUserProfile } from "../../http/api/users";
 import { ResponseGenerator } from "../../http/types";
 import { getLocalUser, setLocalUser } from "../../http/utils";
 import {

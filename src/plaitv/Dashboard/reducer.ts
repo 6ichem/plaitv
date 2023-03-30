@@ -6,6 +6,7 @@ const initialModalState = {
   addVideoModal: false,
   profileModal: false,
   deletePlaylistModal: false,
+  acceptTermsModal: false,
 };
 
 const modalStrategies = {
@@ -31,6 +32,12 @@ const modalStrategies = {
     return {
       ...state,
       deletePlaylistModal: payload,
+    };
+  },
+  [Types.SET_TERMS_MODAL]: (state: any, payload: any) => {
+    return {
+      ...state,
+      acceptTermsModal: payload,
     };
   },
   __default__: (state: any) => state,

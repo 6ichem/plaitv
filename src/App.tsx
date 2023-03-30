@@ -17,6 +17,8 @@ import AuthRoute from "./router/AuthRoute";
 import PublicRoute from "./router/PublicRoute";
 import { getLocalAccessToken, newAccessToken } from "./http/utils";
 import Home from "./plaitv/Home";
+import Explore from "./plaitv/Explore";
+import Profile from "./plaitv/Explore/components/Profile";
 
 function App() {
   const isAuthenticated = getLocalAccessToken();
@@ -67,6 +69,9 @@ function App() {
           />
           <Route path={ROUTE_PATHS.LANDING} element={<Home />} />
         </Route>
+
+        <Route path={ROUTE_PATHS.EXPLORE} element={<Explore />} />
+        <Route path={ROUTE_PATHS.PROFILE} element={<Profile />} />
 
         <Route element={<AuthRoute isAuthenticated={isAuthenticated} />}>
           <Route path={ROUTE_PATHS.DASHBOARD} element={<Dashboard />} />
