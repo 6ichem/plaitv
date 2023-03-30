@@ -51,7 +51,7 @@ export default function Profile() {
         )}
       </div>
       <div className="w-full flex flex-wrap gap-5">
-        {foundPlaylists &&
+        {foundPlaylists && foundPlaylists.length > 0 ? (
           foundPlaylists.map((i: any, idx: number) => (
             <div
               className="text-white bg-[#0E0E0E] p-5 w-full lg:max-w-[300px] rounded-[5px] mt-3 lg:mt-0"
@@ -69,7 +69,12 @@ export default function Profile() {
                 </span>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <span className="text-white text-sm font-normal text-center mt-24 flex justify-center mx-auto">
+            This user doesn’t have any plublic playlists yet :(
+          </span>
+        )}
       </div>
     </div>
   );
