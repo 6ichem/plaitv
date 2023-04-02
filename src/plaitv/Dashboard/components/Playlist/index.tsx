@@ -14,7 +14,7 @@ import {
 } from "../../actions";
 import Loader from "../../../../components/Loader";
 
-export default function Playlist({ userPlaylists }: any) {
+export default function Playlist({ userPlaylists, isPublicView = false }: any) {
   const dispatch = useDispatch();
 
   const currentPlaylist = useSelector(
@@ -139,13 +139,15 @@ export default function Playlist({ userPlaylists }: any) {
         <div className="flex justify-between items-center mb-12">
           <span className={styles.descspan}>Videos</span>
 
-          <button
-            className={styles.descbutton}
-            onClick={() => dispatch(setAddVideoModal(true))}
-          >
-            <Icon name="plus" />
-            Add
-          </button>
+          {!isPublicView && (
+            <button
+              className={styles.descbutton}
+              onClick={() => dispatch(setAddVideoModal(true))}
+            >
+              <Icon name="plus" />
+              Add
+            </button>
+          )}
         </div>
         <div className={styles.Playlist__Inner}>
           {playlistMedia &&
@@ -208,10 +210,10 @@ export default function Playlist({ userPlaylists }: any) {
 
   return (
     <div className={styles.Playlist}>
-      {_editView()}
-      {_listView()}
+      {!isPublicView && _editView()}
+      {!isPublicView && _listView()}
       <div className={`${styles.Playlist__Sub} ${isEdit ? "my-12" : ""}`}>
-        {!isEdit && currentPlaylist && (
+        {!isEdit && currentPlaylist && !isPublicView && (
           <div
             className={`${
               (isEdit && "flex justify-between items-center") || ""

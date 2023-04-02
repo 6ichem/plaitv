@@ -20,6 +20,8 @@ instance.interceptors.response.use(
       location.reload();
     } else if (isRefreshExpired(e)) {
       store.dispatch(userLogout());
+    } else {
+      throw e;
     }
   }
 );

@@ -135,6 +135,7 @@ const initialLoaderState = {
   deleteMediaLoader: false,
   userProfileLoader: false,
   deletePlaylistLoader: false,
+  userPublicProfileLoader: true,
 };
 
 const loaderStrategies = {
@@ -190,6 +191,12 @@ const loaderStrategies = {
     return {
       ...state,
       deletePlaylistLoader: payload,
+    };
+  },
+  [Types.SET_PUBLIC_PROFILE_LOADER]: (state: any, payload: any) => {
+    return {
+      ...state,
+      userPublicProfileLoader: payload,
     };
   },
   __default__: (state: any) => state,

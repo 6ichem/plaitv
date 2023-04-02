@@ -38,9 +38,13 @@ export const httpDeletePlaylist = async (payload: any) => {
 };
 
 export const httpGetPublicUserPlaylists = async (username: string) => {
-  const { data } = await instance.get(
-    `${BASE_URL}/playlist/get-user-playlists/public/u/${username}/`
-  );
+  try {
+    const { data } = await instance.get(
+      `${BASE_URL}/playlist/get-user-playlists/public/u/${username}/`
+    );
 
-  return data;
+    return data;
+  } catch (e: any) {
+    throw e;
+  }
 };

@@ -17,10 +17,6 @@ export default function Dashboard() {
   const userPlaylists =
     useSelector((state: any) => state.userPlaylists.userPlaylists) ?? [];
 
-  const currentPlaylist = useSelector(
-    (state: any) => state.userPlaylists.currentPlaylist
-  );
-
   const userData = JSON.parse(getLocalUser());
 
   useEffect(() => {

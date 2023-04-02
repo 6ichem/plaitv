@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ExploreSearchInput from "../../../components/ExploreSearchInput";
 import Icon from "../../../components/Icon";
 import Loader from "../../../components/Loader";
 import { getLocalAccessToken } from "../../../http/utils";
 import { findProfile, findUserPlaylists } from "../actions";
+import { getPlaylistMedia, setCurrentPlaylist } from "../../Dashboard/actions";
 
 export default function Profile() {
   const dispatch = useDispatch();
   const isAuthenticated = getLocalAccessToken();
+  const navigate = useNavigate();
+
   const { username } = useParams();
 
   const [isLoading, setLoading] = useState(false);
@@ -35,6 +38,17 @@ export default function Profile() {
     }
   }, [foundPlaylists]);
 
+  useEffect(() => {
+    document.body.style.backgroundColor = "#000000";
+  }, []);
+
+  const viewPlaylist = (playlist: any) => {
+    dispatch(setCurrentPlaylist(playlist));
+    dispatch(getPlaylistMedia({ playlist_id: playlist?.playlist_id }));
+
+    navigate("/playlist");
+  };
+
   const Playlists = () => (
     <div className="flex flex-col lg:flex-row justify-between mt-10 lg:mt-24">
       <div className="flex flex-col w-1/3">
@@ -53,13 +67,14 @@ export default function Profile() {
       <div className="w-full flex flex-wrap gap-5">
         {foundPlaylists && foundPlaylists.length > 0 ? (
           foundPlaylists.map((i: any, idx: number) => (
-            <div
-              className="text-white bg-[#0E0E0E] p-5 w-full lg:max-w-[300px] rounded-[5px] mt-3 lg:mt-0"
+            <button
+              className="text-white bg-[#0E0E0E] p-5 w-full lg:max-w-[300px] rounded-[5px] mt-3 lg:mt-0 text-left transition-all duration-500 ease-in-out hover:opacity-75 outline-none"
               key={idx}
+              onClick={() => viewPlaylist(i)}
             >
               <img
                 src={i.image}
-                className="w-full lg:w-[261.82px] h-auto lg:h-[181.36px] rounded"
+                className="w-full lg:w-[261.82px] h-52 object-cover object-center	lg:h-[181.36px] rounded"
                 alt=""
               />
               <div className="mt-4">
@@ -68,7 +83,7 @@ export default function Profile() {
                   {i.description}
                 </span>
               </div>
-            </div>
+            </button>
           ))
         ) : (
           <span className="text-white text-sm font-normal text-center mt-24 flex justify-center mx-auto">

@@ -9,6 +9,7 @@ import {
   setSearchResults,
 } from "./actions";
 import * as Types from "./actionTypes";
+import { SET_PUBLIC_PROFILE_LOADER } from "../Dashboard/actionTypes";
 
 export const state = (state: any) => state;
 
@@ -43,19 +44,22 @@ export function* findProfile({ payload }: any): any {
 }
 
 export function* getPublicUserPlaylists(): any {
+  const {
+    explore: { foundProfile },
+  } = yield select(state);
+
   try {
-    const {
-      explore: { foundProfile },
-    } = yield select(state);
+    if (foundProfile && foundProfile.username) {
+      const resp: any = yield call(
+        httpGetPublicUserPlaylists,
+        foundProfile.username
+      );
 
-    const resp: any = yield call(
-      httpGetPublicUserPlaylists,
-      foundProfile.username
-    );
-
-    yield put(setFoundProfilePlaylists(resp));
+      yield put(setFoundProfilePlaylists(resp));
+    }
   } catch (e: any) {
-    console.log("getPublicUserPlaylists", e);
+    console.log("getPublicUserPlaylists", e?.response?.data);
+    yield put(setFoundProfilePlaylists(e?.response?.data));
   }
 }
 

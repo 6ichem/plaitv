@@ -112,3 +112,8 @@ export const setTermsModal = (payload: any) => ({
   type: Types.SET_TERMS_MODAL,
   payload,
 });
+
+export const setPublicProfileLoader = (payload: any) => ({
+  type: Types.SET_PUBLIC_PROFILE_LOADER,
+  payload,
+});

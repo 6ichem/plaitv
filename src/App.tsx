@@ -19,6 +19,7 @@ import { getLocalAccessToken, newAccessToken } from "./http/utils";
 import Home from "./plaitv/Home";
 import Explore from "./plaitv/Explore";
 import Profile from "./plaitv/Explore/components/Profile";
+import PublicPlaylistView from "./plaitv/Explore/components/PublicPlaylistView";
 
 function App() {
   const isAuthenticated = getLocalAccessToken();
@@ -72,6 +73,7 @@ function App() {
 
         <Route path={ROUTE_PATHS.EXPLORE} element={<Explore />} />
         <Route path={ROUTE_PATHS.PROFILE} element={<Profile />} />
+        <Route path={ROUTE_PATHS.PLAYLIST} element={<PublicPlaylistView />} />
 
         <Route element={<AuthRoute isAuthenticated={isAuthenticated} />}>
           <Route path={ROUTE_PATHS.DASHBOARD} element={<Dashboard />} />

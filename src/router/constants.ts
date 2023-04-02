@@ -8,4 +8,5 @@ export const ROUTE_PATHS = {
   LANDING: "/",
   EXPLORE: "/explore",
   PROFILE: "/profile/:username",
+  PLAYLIST: "/playlist",
 };
