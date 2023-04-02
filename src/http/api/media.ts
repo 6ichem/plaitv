@@ -44,3 +44,12 @@ export const httpAddMedia = async (payload: addMediaPayload) => {
 
   return data;
 };
+
+export const httpGetPublicMedia = async (payload: any) => {
+  const { username, playlist_id } = payload;
+  const { data } = await instance.get(
+    `${BASE_URL}/media/public/u/${username}/${playlist_id}/`
+  );
+
+  return data;
+};

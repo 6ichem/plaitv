@@ -25,11 +25,17 @@ export const setFoundProfile = (payload: any) => ({
   payload,
 });
 
-export const findUserPlaylists = () => ({
+export const findUserPlaylists = (payload?: any) => ({
   type: Types.FIND_USER_PLAYLISTS,
+  payload,
 });
 
 export const setFoundProfilePlaylists = (payload: any) => ({
   type: Types.SET_FOUND_USER_PLAYLISTS,
+  payload,
+});
+
+export const getPublicPlaylistMedia = (payload: any) => ({
+  type: Types.GET_PUBLIC_PLAYLIST_MEDIA,
   payload,
 });

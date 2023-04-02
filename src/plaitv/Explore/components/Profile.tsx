@@ -43,10 +43,7 @@ export default function Profile() {
   }, []);
 
   const viewPlaylist = (playlist: any) => {
-    dispatch(setCurrentPlaylist(playlist));
-    dispatch(getPlaylistMedia({ playlist_id: playlist?.playlist_id }));
-
-    navigate("/playlist");
+    navigate(`/playlist/${foundProfile.username}/${playlist?.playlist_id}`);
   };
 
   const Playlists = () => (
@@ -109,7 +106,7 @@ export default function Profile() {
           )}
         </div>
         <div className="flex justify-center w-full mt-3 lg:mt-0">
-          <ExploreSearchInput />
+          <ExploreSearchInput isProfile={true} />
         </div>
       </div>
 

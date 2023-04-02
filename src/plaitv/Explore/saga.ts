@@ -10,10 +10,12 @@ import {
 } from "./actions";
 import * as Types from "./actionTypes";
 import { SET_PUBLIC_PROFILE_LOADER } from "../Dashboard/actionTypes";
+import { setPlaylistMedia } from "../Dashboard/actions";
+import { httpGetPublicMedia } from "../../http/api/media";
 
 export const state = (state: any) => state;
 
-export function* searchUserSaga({ payload }: any): any {
+function* searchUserSaga({ payload }: any): any {
   yield put({ type: Types.SET_SEARCH_LOADER, payload: true });
   yield put(setFoundProfile(null));
   yield put(setFoundProfilePlaylists(null));
@@ -33,7 +35,7 @@ export function* searchUserSaga({ payload }: any): any {
   }
 }
 
-export function* findProfile({ payload }: any): any {
+function* findProfile({ payload }: any): any {
   try {
     const resp: any = yield call(httpFindProfile, payload);
 
@@ -43,7 +45,7 @@ export function* findProfile({ payload }: any): any {
   }
 }
 
-export function* getPublicUserPlaylists(): any {
+function* getPublicUserPlaylists({ payload }: any): any {
   const {
     explore: { foundProfile },
   } = yield select(state);
@@ -56,6 +58,10 @@ export function* getPublicUserPlaylists(): any {
       );
 
       yield put(setFoundProfilePlaylists(resp));
+    } else if (payload.username) {
+      const resp: any = yield call(httpGetPublicUserPlaylists, payload);
+
+      yield put(setFoundProfilePlaylists(resp));
     }
   } catch (e: any) {
     console.log("getPublicUserPlaylists", e?.response?.data);
@@ -63,10 +69,25 @@ export function* getPublicUserPlaylists(): any {
   }
 }
 
+function* getUserPlaylistMedia({ payload }: any) {
+  yield put(setPlaylistMedia(null));
+
+  try {
+    const resp: ResponseGenerator = yield call(httpGetPublicMedia, payload);
+
+    yield put(setPlaylistMedia(resp));
+  } catch (e: any) {
+    yield put(setPlaylistMedia(e?.response?.data));
+  }
+}
+
 function* watcher() {
   yield all([takeLatest(Types.SEARCH_USER, searchUserSaga)]);
   yield all([takeLatest(Types.FIND_PROFILE, findProfile)]);
   yield all([takeLatest(Types.FIND_USER_PLAYLISTS, getPublicUserPlaylists)]);
+  yield all([
+    takeLatest(Types.GET_PUBLIC_PLAYLIST_MEDIA, getUserPlaylistMedia),
+  ]);
 }
 
 export const exploreSaga = watcher;

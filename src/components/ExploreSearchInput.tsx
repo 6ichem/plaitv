@@ -2,24 +2,36 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchUser, setSearchInput } from "../plaitv/Explore/actions";
 import Loader from "./Loader";
+import { useNavigate } from "react-router-dom";
 
-export default function ExploreSearchInput() {
+export default function ExploreSearchInput({ isProfile = false }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const searchValue = useSelector((state: any) => state.explore.searchInput);
   const isLoading = useSelector((state: any) => state.explore.searchLoader);
 
+  const onInputClick = () => {
+    if (isProfile) {
+      navigate("/explore");
+    }
+  };
+
   return (
-    <div className="relative w-full lg:w-[714px]">
+    <div className="relative w-full lg:w-[714px] transition-all duration-300 ease-in-out hover:opacity-80">
       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[#464647]">
         @
       </div>
       <input
         type="search"
-        className="block w-full p-3 pl-9 text-sm text-gray-400 placeholder-gray-500 bg-[#262628] rounded-[3px] outline-none"
+        className={`block w-full p-3 pl-9 text-sm text-gray-400 placeholder-gray-500 bg-[#262628] rounded-[3px] outline-none ${
+          (isProfile && "cursor-pointer") || ""
+        }`}
         placeholder="username"
         onChange={(e) => dispatch(setSearchInput(e.target.value))}
         value={searchValue}
         required
+        onClick={onInputClick}
       />
       <button type="submit" className="absolute right-5 bottom-2.5 top-2.5">
         {isLoading ? (
