@@ -105,7 +105,7 @@ export default function Profile() {
             </Link>
           )}
         </div>
-        <div className="flex justify-center w-full mt-3 lg:mt-0">
+        <div className="flex justify-center w-[80%] mt-3 lg:mt-0">
           <ExploreSearchInput isProfile={true} />
         </div>
       </div>

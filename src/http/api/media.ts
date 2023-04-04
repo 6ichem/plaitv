@@ -21,7 +21,9 @@ export const httpGetUserPlaylistMedia = async (
 export const httpDeleteMedia = async (payload: mediaControllerPayload) => {
   const { media_id } = payload;
 
-  const { data } = await instance.delete(`${BASE_URL}/media/${media_id}`);
+  const { data } = await instance.delete(
+    `${BASE_URL}/media/delete/${media_id}`
+  );
 
   return data;
 };
@@ -29,7 +31,7 @@ export const httpDeleteMedia = async (payload: mediaControllerPayload) => {
 export const getLambdaMedia = async (payload: lambdaMediaPayload) => {
   try {
     const { data } = await instance.post(
-      `${BASE_URL}/media/get_lambda_media/`,
+      `${BASE_URL}/media/get-video/`,
       payload
     );
 

@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Transition } from "@headlessui/react";
+import { Switch, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   postAddMedia,
@@ -16,6 +16,7 @@ import PlaylistItem from "../../../../components/PlaylistItem";
 
 export default function AddVideo() {
   const [videoURL, setVideoURL] = useState<string>("");
+  const [isNsfw, setNsfw] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -30,7 +31,13 @@ export default function AddVideo() {
   );
 
   const getVideo = () => {
-    dispatch(postLambdaMedia({ url: videoURL }));
+    dispatch(
+      postLambdaMedia({
+        playlist_id: currentPlaylist.playlist_id,
+        og_url: videoURL,
+        is_nsfw: isNsfw,
+      })
+    );
   };
 
   const onClose = () => {
@@ -50,27 +57,47 @@ export default function AddVideo() {
       open={isModalOpen}
       onClose={onClose}
     >
-      <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-5 !my-5 pb-5">
-        <Input
-          type="text"
-          placeholder="Paste video url"
-          required
-          withLabel={false}
-          className="!m-0 !h-[35px]"
-          wrapperStyle="!m-0 w-full"
-          value={videoURL}
-          onChange={(e) => setVideoURL(e.target.value)}
-        />
-        <div className="w-full lg:w-auto lg:block flex place-content-end">
-          <Button
-            title="Find"
-            onClick={getVideo}
-            loading={lambdaLoader}
-            color="primary"
-            className="!w-[82px] !capitalize"
+      <>
+        <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-5 !my-5 pb-5">
+          <Input
+            type="text"
+            placeholder="Paste video url"
+            required
+            withLabel={false}
+            className="!m-0 !h-[35px]"
+            wrapperStyle="!m-0 w-full"
+            value={videoURL}
+            onChange={(e) => setVideoURL(e.target.value)}
           />
+          <div className="w-full lg:w-auto lg:block flex place-content-end">
+            <Button
+              title="Find"
+              onClick={getVideo}
+              loading={lambdaLoader}
+              color="primary"
+              className="!w-[82px] !capitalize"
+            />
+          </div>
         </div>
-      </div>
+
+        <div className="flex items-center">
+          <h1 className="mr-4 text-xs font-normal">NSFW</h1>
+          <Switch
+            checked={isNsfw}
+            onChange={setNsfw}
+            className={`${
+              isNsfw ? "bg-[#CC8E45]" : "bg-gray-200"
+            } relative inline-flex h-6 w-11 items-center rounded-full`}
+          >
+            <span className="sr-only">Enable notifications</span>
+            <span
+              className={`${
+                isNsfw ? "translate-x-6" : "translate-x-1"
+              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+            />
+          </Switch>
+        </div>
+      </>
     </OverlayModal>
   );
 

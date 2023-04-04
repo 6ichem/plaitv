@@ -110,64 +110,10 @@ function* findMedia({ payload }: any): any {
     yield put({ type: Types.SET_LAMBDA_LOADER, payload: true });
 
     const resp: ResponseGenerator = yield call(getLambdaMedia, payload);
-    const { request_id }: any = resp;
 
-    let isResolved = false;
-    const friendlyMessage = "We're getting your video.";
-
-    toast.loading(friendlyMessage, {
+    toast.success("Video ququed for adding", {
       style: { background: "#333", color: "#fff" },
     });
-
-    do {
-      const resp: any = yield call(getLambdaMedia, {
-        request_id,
-      });
-
-      const { status, details, results } = resp;
-
-      if (details !== friendlyMessage) {
-        toast.dismiss();
-        toast.loading(details, {
-          style: { background: "#333", color: "#fff" },
-        });
-      }
-
-      if (status === "Failed") {
-        isResolved = true;
-
-        yield put(setLambdaMedia(resp));
-        yield put({ type: Types.SET_LAMBDA_LOADER, payload: false });
-        toast.dismiss();
-        toast.error(details, {
-          style: { background: "#333", color: "#fff" },
-        });
-      } else if (status === "Success" && results.length == 0) {
-        isResolved = true;
-
-        yield put(setLambdaMedia(resp));
-        yield put({ type: Types.SET_LAMBDA_LOADER, payload: false });
-        toast.dismiss();
-        toast.error(
-          "We weren't able to find any videos for the link provided",
-          {
-            style: { background: "#333", color: "#fff" },
-          }
-        );
-      } else if (status === "Success") {
-        isResolved = true;
-
-        yield put(setLambdaMedia(resp));
-        yield put({ type: Types.SET_LAMBDA_LOADER, payload: false });
-
-        toast.dismiss();
-        toast.success(details, {
-          style: { background: "#333", color: "#fff" },
-        });
-      }
-
-      yield delay(5000);
-    } while (isResolved == false);
   } catch (e: any) {
     console.log(e);
 
@@ -202,6 +148,8 @@ function* deleteMedia({ payload }: any) {
     toast.success(`Deleted ${payload.title} to playlist`, {
       style: { background: "#333", color: "#fff" },
     });
+
+    yield put({ type: Types.SET_ADD_VIDEO_MODAL, payload: false });
   } catch (e: any) {
     toast.error(e?.response?.data, {
       style: { background: "#333", color: "#fff" },

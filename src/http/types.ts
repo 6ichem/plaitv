@@ -58,6 +58,7 @@ export interface getPlaylistMediaPayload {
 export interface newPlaylistPayload {
   title: string;
   description: string;
+  is_public: boolean;
 }
 
 export interface editPlaylistPayload extends newPlaylistPayload {

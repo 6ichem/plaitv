@@ -18,11 +18,15 @@ export const newPlaylist = async (payload: newPlaylistPayload) => {
 };
 
 export const httpUpdatePlaylist = async (payload: editPlaylistPayload) => {
-  const { playlist_id, title, description } = payload;
-  const { data } = await instance.put(`${BASE_URL}/playlist/${playlist_id}`, {
-    title,
-    description,
-  });
+  const { playlist_id, title, description, is_public } = payload;
+  const { data } = await instance.put(
+    `${BASE_URL}/playlist/update-playlist/${playlist_id}`,
+    {
+      title,
+      description,
+      is_public,
+    }
+  );
 
   return data;
 };

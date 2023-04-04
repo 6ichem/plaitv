@@ -3,7 +3,7 @@ import styles from "./Playlist.module.scss";
 import PlaylistItem from "../../../../components/PlaylistItem";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import Input from "../../../../components/Input";
-import { Transition } from "@headlessui/react";
+import { Menu, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   postDeleteMedia,
@@ -44,6 +44,16 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
       postUpdatePlaylist({
         ...playlistInfo,
         playlist_id: currentPlaylist.playlist_id,
+      })
+    );
+  };
+
+  const updatePlaylistPrivacy = (value: boolean) => {
+    dispatch(
+      postUpdatePlaylist({
+        ...playlistInfo,
+        playlist_id: currentPlaylist.playlist_id,
+        is_public: value,
       })
     );
   };
@@ -120,12 +130,78 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
   const _listView = () =>
     !isEdit && (
       <div className={styles.Playlist__Header}>
-        <span>Selected Playlist</span>
         {!isLoading && (
-          <button onClick={() => setEdit(true)}>
-            <Icon name="edit" />
-            Edit
-          </button>
+          <>
+            <Menu as="div" className="relative inline-block text-left z-50">
+              <div>
+                <Menu.Button
+                  className={`flex font-bold uppercase !text-black items-center w-full justify-center rounded-full px-5 py-2 text-sm ${
+                    !currentPlaylist.is_public
+                      ? "bg-white bg-opacity-50"
+                      : "bg-[#50E856]"
+                  }`}
+                >
+                  {currentPlaylist.is_public ? "Public" : "Private"}
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 4.5L6 7.5L9 4.5"
+                      stroke="black"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </Menu.Button>
+              </div>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute z-10 mt-1.5 left-0 w-56 origin-top-right rounded-md bg-secondary shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ">
+                  <div
+                    className="text-sm"
+                    style={{ color: "rgba(255, 255, 255, 0.6)" }}
+                  >
+                    <Menu.Item>
+                      <button
+                        onClick={() => {
+                          updatePlaylistPrivacy(true);
+                        }}
+                        className="flex w-full items-center rounded-md px-4 py-3 text-sm hover:bg-tertiary"
+                      >
+                        Public
+                      </button>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <button
+                        onClick={() => {
+                          updatePlaylistPrivacy(false);
+                        }}
+                        className="flex w-full items-center rounded-md px-4 py-3 text-sm hover:bg-tertiary"
+                      >
+                        Private
+                      </button>
+                    </Menu.Item>
+                  </div>
+                </Menu.Items>
+              </Transition>
+            </Menu>
+            <button onClick={() => setEdit(true)}>
+              <Icon name="edit" />
+              Edit
+            </button>
+          </>
         )}
       </div>
     );

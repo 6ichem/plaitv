@@ -10,7 +10,7 @@ import {
 } from "./actions";
 import * as Types from "./actionTypes";
 import { SET_PUBLIC_PROFILE_LOADER } from "../Dashboard/actionTypes";
-import { setPlaylistMedia } from "../Dashboard/actions";
+import { setCurrentMedia, setPlaylistMedia } from "../Dashboard/actions";
 import { httpGetPublicMedia } from "../../http/api/media";
 
 export const state = (state: any) => state;
@@ -71,6 +71,7 @@ function* getPublicUserPlaylists({ payload }: any): any {
 
 function* getUserPlaylistMedia({ payload }: any) {
   yield put(setPlaylistMedia(null));
+  yield put(setCurrentMedia(null));
 
   try {
     const resp: ResponseGenerator = yield call(httpGetPublicMedia, payload);
