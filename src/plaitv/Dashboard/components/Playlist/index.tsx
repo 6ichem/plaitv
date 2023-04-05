@@ -6,6 +6,7 @@ import Input from "../../../../components/Input";
 import { Menu, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getMediaStatus,
   postDeleteMedia,
   postUpdatePlaylist,
   setAddVideoModal,
@@ -13,6 +14,7 @@ import {
   setDeletePlaylistModal,
 } from "../../actions";
 import Loader from "../../../../components/Loader";
+import Notifications from "./Notifications";
 
 export default function Playlist({ userPlaylists, isPublicView = false }: any) {
   const dispatch = useDispatch();
@@ -31,7 +33,6 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
   const [isEdit, setEdit] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [isEditLoading, setEditLoading] = useState<boolean>(false);
-  const [isNotificationOpen, setNotificationOpen] = useState<boolean>(false);
 
   const [playlistInfo, setPlaylistInfo] = useState({
     title: "",
@@ -143,21 +144,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
                   }`}
                 >
                   {currentPlaylist.is_public ? "Public" : "Private"}
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M3 4.5L6 7.5L9 4.5"
-                      stroke="black"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
+                  <Icon name="arrow-down" />
                 </Menu.Button>
               </div>
               <Transition
@@ -199,10 +186,13 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
               </Transition>
             </Menu>
 
-            <button onClick={() => setEdit(true)}>
-              <Icon name="edit" />
-              Edit
-            </button>
+            <div className="flex items-center">
+              <Notifications />
+              <button onClick={() => setEdit(true)}>
+                <Icon name="edit" />
+                Edit
+              </button>
+            </div>
           </>
         )}
       </div>
@@ -227,7 +217,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
             </button>
           )}
         </div>
-        <div className={styles.Playlist__Inner}>
+        <div className="max-h-[75vh] overflow-y-scroll pr-2">
           {playlistMedia &&
             playlistMedia.map((i: any) => (
               <PlaylistItem
@@ -286,12 +276,13 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
     if (isEditLoading) setEditLoading(false);
   }, [currentPlaylist]);
 
+  useEffect(() => {
+    if (currentPlaylist && "playlist_id" in currentPlaylist && !isLoading)
+      dispatch(getMediaStatus());
+  }, [currentPlaylist, isLoading]);
+
   return (
-    <div
-      className={`${styles.Playlist} ${
-        !isNotificationOpen ? "overflow-scroll" : ""
-      }`}
-    >
+    <div className={styles.Playlist}>
       {!isPublicView && _editView()}
       {!isPublicView && _listView()}
       <div className={`${styles.Playlist__Sub} ${isEdit ? "my-12" : ""}`}>

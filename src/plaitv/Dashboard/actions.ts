@@ -112,3 +112,12 @@ export const findMedia = (payload: any) => ({
   type: Types.POST_FIND_MEDIA,
   payload,
 });
+
+export const getMediaStatus = () => ({
+  type: Types.GET_MEDIA_STATUS,
+});
+
+export const setMediaStatus = (payload: any) => ({
+  type: Types.SET_MEDIA_STATUS,
+  payload,
+});

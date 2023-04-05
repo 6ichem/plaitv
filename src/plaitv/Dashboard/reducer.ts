@@ -85,6 +85,7 @@ const userPlaylistsStrategies = {
       newPlaylist: null,
     };
   },
+
   __default__: (state: any) => state,
 };
 
@@ -94,6 +95,7 @@ export const userPlaylistsState = createReducer(userPlaylistsStrategies, {
 
 const initialMediaState = {
   currentMedia: null,
+  mediaStatus: null,
 };
 
 const mediaStrategies = {
@@ -101,6 +103,12 @@ const mediaStrategies = {
     return {
       ...state,
       currentMedia: payload,
+    };
+  },
+  [Types.SET_MEDIA_STATUS]: (state: any, payload: any) => {
+    return {
+      ...state,
+      mediaStatus: payload,
     };
   },
   __default__: (state: any) => state,

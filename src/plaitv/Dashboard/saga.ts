@@ -5,6 +5,7 @@ import {
   httpAddMedia,
   httpDeleteMedia,
   httpFindMedia,
+  httpGetMediaStatus,
   httpGetUserPlaylistMedia,
   httpUploadVideo,
 } from "../../http/api/media";
@@ -25,6 +26,7 @@ import {
   setNewPlaylistModal,
   getPlaylistMedia,
   setCurrentMedia,
+  setMediaStatus,
 } from "./actions";
 import * as Types from "./actionTypes";
 
@@ -303,6 +305,34 @@ function* uploadVideo({ payload }: any) {
   }
 }
 
+function* mediaStatus({ payload }: any) {
+  const {
+    userPlaylists: { currentPlaylist },
+  } = yield select(state);
+
+  try {
+    const resp: ResponseGenerator = yield call(
+      httpGetMediaStatus,
+      currentPlaylist.playlist_id
+    );
+
+    yield put(setMediaStatus(resp));
+
+    yield delay(1500);
+    yield put({ type: Types.SET_ADD_MEDIA_LOADER, payload: false });
+    yield put({ type: Types.SET_ADD_VIDEO_MODAL, payload: false });
+  } catch (e: any) {
+    console.log(e);
+    toast.error(e?.response?.data?.detail, {
+      style: { background: "#333", color: "#fff" },
+    });
+    console.log("UPLOAD_VIDEO", e?.response?.data);
+    yield put({ type: Types.SET_ADD_MEDIA_LOADER, payload: false });
+
+    // yield put(setUserPlaylists(e?.response?.data));
+  }
+}
+
 function* watcher() {
   yield all([takeLatest(Types.GET_USER_PLAYLISTS, getAllUserPlaylists)]);
   yield all([takeLatest(Types.GET_PLAYLIST_MEDIA, getUserPlaylistMedia)]);
@@ -315,6 +345,7 @@ function* watcher() {
   yield all([takeLatest(Types.POST_CHANGE_PASSWORD, changeUserPassword)]);
   yield all([takeLatest(Types.POST_DELETE_PLAYLIST, deletePlaylist)]);
   yield all([takeLatest(Types.UPLOAD_VIDEO, uploadVideo)]);
+  yield all([takeLatest(Types.GET_MEDIA_STATUS, mediaStatus)]);
 }
 
 export const dashboardSaga = watcher;

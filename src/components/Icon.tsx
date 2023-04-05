@@ -17,6 +17,9 @@ import { ReactComponent as Delete } from "../assets/delete.svg";
 import { ReactComponent as ArrowLeft } from "../assets/arrow-left.svg";
 import { ReactComponent as Notification } from "../assets/notification.svg";
 import { ReactComponent as ArrowDown } from "../assets/arrow-down.svg";
+import { ReactComponent as DefaultVideo } from "../assets/default-video.svg";
+import { ReactComponent as CheckCircle } from "../assets/check-circle.svg";
+import { ReactComponent as XCircle } from "../assets/x-circle.svg";
 
 const icons = {
   edit: Edit,
@@ -38,6 +41,9 @@ const icons = {
   "arrow-left": ArrowLeft,
   notification: Notification,
   "arrow-down": ArrowDown,
+  "default-video": DefaultVideo,
+  "check-circle": CheckCircle,
+  "x-circle": XCircle,
 };
 
 export const iconNames = Object.keys(icons);

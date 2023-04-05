@@ -87,3 +87,17 @@ export const httpUploadVideo = async (payload: any) => {
     throw e;
   }
 };
+
+export const httpGetMediaStatus = async (playlist_id: string) => {
+  try {
+    const { data } = await instance.get(`${BASE_URL}/media/media-status`, {
+      params: {
+        playlist_id,
+      },
+    });
+
+    return data;
+  } catch (e: any) {
+    throw e;
+  }
+};

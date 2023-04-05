@@ -1,9 +1,11 @@
+import { Menu, Transition } from "@headlessui/react";
 import Icon from "../../../../components/Icon";
 import MenuDropdown from "../Menu";
 import Playlist from "../Playlist";
 import SearchInput from "../SearchInput";
 import styles from "./Navigation.module.scss";
 import PublicNavigation from "./PublicNavigation";
+import { Fragment } from "react";
 
 export default function Navigation({ isPublicView = false }) {
   return (
@@ -12,14 +14,12 @@ export default function Navigation({ isPublicView = false }) {
         {isPublicView ? (
           <PublicNavigation />
         ) : (
-          <>
-            <div className="px-6 pt-7">
-              <MenuDropdown />
-            </div>
-            <div className="p-6 w-[50%]">
+          <div className="flex items-center justify-between p-6 w-full">
+            <MenuDropdown />
+            <div className="w-[60%]">
               <SearchInput />
             </div>
-          </>
+          </div>
         )}
         <div className={styles.Playlist__Desktop}>
           <Playlist isPublicView={isPublicView} />
