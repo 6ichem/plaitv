@@ -2,10 +2,11 @@ import toast from "react-hot-toast";
 import { takeLatest, all, call, put, select, delay } from "redux-saga/effects";
 import { httpChangePassword } from "../../http/api/auth";
 import {
-  getLambdaMedia,
   httpAddMedia,
   httpDeleteMedia,
+  httpFindMedia,
   httpGetUserPlaylistMedia,
+  httpUploadVideo,
 } from "../../http/api/media";
 import {
   getUserPlaylists,
@@ -22,7 +23,6 @@ import {
   setUserPlaylists,
   setCurrentPlaylist,
   setNewPlaylistModal,
-  setLambdaMedia,
   getPlaylistMedia,
   setCurrentMedia,
 } from "./actions";
@@ -104,26 +104,22 @@ function* updatePlaylist({ payload }: any) {
 }
 
 function* findMedia({ payload }: any): any {
-  yield put({ type: Types.SET_LAMBDA_MEDIA, payload: null });
-
   try {
-    yield put({ type: Types.SET_LAMBDA_LOADER, payload: true });
-
-    const resp: ResponseGenerator = yield call(getLambdaMedia, payload);
+    const resp: ResponseGenerator = yield call(httpFindMedia, payload);
 
     toast.success("Video ququed for adding", {
       style: { background: "#333", color: "#fff" },
     });
+
+    yield delay(1500);
+    yield put({ type: Types.SET_ADD_VIDEO_MODAL, payload: false });
   } catch (e: any) {
     console.log(e);
 
-    yield put({ type: Types.SET_LAMBDA_LOADER, payload: false });
     toast.dismiss();
     toast.error(e?.response?.data, {
       style: { background: "#333", color: "#fff" },
     });
-
-    yield put(setLambdaMedia(e?.response?.data));
   }
 }
 
@@ -282,17 +278,43 @@ function* deletePlaylist({ payload }: any) {
   }
 }
 
+function* uploadVideo({ payload }: any) {
+  yield put({ type: Types.SET_ADD_MEDIA_LOADER, payload: true });
+
+  try {
+    const resp: ResponseGenerator = yield call(httpUploadVideo, payload);
+
+    toast.success("Video ququed for adding", {
+      style: { background: "#333", color: "#fff" },
+    });
+
+    yield delay(1500);
+    yield put({ type: Types.SET_ADD_MEDIA_LOADER, payload: false });
+    yield put({ type: Types.SET_ADD_VIDEO_MODAL, payload: false });
+  } catch (e: any) {
+    console.log(e);
+    toast.error(e?.response?.data?.detail, {
+      style: { background: "#333", color: "#fff" },
+    });
+    console.log("UPLOAD_VIDEO", e?.response?.data);
+    yield put({ type: Types.SET_ADD_MEDIA_LOADER, payload: false });
+
+    // yield put(setUserPlaylists(e?.response?.data));
+  }
+}
+
 function* watcher() {
   yield all([takeLatest(Types.GET_USER_PLAYLISTS, getAllUserPlaylists)]);
   yield all([takeLatest(Types.GET_PLAYLIST_MEDIA, getUserPlaylistMedia)]);
   yield all([takeLatest(Types.POST_NEW_PLAYLIST, createNewPlaylist)]);
   yield all([takeLatest(Types.POST_UPDATE_PLAYLIST, updatePlaylist)]);
-  yield all([takeLatest(Types.POST_LAMBDA_MEDIA, findMedia)]);
+  yield all([takeLatest(Types.POST_FIND_MEDIA, findMedia)]);
   yield all([takeLatest(Types.POST_DELETE_MEDIA, deleteMedia)]);
   yield all([takeLatest(Types.POST_ADD_MEDIA, addMediaToPlaylist)]);
   yield all([takeLatest(Types.POST_UPDATE_USER_PROFILE, updateUserProfile)]);
   yield all([takeLatest(Types.POST_CHANGE_PASSWORD, changeUserPassword)]);
   yield all([takeLatest(Types.POST_DELETE_PLAYLIST, deletePlaylist)]);
+  yield all([takeLatest(Types.UPLOAD_VIDEO, uploadVideo)]);
 }
 
 export const dashboardSaga = watcher;

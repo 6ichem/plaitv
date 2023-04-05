@@ -4,7 +4,6 @@ import { BASE_URL } from "../constants";
 import {
   addMediaPayload,
   getPlaylistMediaPayload,
-  lambdaMediaPayload,
   mediaControllerPayload,
 } from "../types";
 
@@ -28,7 +27,7 @@ export const httpDeleteMedia = async (payload: mediaControllerPayload) => {
   return data;
 };
 
-export const getLambdaMedia = async (payload: lambdaMediaPayload) => {
+export const httpFindMedia = async (payload: any) => {
   try {
     const { data } = await instance.post(
       `${BASE_URL}/media/get-video/`,
@@ -54,4 +53,37 @@ export const httpGetPublicMedia = async (payload: any) => {
   );
 
   return data;
+};
+
+export const httpUploadVideo = async (payload: any) => {
+  const { file, playlist_id, title, description, is_nsfw } = payload;
+  try {
+    const blob = new Blob([file], { type: file.type });
+
+    const { data } = await instance.post(
+      `${BASE_URL}/media/upload-video`,
+      blob,
+      {
+        headers: {
+          "content-type": file.type,
+        },
+        params: {
+          playlist_id,
+          title,
+          description,
+          is_nsfw,
+        },
+        // onUploadProgress: (progressEvent) => {
+        //   const percentCompleted = Math.round(
+        //     (progressEvent.loaded * 100) / progressEvent.total!
+        //   );
+        //   console.log(percentCompleted);
+        // },
+      }
+    );
+
+    return data;
+  } catch (e: any) {
+    throw e;
+  }
 };

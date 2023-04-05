@@ -58,23 +58,8 @@ export const postUpdatePlaylist = (payload: any) => ({
   payload,
 });
 
-export const setLambdaMedia = (payload: any) => ({
-  type: Types.SET_LAMBDA_MEDIA,
-  payload,
-});
-
-export const postLambdaMedia = (payload: any) => ({
-  type: Types.POST_LAMBDA_MEDIA,
-  payload,
-});
-
 export const postDeleteMedia = (payload: any) => ({
   type: Types.POST_DELETE_MEDIA,
-  payload,
-});
-
-export const showLambdaResults = (payload: any) => ({
-  type: Types.SHOW_LAMBA_RESULTS,
   payload,
 });
 
@@ -115,5 +100,15 @@ export const setTermsModal = (payload: any) => ({
 
 export const setPublicProfileLoader = (payload: any) => ({
   type: Types.SET_PUBLIC_PROFILE_LOADER,
+  payload,
+});
+
+export const uploadVideo = (payload: any) => ({
+  type: Types.UPLOAD_VIDEO,
+  payload,
+});
+
+export const findMedia = (payload: any) => ({
+  type: Types.POST_FIND_MEDIA,
   payload,
 });

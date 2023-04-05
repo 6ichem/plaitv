@@ -15,6 +15,8 @@ import { ReactComponent as DeleteIcon } from "../assets/delete-icon.svg";
 import { ReactComponent as NavbarLogo } from "../assets/navbar-logo.svg";
 import { ReactComponent as Delete } from "../assets/delete.svg";
 import { ReactComponent as ArrowLeft } from "../assets/arrow-left.svg";
+import { ReactComponent as Notification } from "../assets/notification.svg";
+import { ReactComponent as ArrowDown } from "../assets/arrow-down.svg";
 
 const icons = {
   edit: Edit,
@@ -34,6 +36,8 @@ const icons = {
   "navbar-logo": NavbarLogo,
   delete: Delete,
   "arrow-left": ArrowLeft,
+  notification: Notification,
+  "arrow-down": ArrowDown,
 };
 
 export const iconNames = Object.keys(icons);

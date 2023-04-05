@@ -31,6 +31,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
   const [isEdit, setEdit] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [isEditLoading, setEditLoading] = useState<boolean>(false);
+  const [isNotificationOpen, setNotificationOpen] = useState<boolean>(false);
 
   const [playlistInfo, setPlaylistInfo] = useState({
     title: "",
@@ -132,7 +133,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
       <div className={styles.Playlist__Header}>
         {!isLoading && (
           <>
-            <Menu as="div" className="relative inline-block text-left z-50">
+            <Menu as="div" className="relative inline-block text-left">
               <div>
                 <Menu.Button
                   className={`flex font-bold uppercase !text-black items-center w-full justify-center rounded-full px-5 py-2 text-sm ${
@@ -197,6 +198,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
                 </Menu.Items>
               </Transition>
             </Menu>
+
             <button onClick={() => setEdit(true)}>
               <Icon name="edit" />
               Edit
@@ -285,7 +287,11 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
   }, [currentPlaylist]);
 
   return (
-    <div className={styles.Playlist}>
+    <div
+      className={`${styles.Playlist} ${
+        !isNotificationOpen ? "overflow-scroll" : ""
+      }`}
+    >
       {!isPublicView && _editView()}
       {!isPublicView && _listView()}
       <div className={`${styles.Playlist__Sub} ${isEdit ? "my-12" : ""}`}>
@@ -293,7 +299,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
           <div
             className={`${
               (isEdit && "flex justify-between items-center") || ""
-            }my-7`}
+            } my-7`}
           >
             <h1 className={styles.title1}>{currentPlaylist?.title}</h1>
           </div>

@@ -1,12 +1,13 @@
-import { Fragment, useState } from "react";
+import { ChangeEvent, Fragment, useState } from "react";
+import { Tab } from "@headlessui/react";
 import { Switch, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  findMedia,
   postAddMedia,
   postDeleteMedia,
-  postLambdaMedia,
   setAddVideoModal,
-  setLambdaMedia,
+  uploadVideo,
 } from "../../actions";
 import Icon from "../../../../components/Icon";
 import Input from "../../../../components/Input";
@@ -17,12 +18,12 @@ import PlaylistItem from "../../../../components/PlaylistItem";
 export default function AddVideo() {
   const [videoURL, setVideoURL] = useState<string>("");
   const [isNsfw, setNsfw] = useState(false);
+  const [videoTitle, setVideoTitle] = useState<string>("");
+  const [videoDescription, setVideoDescription] = useState<string>("");
 
   const dispatch = useDispatch();
 
   const isModalOpen = useSelector((state: any) => state.modal.addVideoModal);
-  const lambdaLoader = useSelector((state: any) => state.loaders.lambdaLoader);
-  const lambdaMedia = useSelector((state: any) => state.media.lambdaMedia);
   const addMediaLoader = useSelector(
     (state: any) => state.loaders.addMediaLoader
   );
@@ -32,7 +33,7 @@ export default function AddVideo() {
 
   const getVideo = () => {
     dispatch(
-      postLambdaMedia({
+      findMedia({
         playlist_id: currentPlaylist.playlist_id,
         og_url: videoURL,
         is_nsfw: isNsfw,
@@ -41,111 +42,184 @@ export default function AddVideo() {
   };
 
   const onClose = () => {
-    dispatch(setLambdaMedia(null));
     dispatch(setAddVideoModal(false));
     setVideoURL("");
   };
 
-  const editSearch = () => {
-    dispatch(setLambdaMedia(null));
+  const _initialView = () => (
+    <>
+      <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-5 !my-5 pb-5">
+        <Input
+          type="text"
+          placeholder="Paste video url"
+          required
+          withLabel={false}
+          className="!m-0 !h-[35px]"
+          wrapperStyle="!m-0 w-full"
+          value={videoURL}
+          onChange={(e) => setVideoURL(e.target.value)}
+        />
+      </div>
+
+      <div className="flex items-center">
+        <h1 className="mr-4 text-xs font-normal">NSFW</h1>
+        <Switch
+          checked={isNsfw}
+          onChange={setNsfw}
+          className={`${
+            isNsfw ? "bg-[#CC8E45]" : "bg-gray-200"
+          } relative inline-flex h-6 w-11 items-center rounded-full`}
+        >
+          <span className="sr-only">Enable notifications</span>
+          <span
+            className={`${
+              isNsfw ? "translate-x-6" : "translate-x-1"
+            } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+          />
+        </Switch>
+
+        <div className="justify-end w-full flex">
+          <div className="w-full lg:w-auto lg:block flex place-content-end">
+            <Button
+              title="Find"
+              onClick={getVideo}
+              loading={addMediaLoader}
+              color="primary"
+              className="!w-[82px] !capitalize"
+            />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const fileSelectedHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setSelectedFile(event.target.files[0]);
+    }
   };
 
-  const _initialView = () => (
+  const fileUploadHandler = () => {
+    if (selectedFile) {
+      dispatch(
+        uploadVideo({
+          playlist_id: currentPlaylist.playlist_id,
+          title: videoTitle,
+          description: videoDescription,
+          is_nsfw: isNsfw,
+          file: selectedFile,
+        })
+      );
+    }
+  };
+  const _fromURL = () => (
+    <>
+      <div className="flex flex-col lg:justify-between items-center gap-5 !my-5 pb-5">
+        <Input
+          type="file"
+          placeholder="Select mp4 from device"
+          required
+          withLabel={false}
+          className="!m-0 !h-auto"
+          wrapperStyle="!m-0 w-full"
+          onChange={fileSelectedHandler}
+        />
+        <Input
+          type="text"
+          placeholder="Select mp4 from device"
+          required
+          label="Title (required)"
+          className="!m-0 !h-auto"
+          wrapperStyle="!m-0 w-full"
+          value={videoTitle}
+          onChange={(e) => setVideoTitle(e.target.value)}
+        />
+        <Input
+          type="text"
+          placeholder="Select mp4 from device"
+          required
+          label="Description (required)"
+          className="!m-0 !h-auto"
+          wrapperStyle="!m-0 w-full"
+          value={videoDescription}
+          onChange={(e) => setVideoDescription(e.target.value)}
+        />
+      </div>
+
+      <div className="flex items-center">
+        <h1 className="mr-4 text-xs font-normal">NSFW</h1>
+        <Switch
+          checked={isNsfw}
+          onChange={setNsfw}
+          className={`${
+            isNsfw ? "bg-[#CC8E45]" : "bg-gray-200"
+          } relative inline-flex h-6 w-11 items-center rounded-full`}
+        >
+          <span className="sr-only">Enable notifications</span>
+          <span
+            className={`${
+              isNsfw ? "translate-x-6" : "translate-x-1"
+            } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+          />
+        </Switch>
+      </div>
+
+      <div className="justify-end w-full flex">
+        <div className="w-full lg:w-auto lg:block flex place-content-end">
+          <Button
+            title="Upload"
+            onClick={fileUploadHandler}
+            loading={addMediaLoader}
+            color="primary"
+            className="!w-[82px] !capitalize"
+          />
+        </div>
+      </div>
+    </>
+  );
+
+  function classNames(...classes: any) {
+    return classes.filter(Boolean).join(" ");
+  }
+
+  const tabs = ["From URL", "Upload"];
+
+  return (
     <OverlayModal
       title="Add new video"
       desc="Find supported videos from any link."
       open={isModalOpen}
       onClose={onClose}
     >
-      <>
-        <div className="flex flex-col lg:flex-row lg:justify-between items-center gap-5 !my-5 pb-5">
-          <Input
-            type="text"
-            placeholder="Paste video url"
-            required
-            withLabel={false}
-            className="!m-0 !h-[35px]"
-            wrapperStyle="!m-0 w-full"
-            value={videoURL}
-            onChange={(e) => setVideoURL(e.target.value)}
-          />
-          <div className="w-full lg:w-auto lg:block flex place-content-end">
-            <Button
-              title="Find"
-              onClick={getVideo}
-              loading={lambdaLoader}
-              color="primary"
-              className="!w-[82px] !capitalize"
-            />
-          </div>
-        </div>
-
-        <div className="flex items-center">
-          <h1 className="mr-4 text-xs font-normal">NSFW</h1>
-          <Switch
-            checked={isNsfw}
-            onChange={setNsfw}
-            className={`${
-              isNsfw ? "bg-[#CC8E45]" : "bg-gray-200"
-            } relative inline-flex h-6 w-11 items-center rounded-full`}
-          >
-            <span className="sr-only">Enable notifications</span>
-            <span
-              className={`${
-                isNsfw ? "translate-x-6" : "translate-x-1"
-              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-            />
-          </Switch>
-        </div>
-      </>
-    </OverlayModal>
-  );
-
-  const _resultsView = () => (
-    <OverlayModal
-      title="Videos"
-      desc="Find supported videos from any link."
-      open={isModalOpen}
-      onClose={onClose}
-      innerLayoutStyles="!mt-5 lg:mt-0"
-      appendContent={
-        <button
-          className="flex items-center gap-3 mr-0 lg:mr-5"
-          onClick={editSearch}
-        >
-          <Icon name="search-icon" />
-          <p className="text-[#ffffffcc] text-sm">Edit search</p>
-        </button>
-      }
-    >
-      <div className="!mb-0 pb-5 pr-5 max-h-96 overflow-auto">
-        {lambdaMedia &&
-          lambdaMedia.results.map((i: any) => (
-            <PlaylistItem
-              key={i._id}
-              title={i.title}
-              link={i.source}
-              desc={i.description}
-              searchItem
-              onDelete={() =>
-                dispatch(postDeleteMedia({ media_id: i.media_id }))
-              }
-              onAdd={() =>
-                dispatch(
-                  postAddMedia({
-                    ...i,
-                    playlist_id: currentPlaylist.playlist_id,
-                  })
+      <Tab.Group>
+        <Tab.List className="flex gap-5 space-x-1 p-1">
+          {tabs.map((tab, idx) => (
+            <Tab
+              key={idx}
+              className={({ selected }) =>
+                classNames(
+                  "py-2.5 text-sm font-bold leading-5",
+                  "focus:outline-none",
+                  selected
+                    ? "border-b-[3px] border-[#CC8E45] text-white text-opacity-80"
+                    : "text-white text-opacity-20"
                 )
               }
-              isAddLoading={addMediaLoader}
-            />
+            >
+              {tab}
+            </Tab>
           ))}
-      </div>
+        </Tab.List>
+        <Tab.Panels className="mt-2">
+          {tabs.map((tab, idx) => (
+            <Tab.Panel key={idx}>
+              {idx == 0 ? _initialView() : _fromURL()}
+            </Tab.Panel>
+          ))}
+        </Tab.Panels>
+      </Tab.Group>
     </OverlayModal>
   );
-
-  return lambdaMedia?.status === "Success" && lambdaMedia?.results.length > 0
-    ? _resultsView()
-    : _initialView();
 }

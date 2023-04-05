@@ -65,11 +65,6 @@ export interface editPlaylistPayload extends newPlaylistPayload {
   playlist_id: string;
 }
 
-export interface lambdaMediaPayload {
-  url?: string;
-  request_id?: string;
-}
-
 export interface mediaControllerPayload {
   media_id: string;
 }
