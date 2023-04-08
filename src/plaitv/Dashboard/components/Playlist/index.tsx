@@ -3,7 +3,7 @@ import styles from "./Playlist.module.scss";
 import PlaylistItem from "../../../../components/PlaylistItem";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import Input from "../../../../components/Input";
-import { Menu, Transition } from "@headlessui/react";
+import { Menu, Switch, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getMediaStatus,
@@ -33,6 +33,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
   const [isEdit, setEdit] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(true);
   const [isEditLoading, setEditLoading] = useState<boolean>(false);
+  const [isNsfw, setNsfw] = useState<boolean>(false);
 
   const [playlistInfo, setPlaylistInfo] = useState({
     title: "",
@@ -114,8 +115,23 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
           }
         />
 
-        <div className="flex place-content-end">
-          <button
+        <div className="flex items-center">
+          <h1 className="mr-4 text-xs font-normal text-white">NSFW</h1>
+          <Switch
+            checked={isNsfw}
+            onChange={setNsfw}
+            className={`${
+              isNsfw ? "bg-[#CC8E45]" : "bg-gray-200"
+            } relative inline-flex h-6 w-11 items-center rounded-full`}
+          >
+            <span className="sr-only">Enable notifications</span>
+            <span
+              className={`${
+                isNsfw ? "translate-x-6" : "translate-x-1"
+              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+            />
+          </Switch>
+          {/* <button
             className="text-[#ffffff80] text-sm"
             onClick={() => {
               dispatch(setDeletePlaylistModal(true));
@@ -123,7 +139,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
             }}
           >
             <span>Delete Playlist</span>
-          </button>
+          </button> */}
         </div>
       </div>
     </Transition>
@@ -234,6 +250,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
                 }
                 onClick={() => chooseMedia(i)}
                 isDeleteLoading={deleteMediaLoader}
+                thumbnail={i.image}
               />
             ))}
         </div>

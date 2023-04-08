@@ -15,6 +15,7 @@ interface propTypes {
   onAdd?: () => void;
   isDeleteLoading?: boolean;
   onClick?: () => void;
+  thumbnail?: string;
 }
 
 export default function PlaylistItem({
@@ -29,9 +30,18 @@ export default function PlaylistItem({
   onAdd = () => {},
   isDeleteLoading = false,
   onClick = () => {},
+  thumbnail = "",
 }: propTypes) {
   const renderActiveIcon = () =>
-    active ? <Icon name="play-active" /> : <Icon name="play-inactive" />;
+    thumbnail.trim().length > 0 ? (
+      <img
+        src={thumbnail}
+        className="w-[55px] h-[43px] rounded-[5px] object-cover"
+        alt=""
+      />
+    ) : (
+      <div></div>
+    );
 
   return (
     <div className={styles.PlaylistItem} onClick={onClick}>
@@ -50,7 +60,7 @@ export default function PlaylistItem({
         <div>
           <h1
             className={`${styles.h1} ${
-              (isEditState && "!text-[#ffffff80] !font-normal") || ""
+              isEditState || (!active && "!text-[#ffffff80] !font-normal") || ""
             }`}
           >
             {title}

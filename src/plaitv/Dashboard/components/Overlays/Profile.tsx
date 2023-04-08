@@ -2,7 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   postChangePassword,
   postUpdateUserProfile,
+  setDeleteAccountModal,
   setNewPlaylistModal,
+  setPasswordModal,
   setProfileModal,
 } from "../../actions";
 import Input from "../../../../components/Input";
@@ -22,40 +24,36 @@ export default function Profile() {
 
   const userData = JSON.parse(getLocalUser());
 
-  const { email, first_name, last_name } = userData;
+  const {
+    email,
+    first_name,
+    last_name,
+    username: profileUsername,
+    profile_description,
+  } = userData;
 
   const [firstName, setFirstName] = useState<string>(first_name);
   const [lastName, setLastName] = useState<string>(last_name);
-
-  const [currentPassword, setCurrentPassword] = useState<string>("");
-  const [newPassword, setNewPassword] = useState<string>("");
-  const [repeatPassword, setRepeatPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>(profileUsername);
+  const [description, setDescription] = useState<string>(profile_description);
 
   const updateProfile = (e: SyntheticEvent) => {
     e.preventDefault();
 
-    if (firstName !== first_name || lastName !== last_name) {
+    if (
+      firstName !== first_name ||
+      lastName !== last_name ||
+      username !== profileUsername ||
+      description !== profile_description
+    ) {
       dispatch(
         postUpdateUserProfile({
           first_name: firstName,
           last_name: lastName,
+          username,
+          profile_description: description,
         })
       );
-    }
-
-    if (newPassword === repeatPassword) {
-      if (currentPassword.trim().length > 5) {
-        dispatch(
-          postChangePassword({
-            current_password: currentPassword,
-            new_password: newPassword,
-          })
-        );
-      }
-    } else {
-      toast.error("New password and repeat password don't match!", {
-        style: { background: "#333", color: "#fff" },
-      });
     }
   };
 
@@ -101,38 +99,49 @@ export default function Profile() {
             value={lastName ?? ""}
             onChange={(e) => setLastName(e.target.value)}
           />
+          <Input
+            type="text"
+            placeholder="Username"
+            className="mb-5"
+            required
+            withLabel={true}
+            label="Username"
+            value={username ?? ""}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            type="text"
+            placeholder="Profile description (optional)"
+            className="mb-5"
+            required
+            withLabel={true}
+            label="Profile description (optional)"
+            value={description ?? ""}
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </div>
-        <div className="!my-6">
+        <div className="!my-6 flex flex-col gap-3">
           <h1 className="uppercase !text-[#ffffff33] !font-bold !text-xs !mb-2.5">
-            Security
+            Options
           </h1>
-          <Input
-            type="password"
-            placeholder="Current password"
-            className="mb-5"
-            required
-            withLabel={true}
-            label="Current password"
-            onChange={(e) => setCurrentPassword(e.target.value)}
-          />
-          <Input
-            type="password"
-            placeholder="New password"
-            className="mb-5"
-            required
-            withLabel={true}
-            label="New password"
-            onChange={(e) => setNewPassword(e.target.value)}
-          />
-          <Input
-            type="password"
-            placeholder="Repeat new password"
-            className="mb-5"
-            required
-            withLabel={true}
-            label="Repeat new password"
-            onChange={(e) => setRepeatPassword(e.target.value)}
-          />
+          <button
+            className="text-[#CC8E45] font-bold text-sm w-32 justify-start text-left"
+            onClick={() => {
+              dispatch(setProfileModal(false));
+              dispatch(setPasswordModal(true));
+            }}
+          >
+            Change password
+          </button>
+          <button
+            className="text-[#C83C44] font-bold text-sm w-28 justify-start text-left"
+            onClick={() => {
+              dispatch(setProfileModal(false));
+              dispatch(setDeleteAccountModal(true));
+            }}
+          >
+            Delete account
+          </button>
         </div>
 
         <div className="flex place-content-end">

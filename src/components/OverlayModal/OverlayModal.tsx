@@ -12,6 +12,7 @@ type propTypes = DialogParameters & {
   desc?: string;
   appendContent?: JSX.Element;
   innerLayoutStyles?: string;
+  innerContentStyles?: string;
 };
 
 export default function OverlayModal({
@@ -21,6 +22,7 @@ export default function OverlayModal({
   desc,
   appendContent,
   innerLayoutStyles,
+  innerContentStyles,
   ...rest
 }: propTypes) {
   return (
@@ -72,7 +74,11 @@ export default function OverlayModal({
                     </div>
                     {appendContent && <div>{appendContent}</div>}
                   </div>
-                  <div className={styles.Modal__InnerLayoutContent}>
+                  <div
+                    className={`${styles.Modal__InnerLayoutContent} ${
+                      (innerContentStyles && innerContentStyles) || ""
+                    }`}
+                  >
                     {children}
                   </div>
                 </div>

@@ -121,3 +121,23 @@ export const setMediaStatus = (payload: any) => ({
   type: Types.SET_MEDIA_STATUS,
   payload,
 });
+
+export const setPasswordModal = (payload: any) => ({
+  type: Types.SET_CHANGE_PWD_MODAL,
+  payload,
+});
+
+export const deleteAccount = (payload: any) => ({
+  type: Types.POST_DELETE_ACCOUNT,
+  payload,
+});
+
+export const setDeleteAccountModal = (payload: any) => ({
+  type: Types.SET_DELETE_ACCOUNT_MODAL,
+  payload,
+});
+
+export const setNsfwModal = (payload: any) => ({
+  type: Types.SET_NSFW_MODAL,
+  payload,
+});

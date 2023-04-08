@@ -1,7 +1,7 @@
 .PlaylistItem {
-  @apply flex gap-3 mb-5 relative cursor-pointer transition-all duration-500 ease-in-out;
+  @apply flex justify-between gap-3 mb-5 relative cursor-pointer transition-all duration-500 ease-in-out;
   div:nth-child(2) {
-    @apply pb-6;
+    @apply pb-6 w-full;
     word-break: break-all;
     .h1 {
       @apply text-white font-bold text-sm;

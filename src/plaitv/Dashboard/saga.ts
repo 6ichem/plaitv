@@ -15,7 +15,11 @@ import {
   httpUpdatePlaylist,
   newPlaylist,
 } from "../../http/api/playlist";
-import { httpGetTerms, httpUpdateUserProfile } from "../../http/api/users";
+import {
+  httpDeleteAccount,
+  httpGetTerms,
+  httpUpdateUserProfile,
+} from "../../http/api/users";
 import { ResponseGenerator } from "../../http/types";
 import { getLocalUser, setLocalUser } from "../../http/utils";
 import {
@@ -29,6 +33,7 @@ import {
   setMediaStatus,
 } from "./actions";
 import * as Types from "./actionTypes";
+import { userLogout } from "../Auth/Login/actions";
 
 export const state = (state: any) => state;
 
@@ -234,7 +239,7 @@ function* changeUserPassword({ payload }: any): any {
     });
 
     yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: false });
-    yield put({ type: Types.SET_PROFILE_MODAL, payload: false });
+    yield put({ type: Types.SET_CHANGE_PWD_MODAL, payload: false });
   } catch (e: any) {
     toast.error(e?.response?.data, {
       style: { background: "#333", color: "#fff" },
@@ -333,6 +338,33 @@ function* mediaStatus({ payload }: any) {
   }
 }
 
+function* deleteAccount({ payload }: any) {
+  yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: true });
+
+  try {
+    const resp: ResponseGenerator = yield call(
+      httpDeleteAccount,
+      payload.password
+    );
+
+    yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: false });
+
+    toast.success(`Account deleted.`, {
+      style: { background: "#333", color: "#fff" },
+    });
+
+    yield delay(1500);
+    window.location.href = "/";
+    yield put(userLogout());
+  } catch (e: any) {
+    toast.error(e?.response?.data?.detail, {
+      style: { background: "#333", color: "#fff" },
+    });
+    console.log("DELETE_ACCOUNT", e?.response?.data);
+    yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: false });
+  }
+}
+
 function* watcher() {
   yield all([takeLatest(Types.GET_USER_PLAYLISTS, getAllUserPlaylists)]);
   yield all([takeLatest(Types.GET_PLAYLIST_MEDIA, getUserPlaylistMedia)]);
@@ -346,6 +378,8 @@ function* watcher() {
   yield all([takeLatest(Types.POST_DELETE_PLAYLIST, deletePlaylist)]);
   yield all([takeLatest(Types.UPLOAD_VIDEO, uploadVideo)]);
   yield all([takeLatest(Types.GET_MEDIA_STATUS, mediaStatus)]);
+  yield all([takeLatest(Types.GET_MEDIA_STATUS, mediaStatus)]);
+  yield all([takeLatest(Types.POST_DELETE_ACCOUNT, deleteAccount)]);
 }
 
 export const dashboardSaga = watcher;

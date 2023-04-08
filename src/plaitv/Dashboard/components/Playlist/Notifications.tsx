@@ -19,7 +19,6 @@ export default function Notifications() {
     }
   };
 
-  console.log(mediaStatus);
   return (
     <Menu as="div" className="hidden lg:inline-block relative text-left">
       <div>

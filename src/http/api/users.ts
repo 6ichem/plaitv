@@ -4,41 +4,81 @@ import { BASE_URL } from "../constants";
 import { instance } from "../config";
 
 export const createUser = async (payload: createUserPayload) => {
-  const { data } = await axios.post(`${BASE_URL}/users/create`, payload);
+  try {
+    const { data } = await axios.post(`${BASE_URL}/users/create`, payload);
 
-  return data;
+    return data;
+  } catch (e: any) {
+    throw e;
+  }
 };
 
 export const resendVerificationMail = async (payload: createUserPayload) => {
-  const { data } = await axios.post(
-    `${BASE_URL}/users/resend-email-verification_link`,
-    payload
-  );
+  try {
+    const { data } = await axios.post(
+      `${BASE_URL}/users/resend-email-verification_link`,
+      payload
+    );
 
-  return data;
+    return data;
+  } catch (e: any) {
+    throw e;
+  }
 };
 
 export const httpUpdateUserProfile = async (payload: userProfilePayload) => {
-  const { data } = await instance.put(`${BASE_URL}/users/update-user`, payload);
-  return data;
+  try {
+    const { data } = await instance.put(
+      `${BASE_URL}/users/update-user`,
+      payload
+    );
+    return data;
+  } catch (e: any) {
+    throw e;
+  }
 };
 
 export const httpGetTerms = async () => {
-  const { data } = await instance.get(`${BASE_URL}/users/get-terms`);
+  try {
+    const { data } = await instance.get(`${BASE_URL}/users/get-terms`);
 
-  return data;
+    return data;
+  } catch (e: any) {
+    throw e;
+  }
 };
 
 export const httpSearchUser = async (username: string) => {
-  const { data } = await instance.get(`${BASE_URL}/users/search-username`, {
-    params: { username },
-  });
-  return data;
+  try {
+    const { data } = await instance.get(`${BASE_URL}/users/search-username`, {
+      params: { username },
+    });
+    return data;
+  } catch (e: any) {
+    throw e;
+  }
 };
 
 export const httpFindProfile = async (username: string) => {
-  const { data } = await instance.get(
-    `${BASE_URL}/users/get-public-profile/u/${username}/`
-  );
-  return data;
+  try {
+    const { data } = await instance.get(
+      `${BASE_URL}/users/get-public-profile/u/${username}/`
+    );
+    return data;
+  } catch (e: any) {
+    throw e;
+  }
+};
+
+export const httpDeleteAccount = async (password: string) => {
+  try {
+    const { data } = await instance.delete(`${BASE_URL}/users/delete-account`, {
+      params: {
+        password,
+      },
+    });
+    return data;
+  } catch (e: any) {
+    throw e;
+  }
 };

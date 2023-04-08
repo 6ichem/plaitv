@@ -7,6 +7,9 @@ const initialModalState = {
   profileModal: false,
   deletePlaylistModal: false,
   acceptTermsModal: false,
+  changePasswordModal: false,
+  deleteAccountModal: false,
+  nsfwModal: false,
 };
 
 const modalStrategies = {
@@ -38,6 +41,24 @@ const modalStrategies = {
     return {
       ...state,
       acceptTermsModal: payload,
+    };
+  },
+  [Types.SET_CHANGE_PWD_MODAL]: (state: any, payload: any) => {
+    return {
+      ...state,
+      changePasswordModal: payload,
+    };
+  },
+  [Types.SET_DELETE_ACCOUNT_MODAL]: (state: any, payload: any) => {
+    return {
+      ...state,
+      deleteAccountModal: payload,
+    };
+  },
+  [Types.SET_NSFW_MODAL]: (state: any, payload: any) => {
+    return {
+      ...state,
+      nsfwModal: payload,
     };
   },
   __default__: (state: any) => state,

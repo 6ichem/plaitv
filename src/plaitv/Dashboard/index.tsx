@@ -6,16 +6,23 @@ import Playlist from "./components/Playlist";
 import CreatePlaylist from "./components/Overlays/CreatePlaylist";
 import AddVideo from "./components/Overlays/AddVideo";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserPlaylists, setTermsModal } from "./actions";
+import { getUserPlaylists, setNsfwModal, setTermsModal } from "./actions";
 import Profile from "./components/Overlays/Profile";
 import RenderVideo from "./components/RenderVideo";
 import DeletePlaylist from "./components/Overlays/DeletePlaylist";
 import AcceptTerms from "./components/Overlays/AcceptTerms";
 import { getLocalUser } from "../../http/utils";
+import ChangePassword from "./components/Overlays/ChangePassword";
+import DeleteAccount from "./components/Overlays/DeleteAccount";
+import NSFWModal from "./components/Overlays/Nsfw";
 
 export default function Dashboard() {
   const userPlaylists =
     useSelector((state: any) => state.userPlaylists.userPlaylists) ?? [];
+  const currentPlaylist = useSelector(
+    (state: any) => state.userPlaylists.currentPlaylist
+  );
+  const nsfwModal = useSelector((state: any) => state.modal.nsfwModal);
 
   const userData = JSON.parse(getLocalUser());
 
@@ -30,9 +37,13 @@ export default function Dashboard() {
     else dispatch(setTermsModal(true));
   }, []);
 
+  useEffect(() => {
+    if (currentPlaylist?.is_nsfw) dispatch(setNsfwModal(true));
+  }, [currentPlaylist]);
+
   return (
     <div className={styles.Dashboard}>
-      {userData.terms_accepted ? (
+      {userData.terms_accepted && !nsfwModal ? (
         <>
           <Navigation />
 
@@ -46,10 +57,14 @@ export default function Dashboard() {
         <AcceptTerms />
       )}
 
+      <NSFWModal />
+
       <CreatePlaylist />
       <AddVideo />
       <Profile />
       <DeletePlaylist />
+      <ChangePassword />
+      <DeleteAccount />
     </div>
   );
 }
