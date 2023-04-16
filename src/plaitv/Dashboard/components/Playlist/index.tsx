@@ -15,9 +15,11 @@ import {
 } from "../../actions";
 import Loader from "../../../../components/Loader";
 import Notifications from "./Notifications";
+import { getLocalAccessToken } from "../../../../http/utils";
 
 export default function Playlist({ userPlaylists, isPublicView = false }: any) {
   const dispatch = useDispatch();
+  const isAuthenticated = getLocalAccessToken();
 
   const currentPlaylist = useSelector(
     (state: any) => state.userPlaylists.currentPlaylist
@@ -294,8 +296,10 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
   }, [currentPlaylist]);
 
   useEffect(() => {
-    if (currentPlaylist && "playlist_id" in currentPlaylist && !isLoading)
-      dispatch(getMediaStatus());
+    if (isAuthenticated) {
+      if (currentPlaylist && "playlist_id" in currentPlaylist && !isLoading)
+        dispatch(getMediaStatus());
+    }
   }, [currentPlaylist, isLoading]);
 
   return (
