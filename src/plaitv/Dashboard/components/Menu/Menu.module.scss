@@ -4,7 +4,7 @@
     @apply relative inline-block text-left;
   }
   .Menu__Button {
-    @apply inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 text-sm font-medium text-white focus:outline-none;
+    @apply inline-flex w-full justify-center rounded-md bg-[#262628] bg-opacity-20 p-1 text-sm font-medium text-white focus:outline-none;
     svg {
       @apply transition-all duration-500 ease-in-out hover:opacity-70;
     }

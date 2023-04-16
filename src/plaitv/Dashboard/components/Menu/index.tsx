@@ -28,10 +28,17 @@ export default function MenuDropdown({ mobileView = false }) {
   return (
     <div className={styles.Menu}>
       <Menu as="div" className={styles.Menu__Header}>
-        <div>
+        <div className="flex items-center gap-3">
           <Menu.Button className={styles.Menu__Button}>
-            {mobileView ? <Icon name="mobile-menu" /> : <Icon name="menu" />}
+            <Icon name="burger" />
           </Menu.Button>
+
+          <a
+            href="/explore"
+            className="text-white text-opacity-60 text-xs font-normal"
+          >
+            Explore
+          </a>
         </div>
         <Transition
           as={Fragment}

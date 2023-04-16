@@ -20,6 +20,7 @@ import { ReactComponent as ArrowDown } from "../assets/arrow-down.svg";
 import { ReactComponent as DefaultVideo } from "../assets/default-video.svg";
 import { ReactComponent as CheckCircle } from "../assets/check-circle.svg";
 import { ReactComponent as XCircle } from "../assets/x-circle.svg";
+import { ReactComponent as Burger } from "../assets/burger.svg";
 
 const icons = {
   edit: Edit,
@@ -44,6 +45,7 @@ const icons = {
   "default-video": DefaultVideo,
   "check-circle": CheckCircle,
   "x-circle": XCircle,
+  burger: Burger,
 };
 
 export const iconNames = Object.keys(icons);
