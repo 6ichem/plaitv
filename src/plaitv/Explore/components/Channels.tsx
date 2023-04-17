@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { searchUser } from "../actions";
+import { searchUser, setSearchResults } from "../actions";
 
 export default function Channels() {
   const dispatch = useDispatch();
@@ -29,6 +29,8 @@ export default function Channels() {
   useEffect(() => {
     if (searchValue.trim().length > 0) {
       submitSearch();
+    } else {
+      dispatch(setSearchResults([]));
     }
   }, [searchValue]);
 

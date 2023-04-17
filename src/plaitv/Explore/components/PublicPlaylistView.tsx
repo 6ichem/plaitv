@@ -5,7 +5,7 @@ import Navigation from "../../Dashboard/components/Navigation";
 import Playlist from "../../Dashboard/components/Playlist";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPlaylist } from "../../Dashboard/actions";
+import { setCurrentPlaylist, setNsfwModal } from "../../Dashboard/actions";
 import RenderVideo from "../../Dashboard/components/RenderVideo";
 import { useParams } from "react-router-dom";
 import Loader from "../../../components/Loader";
@@ -14,10 +14,15 @@ import {
   getPublicPlaylistMedia,
   setFoundProfile,
 } from "../actions";
+import { getLocalAccessToken } from "../../../http/utils";
+import NSFWModal from "../../Dashboard/components/Overlays/Nsfw";
 
 export default function PublicPlaylistView() {
   const [isLoading, setIsLoading] = useState(true);
   const { playlistId, userId } = useParams();
+  const isAuthenticated = getLocalAccessToken();
+
+  const nsfwModal = useSelector((state: any) => state.modal.nsfwModal) ?? false;
 
   const userPlaylists =
     useSelector((state: any) => state.userPlaylists.userPlaylists) ?? [];
@@ -60,9 +65,19 @@ export default function PublicPlaylistView() {
 
   useEffect(() => {
     document.body.style.backgroundColor = "#18181A";
+    return () => {
+      if (!isAuthenticated) document.body.style.backgroundColor = "#000000";
+    };
   }, []);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const allow_nsfw = localStorage.getItem("allow_nsfw");
+
+    if (currentPlaylist?.is_nsfw && !allow_nsfw && allow_nsfw !== "true")
+      dispatch(setNsfwModal(true));
+  }, [currentPlaylist]);
 
   return (
     <div className={styles.Dashboard}>
@@ -70,17 +85,21 @@ export default function PublicPlaylistView() {
         <Loader type="spinner" />
       ) : (
         <>
-          <>
-            <Navigation isPublicView={true} />
+          {!nsfwModal && (
+            <>
+              <Navigation isPublicView={true} />
 
-            <RenderVideo />
+              <RenderVideo />
 
-            <div className="block lg:hidden">
-              <Playlist userPlaylists={userPlaylists} />
-            </div>
-          </>
+              <div className="block lg:hidden">
+                <Playlist userPlaylists={userPlaylists} isPublicView={true} />
+              </div>
+            </>
+          )}
         </>
       )}
+
+      <NSFWModal isPublic={true} user={userId} />
     </div>
   );
 }

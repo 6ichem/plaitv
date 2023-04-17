@@ -12,10 +12,14 @@ import {
   setAddVideoModal,
   setCurrentMedia,
   setDeletePlaylistModal,
+  setNotificationModal,
 } from "../../actions";
 import Loader from "../../../../components/Loader";
 import Notifications from "./Notifications";
 import { getLocalAccessToken } from "../../../../http/utils";
+import { DASHBOARD } from "../../constants";
+import NotificationsOverlay from "./NotificationsOverlay";
+import { SET_NOTIFICAITONS_MODAL } from "../../actionTypes";
 
 export default function Playlist({ userPlaylists, isPublicView = false }: any) {
   const dispatch = useDispatch();
@@ -67,6 +71,10 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
     if (item.media_id !== currentMedia.media_id) {
       dispatch(setCurrentMedia(item));
     }
+  };
+
+  const openMobileNotifications = () => {
+    dispatch(setNotificationModal(true));
   };
 
   const _editView = () => (
@@ -123,10 +131,9 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
             checked={isNsfw}
             onChange={setNsfw}
             className={`${
-              isNsfw ? "bg-[#CC8E45]" : "bg-gray-200"
-            } relative inline-flex h-6 w-11 items-center rounded-full`}
+              isNsfw ? "bg-[#CC8E45]" : "bg-white bg-opacity-20"
+            } relative inline-flex h-6 lg:w-11 items-center rounded-full`}
           >
-            <span className="sr-only">Enable notifications</span>
             <span
               className={`${
                 isNsfw ? "translate-x-6" : "translate-x-1"
@@ -155,14 +162,14 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
             <Menu as="div" className="relative inline-block text-left">
               <div>
                 <Menu.Button
-                  className={`flex font-bold uppercase !text-black items-center w-full justify-center rounded-full px-5 py-2 text-sm ${
+                  className={`flex font-bold uppercase !text-black items-center w-full justify-center rounded-full py-1 px-2 text-sm ${
                     !currentPlaylist.is_public
                       ? "bg-white bg-opacity-50"
                       : "bg-[#50E856]"
                   }`}
                 >
                   {currentPlaylist.is_public ? "Public" : "Private"}
-                  <Icon name="arrow-down" />
+                  <Icon name="arrow-down" className="!mx-1" />
                 </Menu.Button>
               </div>
               <Transition
@@ -205,7 +212,16 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
             </Menu>
 
             <div className="flex items-center">
-              <Notifications />
+              <div className="hidden lg:inline-block">
+                <Notifications />
+              </div>
+              <div className="inline-block lg:hidden">
+                <button onClick={openMobileNotifications}>
+                  <Icon name="notification" />
+                </button>
+
+                <NotificationsOverlay />
+              </div>
               <button onClick={() => setEdit(true)}>
                 <Icon name="edit" />
                 Edit
@@ -266,15 +282,6 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
       </div>
     );
 
-  const RenderContent: any = () =>
-    isLoading ? (
-      <div className="my-32">
-        <Loader type="spinner" />
-      </div>
-    ) : (
-      _playlistView()
-    );
-
   useEffect(() => {
     if (currentPlaylist && "playlist_id" in currentPlaylist && playlistMedia) {
       dispatch(setCurrentMedia(playlistMedia[0]));
@@ -316,7 +323,13 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
             <h1 className={styles.title1}>{currentPlaylist?.title}</h1>
           </div>
         )}
-        <RenderContent />
+        {isLoading ? (
+          <div className="my-32">
+            <Loader type="spinner" />
+          </div>
+        ) : (
+          _playlistView()
+        )}
       </div>
     </div>
   );

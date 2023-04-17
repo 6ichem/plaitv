@@ -23,3 +23,5 @@ export const POST_RESEND_MAIL = `${AUTH}/POST_RESEND_MAIL`;
 export const POST_REFRESH_TOKEN = `${AUTH}/POST_REFRESH_TOKEN`;
 
 export const USER_LOGOUT = `${AUTH}/USER_LOGOUT`;
+export const GET_USER = `${AUTH}/GET_USER`;
+export const SET_USER = `${AUTH}/SET_USER`;

@@ -20,6 +20,7 @@ export default function AddVideo() {
   const [isNsfw, setNsfw] = useState(false);
   const [videoTitle, setVideoTitle] = useState<string>("");
   const [videoDescription, setVideoDescription] = useState<string>("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const dispatch = useDispatch();
 
@@ -44,6 +45,10 @@ export default function AddVideo() {
   const onClose = () => {
     dispatch(setAddVideoModal(false));
     setVideoURL("");
+    setVideoTitle("");
+    setVideoDescription("");
+    setSelectedFile(null);
+    setNsfw(false);
   };
 
   const _initialView = () => (
@@ -67,13 +72,12 @@ export default function AddVideo() {
           checked={isNsfw}
           onChange={setNsfw}
           className={`${
-            isNsfw ? "bg-[#CC8E45]" : "bg-gray-200"
-          } relative inline-flex h-6 w-11 items-center rounded-full`}
+            isNsfw ? "bg-[#CC8E45]" : "bg-white bg-opacity-20"
+          } relative inline-flex h-6 lg:w-11 items-center rounded-full`}
         >
-          <span className="sr-only">Enable notifications</span>
           <span
             className={`${
-              isNsfw ? "translate-x-6" : "translate-x-1"
+              isNsfw ? "translate-x-6" : "translate-x-1 bg-[#787878]"
             } inline-block h-4 w-4 transform rounded-full bg-white transition`}
           />
         </Switch>
@@ -92,8 +96,6 @@ export default function AddVideo() {
       </div>
     </>
   );
-
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const fileSelectedHandler = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -154,10 +156,9 @@ export default function AddVideo() {
           checked={isNsfw}
           onChange={setNsfw}
           className={`${
-            isNsfw ? "bg-[#CC8E45]" : "bg-gray-200"
-          } relative inline-flex h-6 w-11 items-center rounded-full`}
+            isNsfw ? "bg-[#CC8E45]" : "bg-white bg-opacity-20"
+          } relative inline-flex h-6 lg:w-11 items-center rounded-full`}
         >
-          <span className="sr-only">Enable notifications</span>
           <span
             className={`${
               isNsfw ? "translate-x-6" : "translate-x-1"

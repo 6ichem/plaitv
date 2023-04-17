@@ -12,8 +12,8 @@
       @apply flex items-center gap-8 my-20;
       div {
         @apply w-full;
-        h3 {
-          @apply text-[#CC8E45] font-bold text-sm mb-1;
+        a {
+          @apply text-[#CC8E45] font-bold text-sm mb-1 block;
         }
         span {
           @apply text-[#ffffff80] text-xs my-0;

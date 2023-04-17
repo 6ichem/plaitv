@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { takeLatest, all, call, put, select, delay } from "redux-saga/effects";
-import { httpChangePassword } from "../../http/api/auth";
+import { httpChangePassword, httpCheckToken } from "../../http/api/auth";
 import {
   httpAddMedia,
   httpDeleteMedia,
@@ -55,11 +55,17 @@ function* getUserPlaylistMedia({ payload }: any) {
 function* getAllUserPlaylists(): any {
   try {
     const resp: any = yield call(getUserPlaylists);
+    const user = getLocalUser();
+    const userData = JSON.parse(user);
+
+    const whichPlaylist =
+      userData.last_playlist_id || userData.default_playlist_id;
+    const findPlaylist = resp.find((i: any) => i.playlist_id == whichPlaylist);
 
     yield put(setUserPlaylists(resp));
 
     if (resp.length > 0) {
-      yield put(setCurrentPlaylist(resp[0]));
+      yield put(setCurrentPlaylist(findPlaylist || resp[0]));
 
       yield put(getPlaylistMedia({ playlist_id: resp[0].playlist_id }));
     }
@@ -114,7 +120,7 @@ function* findMedia({ payload }: any): any {
   try {
     const resp: ResponseGenerator = yield call(httpFindMedia, payload);
 
-    toast.success("Video ququed for adding", {
+    toast.success("Video queued for upload", {
       style: { background: "#333", color: "#fff" },
     });
 
@@ -291,7 +297,7 @@ function* uploadVideo({ payload }: any) {
   try {
     const resp: ResponseGenerator = yield call(httpUploadVideo, payload);
 
-    toast.success("Video ququed for adding", {
+    toast.success("Video queued for upload", {
       style: { background: "#333", color: "#fff" },
     });
 

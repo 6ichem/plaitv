@@ -12,20 +12,27 @@ export default function Navbar() {
     <div className={styles.Navbar}>
       <Icon name="navbar-logo" />
 
-      <div>
+      <div className="items-center">
+        <a
+          href="/explore"
+          className="text-white text-opacity-60 text-xs font-normal"
+        >
+          Explore
+        </a>
+
         <Button
           title="Login"
           color="secondary"
           onClick={() => navigate("/login")}
           rounded
-          className="!min-h-[50px] md:min-w-[109.15px] !w-[96.06px]"
+          className="px-2 py-1 !w-auto"
         />
         <Button
           title="Sign Up"
           color="primary"
           onClick={() => navigate("/register")}
           rounded
-          className="!min-h-[50px] md:min-w-[109.15px] !w-[96.06px]"
+          className="px-2 py-1 !w-auto"
         />
       </div>
     </div>

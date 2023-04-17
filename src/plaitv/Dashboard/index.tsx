@@ -15,6 +15,7 @@ import { getLocalUser } from "../../http/utils";
 import ChangePassword from "./components/Overlays/ChangePassword";
 import DeleteAccount from "./components/Overlays/DeleteAccount";
 import NSFWModal from "./components/Overlays/Nsfw";
+import { getUser } from "../Auth/Login/actions";
 
 export default function Dashboard() {
   const userPlaylists =
@@ -38,12 +39,12 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    if (currentPlaylist?.is_nsfw) dispatch(setNsfwModal(true));
-  }, [currentPlaylist]);
+    dispatch(getUser());
+  }, []);
 
   return (
     <div className={styles.Dashboard}>
-      {userData.terms_accepted && !nsfwModal ? (
+      {userData.terms_accepted ? (
         <>
           <Navigation />
 
@@ -56,8 +57,6 @@ export default function Dashboard() {
       ) : (
         <AcceptTerms />
       )}
-
-      <NSFWModal />
 
       <CreatePlaylist />
       <AddVideo />

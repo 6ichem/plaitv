@@ -10,6 +10,7 @@ const initialModalState = {
   changePasswordModal: false,
   deleteAccountModal: false,
   nsfwModal: false,
+  notificationsModal: false,
 };
 
 const modalStrategies = {
@@ -59,6 +60,12 @@ const modalStrategies = {
     return {
       ...state,
       nsfwModal: payload,
+    };
+  },
+  [Types.SET_NOTIFICAITONS_MODAL]: (state: any, payload: any) => {
+    return {
+      ...state,
+      notificationsModal: payload,
     };
   },
   __default__: (state: any) => state,
@@ -150,6 +157,7 @@ const initialLoaderState = {
   userProfileLoader: false,
   deletePlaylistLoader: false,
   userPublicProfileLoader: true,
+  statusRefreshingLoader: false,
 };
 
 const loaderStrategies = {

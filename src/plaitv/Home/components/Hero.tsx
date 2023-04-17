@@ -25,8 +25,8 @@ export default function Hero() {
             className="!h-[58px] !font-bold !capitalize !text-sm !font-semibold w-auto"
           />
           <div>
-            <h3>Your Favourite Content</h3>
-            <span>Create Your Private Playlist</span>
+            <a href="/">Learn more</a>
+            <span>Read about Plai.tv in our docs.</span>
           </div>
         </div>
       </div>

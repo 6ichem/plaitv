@@ -84,3 +84,9 @@ export const httpChangePassword = async (payload: changePasswordPayload) => {
 
   return data;
 };
+
+export const httpCheckToken = async () => {
+  const { data } = await instance.post(`${BASE_URL}/auth/check-token`);
+
+  return data;
+};

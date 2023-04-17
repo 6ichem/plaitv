@@ -9,12 +9,14 @@ import Button from "../../../../components/Button";
 import OverlayModal from "../../../../components/OverlayModal/OverlayModal";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { Switch } from "@headlessui/react";
 
 export default function CreatePlaylist() {
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [isNsfw, setNsfw] = useState(false);
 
   const isModalOpen = useSelector((state: any) => state.modal.newPlaylistModal);
   const newPlaylistData = useSelector(
@@ -29,6 +31,7 @@ export default function CreatePlaylist() {
       postNewPlaylist({
         title,
         description,
+        is_nsfw: isNsfw,
       })
     );
   };
@@ -56,6 +59,24 @@ export default function CreatePlaylist() {
           withLabel={false}
           onChange={(e) => setDescription(e.target.value)}
         />
+
+        <div className="flex items-center">
+          <h1 className="mr-4 text-xs font-normal">NSFW</h1>
+          <Switch
+            checked={isNsfw}
+            onChange={setNsfw}
+            className={`${
+              isNsfw ? "bg-[#CC8E45]" : "bg-white bg-opacity-20"
+            } relative inline-flex h-6 lg:w-11 items-center rounded-full`}
+          >
+            <span
+              className={`${
+                isNsfw ? "translate-x-6" : "translate-x-1 bg-[#787878]"
+              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+            />
+          </Switch>
+        </div>
+
         <div className="flex place-content-end">
           <Button
             loading={isLoading}

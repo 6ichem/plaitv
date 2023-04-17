@@ -15,7 +15,7 @@ export default function Explore() {
         {isAuthenticated && (
           <Link
             to="/profile"
-            className="text-white opacity-60 hover:opacity-100 transition-all duration-300 ease-in-out ml-10"
+            className="text-white text-opacity-60 text-xs font-normal ml-10"
           >
             My profile
           </Link>

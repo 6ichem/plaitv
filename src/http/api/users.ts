@@ -5,7 +5,7 @@ import { instance } from "../config";
 
 export const createUser = async (payload: createUserPayload) => {
   try {
-    const { data } = await axios.post(`${BASE_URL}/users/create`, payload);
+    const { data } = await axios.post(`${BASE_URL}/users/create-user`, payload);
 
     return data;
   } catch (e: any) {

@@ -12,15 +12,31 @@ import {
   setNsfwModal,
   setTermsModal,
 } from "../../actions";
+import { useNavigate } from "react-router-dom";
 
-export default function NSFWModal() {
+export default function NSFWModal({ isPublic, user }: any) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const isModalOpen = useSelector((state: any) => state.modal.nsfwModal);
   const [isLoading, setLoading] = useState(false);
 
   const acceptTerms = (choice: boolean) => {
     if (choice) {
       dispatch(setNsfwModal(false));
+      localStorage.setItem("allow_nsfw", "true");
+      return;
+    }
+
+    if (isPublic) {
+      dispatch(setNsfwModal(false));
+      navigate(`/profile/${user}`);
+      localStorage.setItem("allow_nsfw", "false");
+
+      toast.error("Age restricted.", {
+        style: { background: "#333", color: "#fff" },
+      });
+      return;
     }
   };
 

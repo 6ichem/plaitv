@@ -14,11 +14,12 @@ export default function PublicNavigation() {
 
   return (
     <div className="p-6 flex items-center w-full">
-      <Icon name="navbar-logo" className="mr-12" />
-
+      <button onClick={() => navigate("/")}>
+        <Icon name="navbar-logo" className="mr-12" />
+      </button>
       <button
         className="flex items-center transition-all duration-300 ease-in-out hover:opacity-75"
-        onClick={() => navigate(-1)}
+        onClick={() => navigate(`/profile/${foundProfile.username}`)}
       >
         <Icon name="arrow-left" className="mr-2" />
         <span className="text-white text-opacity-40 block">

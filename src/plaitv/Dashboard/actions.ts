@@ -141,3 +141,8 @@ export const setNsfwModal = (payload: any) => ({
   type: Types.SET_NSFW_MODAL,
   payload,
 });
+
+export const setNotificationModal = (payload: any) => ({
+  type: Types.SET_NOTIFICAITONS_MODAL,
+  payload,
+});

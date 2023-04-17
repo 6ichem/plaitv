@@ -23,3 +23,11 @@ export const postRefreshToken = (payload: any) => ({
 export const userLogout = () => ({
   type: Types.USER_LOGOUT,
 });
+
+export const getUser = () => ({
+  type: Types.GET_USER,
+});
+export const setUser = (payload: any) => ({
+  type: Types.SET_USER,
+  payload,
+});

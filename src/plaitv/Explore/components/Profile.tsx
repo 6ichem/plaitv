@@ -48,7 +48,7 @@ export default function Profile() {
 
   const Playlists = () => (
     <div className="flex flex-col lg:flex-row justify-between mt-10 lg:mt-24">
-      <div className="flex flex-col w-1/3">
+      <div className="flex flex-col w-full lg:w-1/3">
         <span className="text-white text-opacity-30 font-bold text-lg uppercase">
           Channel
         </span>
@@ -64,11 +64,16 @@ export default function Profile() {
       <div className="w-full flex flex-wrap gap-5">
         {foundPlaylists && foundPlaylists.length > 0 ? (
           foundPlaylists.map((i: any, idx: number) => (
-            <button
-              className="text-white bg-[#0E0E0E] p-5 w-full lg:max-w-[300px] rounded-[5px] mt-3 lg:mt-0 text-left transition-all duration-500 ease-in-out hover:opacity-75 outline-none"
+            <div
+              className="text-white bg-[#0E0E0E] p-5 w-full lg:max-w-[300px] rounded-[5px] mt-3 lg:mt-0 text-left transition-all duration-500 ease-in-out hover:opacity-75 outline-none cursor-pointer relative"
               key={idx}
               onClick={() => viewPlaylist(i)}
             >
+              {i.is_nsfw && (
+                <div className="bg-[#005CCD] rounded text-white font-bold text-[10px] absolute right-5 m-2 px-3">
+                  NSFW
+                </div>
+              )}
               <img
                 src={i.image}
                 className="w-full lg:w-[261.82px] h-52 object-cover object-center	lg:h-[181.36px] rounded"
@@ -80,7 +85,7 @@ export default function Profile() {
                   {i.description}
                 </span>
               </div>
-            </button>
+            </div>
           ))
         ) : (
           <span className="text-white text-sm font-normal text-center mt-24 flex justify-center mx-auto">
@@ -94,18 +99,18 @@ export default function Profile() {
   return (
     <div className="px-5 lg:px-10 py-6 items-center">
       <div className="flex flex-col lg:flex-row ">
-        <div className="flex items-center">
+        <div className="flex items-center w-full lg:w-[30%]">
           <Icon name="navbar-logo" />
           {isAuthenticated && (
             <Link
               to="/profile"
-              className="text-white opacity-60 hover:opacity-100 transition-all duration-300 ease-in-out ml-10"
+              className="text-white text-opacity-60 text-xs font-normal ml-10"
             >
               My profile
             </Link>
           )}
         </div>
-        <div className="flex justify-center w-[80%] mt-3 lg:mt-0">
+        <div className="flex justify-center w-full lg:w-[40%] mt-3 lg:mt-0">
           <ExploreSearchInput isProfile={true} />
         </div>
       </div>
