@@ -58,7 +58,7 @@ export default function Profile() {
   };
 
   const Playlists = () => (
-    <div className="flex flex-col lg:flex-row justify-between mt-10 lg:mt-24">
+    <div className="flex flex-col lg:flex-row justify-between mt-10 lg:mt-24 gap-10">
       <div className="flex flex-col w-full lg:w-1/3">
         <span className="text-white text-opacity-30 font-bold text-lg uppercase">
           Channel

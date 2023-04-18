@@ -52,7 +52,7 @@ export default function NotificationsOverlay({ isPublic, user }: any) {
           </div>
         ) : (
           <div
-            className="py-3 flex flex-col divide-y divide-white divide-opacity-10 max-h-[460px] overflow-y-scroll"
+            className="py-3 flex flex-col divide-y divide-white divide-opacity-10 max-h-[100%] lg:max-h-[460px] overflow-y-scroll"
             style={{ color: "rgba(255, 255, 255, 0.6)" }}
           >
             {mediaStatus &&
