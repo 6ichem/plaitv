@@ -73,7 +73,7 @@ export default function NotificationsOverlay({ isPublic, user }: any) {
                         <Icon name="default-video" className="w-full h-full" />
                       )}
                     </div>
-                    <div className="flex flex-col gap-2 min-w-[65%]">
+                    <div className="flex flex-col gap-2 min-w-[65%] lg:min-w-[80%]">
                       <h1 className="!text-white !text-sm">
                         {i.display_title}
                       </h1>

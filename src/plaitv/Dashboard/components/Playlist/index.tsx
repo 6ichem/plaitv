@@ -163,14 +163,14 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
             <Menu as="div" className="relative inline-block text-left">
               <div>
                 <Menu.Button
-                  className={`flex font-bold uppercase !text-black items-center w-full justify-center rounded-full py-1 px-2 text-sm ${
+                  className={`flex font-bold uppercase text-center !text-black items-center w-full justify-center rounded-full py-1 px-2 text-sm ${
                     !currentPlaylist.is_public
                       ? "bg-white bg-opacity-50"
                       : "bg-[#50E856]"
                   }`}
                 >
                   {currentPlaylist.is_public ? "Public" : "Private"}
-                  <Icon name="arrow-down" className="!mx-1" />
+                  <Icon name="arrow-down" className="!ml-1 !mr-0" />
                 </Menu.Button>
               </div>
               <Transition
