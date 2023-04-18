@@ -118,7 +118,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
             </div>
           ) : (
             <button onClick={updatePlaylist}>
-              <div className="flex items-center gap-2 text-white text-opacity-[80%]">
+              <div className="flex items-center gap-2 text-white text-opacity-[80%] font-normal">
                 <Icon name="save" />
                 <span>Save</span>
               </div>
@@ -214,7 +214,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
 
             <div className="flex items-center">
               {children}
-              <button onClick={() => setEdit(true)}>
+              <button onClick={() => setEdit(true)} className="font-normal">
                 <Icon name="edit" />
                 Edit
               </button>

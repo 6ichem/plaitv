@@ -26,7 +26,7 @@
       @apply text-xs font-bold block uppercase;
     }
     .descbutton {
-      @apply flex items-center;
+      @apply flex items-center font-normal;
       color: rgba(255, 255, 255, 0.8);
       svg {
         @apply mx-2.5;
