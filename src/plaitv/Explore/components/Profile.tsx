@@ -109,11 +109,13 @@ export default function Profile() {
     <div className="px-5 lg:px-10 py-6 items-center">
       <div className="flex flex-col lg:flex-row ">
         <div className="flex items-center w-full lg:w-[30%]">
-          <Icon name="navbar-logo" />
+          <button onClick={() => navigate("/")}>
+            <Icon name="navbar-logo" className="mr-5" />
+          </button>
           {isAuthenticated && (
             <Link
               to="/profile"
-              className="text-white text-opacity-60 text-xs font-normal ml-10"
+              className="text-white text-opacity-60 text-xs font-normal mr-10"
             >
               My profile
             </Link>

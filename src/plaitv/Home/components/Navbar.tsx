@@ -10,8 +10,9 @@ export default function Navbar() {
 
   return (
     <div className={styles.Navbar}>
-      <Icon name="navbar-logo" />
-
+      <button onClick={() => navigate("/")}>
+        <Icon name="navbar-logo" className="mr-12" />
+      </button>
       <div className="items-center flex gap-5">
         <a
           href="/explore"

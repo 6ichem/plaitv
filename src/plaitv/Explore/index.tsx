@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Icon from "../../components/Icon";
 import { getLocalAccessToken } from "../../http/utils";
 import Channels from "./components/Channels";
@@ -7,15 +7,17 @@ import styles from "./Explore.module.scss";
 
 export default function Explore() {
   const isAuthenticated = getLocalAccessToken();
-
+  const navigate = useNavigate();
   return (
     <div className={styles.Explore}>
       <div className="flex items-center">
-        <Icon name="navbar-logo" />
+        <button onClick={() => navigate("/")}>
+          <Icon name="navbar-logo" className="mr-5" />
+        </button>
         {isAuthenticated && (
           <Link
             to="/profile"
-            className="text-white text-opacity-60 text-xs font-normal ml-10"
+            className="text-white text-opacity-60 text-xs font-normal mr-10"
           >
             My profile
           </Link>

@@ -34,9 +34,9 @@ export default function NotificationsOverlay({ isPublic, user }: any) {
       title="My videos"
       appendTitle={
         <>
-          <div className="my-auto">
+          <button className="my-auto" onClick={refresh}>
             <Icon name="refresh" />
-          </div>
+          </button>
         </>
       }
       open={isModalOpen}
