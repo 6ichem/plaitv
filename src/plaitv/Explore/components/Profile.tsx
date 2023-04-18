@@ -27,6 +27,8 @@ export default function Profile() {
   );
 
   useEffect(() => {
+    dispatch(setCurrentPlaylist(null));
+
     setLoading(true);
 
     dispatch(findProfile(username));

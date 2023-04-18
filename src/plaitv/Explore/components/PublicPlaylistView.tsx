@@ -40,6 +40,7 @@ export default function PublicPlaylistView() {
   );
 
   useEffect(() => {
+    dispatch(setCurrentPlaylist(null));
     dispatch(
       setFoundProfile({
         username: userId,
@@ -52,7 +53,7 @@ export default function PublicPlaylistView() {
   useEffect(() => {
     if (foundProfilePlaylists && foundProfilePlaylists.length > 0) {
       const findPlaylist = foundProfilePlaylists.find(
-        (i: any) => (i.playlist_id = playlistId)
+        (i: any) => i.playlist_id == playlistId
       );
 
       dispatch(setCurrentPlaylist(findPlaylist));
@@ -66,10 +67,16 @@ export default function PublicPlaylistView() {
 
     setIsLoading(false);
 
-    const allow_nsfw = localStorage.getItem("allow_nsfw") ?? "false";
+    const allow_nsfw = localStorage.getItem("allow_nsfw");
+    if (currentPlaylist) {
+      if (currentPlaylist.is_nsfw && allow_nsfw !== "true") {
+        dispatch(setNsfwModal(true));
+      }
+    }
 
-    if (currentPlaylist?.is_nsfw && allow_nsfw !== "true")
-      dispatch(setNsfwModal(true));
+    return () => {
+      dispatch(setNsfwModal(false));
+    };
   }, [currentPlaylist]);
 
   useEffect(() => {
