@@ -61,13 +61,14 @@ function* getAllUserPlaylists(): any {
     const whichPlaylist =
       userData.last_playlist_id || userData.default_playlist_id;
     const findPlaylist = resp.find((i: any) => i.playlist_id == whichPlaylist);
+    const playlist = findPlaylist || resp[0];
 
     yield put(setUserPlaylists(resp));
 
     if (resp.length > 0) {
-      yield put(setCurrentPlaylist(findPlaylist || resp[0]));
+      yield put(setCurrentPlaylist(playlist));
 
-      yield put(getPlaylistMedia({ playlist_id: resp[0].playlist_id }));
+      yield put(getPlaylistMedia({ playlist_id: playlist.playlist_id }));
     }
   } catch (e: any) {
     yield put(setUserPlaylists(e?.response?.data));
@@ -224,13 +225,11 @@ function* updateUserProfile({ payload }: any): any {
     yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: false });
     yield put({ type: Types.SET_PROFILE_MODAL, payload: false });
   } catch (e: any) {
-    toast.error(e?.response?.data, {
+    toast.error(`${e?.response?.data?.detail}`, {
       style: { background: "#333", color: "#fff" },
     });
 
     yield put({ type: Types.SET_USER_PROFILE_LOADER, payload: false });
-
-    yield put(setPlaylistMedia(e?.response?.data));
   }
 }
 
@@ -321,6 +320,8 @@ function* mediaStatus({ payload }: any) {
     userPlaylists: { currentPlaylist },
   } = yield select(state);
 
+  yield put({ type: Types.SET_REFRESH_STATUS_LOADER, payload: true });
+
   try {
     const resp: ResponseGenerator = yield call(
       httpGetMediaStatus,
@@ -330,17 +331,15 @@ function* mediaStatus({ payload }: any) {
     yield put(setMediaStatus(resp));
 
     yield delay(1500);
-    yield put({ type: Types.SET_ADD_MEDIA_LOADER, payload: false });
-    yield put({ type: Types.SET_ADD_VIDEO_MODAL, payload: false });
+    yield put({ type: Types.SET_REFRESH_STATUS_LOADER, payload: false });
+
+    yield put(getPlaylistMedia({ playlist_id: currentPlaylist.playlist_id }));
   } catch (e: any) {
-    console.log(e);
     toast.error(e?.response?.data?.detail, {
       style: { background: "#333", color: "#fff" },
     });
-    console.log("UPLOAD_VIDEO", e?.response?.data);
-    yield put({ type: Types.SET_ADD_MEDIA_LOADER, payload: false });
-
-    // yield put(setUserPlaylists(e?.response?.data));
+    console.log("GET_STATUS", e?.response?.data);
+    yield put({ type: Types.SET_REFRESH_STATUS_LOADER, payload: false });
   }
 }
 
@@ -383,7 +382,6 @@ function* watcher() {
   yield all([takeLatest(Types.POST_CHANGE_PASSWORD, changeUserPassword)]);
   yield all([takeLatest(Types.POST_DELETE_PLAYLIST, deletePlaylist)]);
   yield all([takeLatest(Types.UPLOAD_VIDEO, uploadVideo)]);
-  yield all([takeLatest(Types.GET_MEDIA_STATUS, mediaStatus)]);
   yield all([takeLatest(Types.GET_MEDIA_STATUS, mediaStatus)]);
   yield all([takeLatest(Types.POST_DELETE_ACCOUNT, deleteAccount)]);
 }

@@ -5,7 +5,11 @@ import Navigation from "../../Dashboard/components/Navigation";
 import Playlist from "../../Dashboard/components/Playlist";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPlaylist, setNsfwModal } from "../../Dashboard/actions";
+import {
+  setCurrentMedia,
+  setCurrentPlaylist,
+  setNsfwModal,
+} from "../../Dashboard/actions";
 import RenderVideo from "../../Dashboard/components/RenderVideo";
 import { useParams } from "react-router-dom";
 import Loader from "../../../components/Loader";
@@ -61,6 +65,11 @@ export default function PublicPlaylistView() {
     );
 
     setIsLoading(false);
+
+    const allow_nsfw = localStorage.getItem("allow_nsfw") ?? "false";
+
+    if (currentPlaylist?.is_nsfw && allow_nsfw !== "true")
+      dispatch(setNsfwModal(true));
   }, [currentPlaylist]);
 
   useEffect(() => {
@@ -71,13 +80,6 @@ export default function PublicPlaylistView() {
   }, []);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const allow_nsfw = localStorage.getItem("allow_nsfw");
-
-    if (currentPlaylist?.is_nsfw && !allow_nsfw && allow_nsfw !== "true")
-      dispatch(setNsfwModal(true));
-  }, [currentPlaylist]);
 
   return (
     <div className={styles.Dashboard}>

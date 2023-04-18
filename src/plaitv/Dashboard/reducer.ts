@@ -215,7 +215,12 @@ const loaderStrategies = {
       userPublicProfileLoader: payload,
     };
   },
-
+  [Types.SET_REFRESH_STATUS_LOADER]: (state: any, payload: any) => {
+    return {
+      ...state,
+      statusRefreshingLoader: payload,
+    };
+  },
   __default__: (state: any) => state,
 };
 

@@ -9,7 +9,8 @@ import Button from "../../../../components/Button";
 import OverlayModal from "../../../../components/OverlayModal/OverlayModal";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { Switch } from "@headlessui/react";
+import { Switch, Tooltip } from "@mui/material";
+import Icon from "../../../../components/Icon";
 
 export default function CreatePlaylist() {
   const dispatch = useDispatch();
@@ -36,6 +37,26 @@ export default function CreatePlaylist() {
     );
   };
 
+  const ToogleNSFW = () => (
+    <div className="flex items-center">
+      <h1 className="mr-4 text-xs font-normal">NSFW</h1>
+
+      <Tooltip
+        title="Content not suitable for minors must be clearly marked or will be removed."
+        placement="top"
+      >
+        <div>
+          <Icon name="info" />
+        </div>
+      </Tooltip>
+      <Switch
+        color="warning"
+        checked={isNsfw}
+        onChange={(e) => setNsfw(e.target.checked)}
+      />
+    </div>
+  );
+
   return (
     <OverlayModal
       title="Create new playlist"
@@ -60,22 +81,7 @@ export default function CreatePlaylist() {
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        <div className="flex items-center">
-          <h1 className="mr-4 text-xs font-normal">NSFW</h1>
-          <Switch
-            checked={isNsfw}
-            onChange={setNsfw}
-            className={`${
-              isNsfw ? "bg-[#CC8E45]" : "bg-white bg-opacity-20"
-            } relative inline-flex h-6 lg:w-11 items-center rounded-full`}
-          >
-            <span
-              className={`${
-                isNsfw ? "translate-x-6" : "translate-x-1 bg-[#787878]"
-              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-            />
-          </Switch>
-        </div>
+        <ToogleNSFW />
 
         <div className="flex place-content-end">
           <Button

@@ -48,10 +48,12 @@ export default function Profile() {
     ) {
       dispatch(
         postUpdateUserProfile({
-          first_name: firstName,
-          last_name: lastName,
-          username,
-          profile_description: description,
+          ...(firstName !== first_name && { first_name: firstName }),
+          ...(lastName !== last_name && { last_name: lastName }),
+          ...(username !== profileUsername && { username }),
+          ...(description !== profile_description && {
+            profile_description: description,
+          }),
         })
       );
     }

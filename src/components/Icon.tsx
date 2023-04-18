@@ -22,6 +22,7 @@ import { ReactComponent as CheckCircle } from "../assets/check-circle.svg";
 import { ReactComponent as XCircle } from "../assets/x-circle.svg";
 import { ReactComponent as Burger } from "../assets/burger.svg";
 import { ReactComponent as Refresh } from "../assets/refresh.svg";
+import { ReactComponent as Info } from "../assets/info.svg";
 
 const icons = {
   edit: Edit,
@@ -48,6 +49,7 @@ const icons = {
   "x-circle": XCircle,
   burger: Burger,
   refresh: Refresh,
+  info: Info,
 };
 
 export const iconNames = Object.keys(icons);

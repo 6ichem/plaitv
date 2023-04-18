@@ -12,7 +12,7 @@ export default function Navbar() {
     <div className={styles.Navbar}>
       <Icon name="navbar-logo" />
 
-      <div className="items-center">
+      <div className="items-center flex gap-5">
         <a
           href="/explore"
           className="text-white text-opacity-60 text-xs font-normal"
@@ -25,14 +25,14 @@ export default function Navbar() {
           color="secondary"
           onClick={() => navigate("/login")}
           rounded
-          className="px-2 py-1 !w-auto"
+          className="px-3 py-1 !w-auto"
         />
         <Button
           title="Sign Up"
           color="primary"
           onClick={() => navigate("/register")}
           rounded
-          className="px-2 py-1 !w-auto"
+          className="px-3 py-1 !w-auto"
         />
       </div>
     </div>

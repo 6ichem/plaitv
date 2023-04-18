@@ -6,7 +6,11 @@ import Icon from "../../../components/Icon";
 import Loader from "../../../components/Loader";
 import { getLocalAccessToken } from "../../../http/utils";
 import { findProfile, findUserPlaylists } from "../actions";
-import { getPlaylistMedia, setCurrentPlaylist } from "../../Dashboard/actions";
+import {
+  getPlaylistMedia,
+  setCurrentMedia,
+  setCurrentPlaylist,
+} from "../../Dashboard/actions";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -40,6 +44,11 @@ export default function Profile() {
 
   useEffect(() => {
     document.body.style.backgroundColor = "#000000";
+
+    return () => {
+      dispatch(setCurrentPlaylist(null));
+      dispatch(setCurrentMedia(null));
+    };
   }, []);
 
   const viewPlaylist = (playlist: any) => {

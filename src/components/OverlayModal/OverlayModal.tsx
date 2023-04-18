@@ -13,6 +13,7 @@ type propTypes = DialogParameters & {
   appendContent?: JSX.Element;
   innerLayoutStyles?: string;
   innerContentStyles?: string;
+  appendTitle?: JSX.Element;
 };
 
 export default function OverlayModal({
@@ -23,6 +24,7 @@ export default function OverlayModal({
   appendContent,
   innerLayoutStyles,
   innerContentStyles,
+  appendTitle,
   ...rest
 }: propTypes) {
   return (
@@ -69,7 +71,10 @@ export default function OverlayModal({
                     }`}
                   >
                     <div>
-                      <Dialog.Title as="h1">{title}</Dialog.Title>
+                      <div className="flex items-cente gap-3">
+                        <Dialog.Title as="h1">{title}</Dialog.Title>
+                        {appendTitle && appendTitle}
+                      </div>
                       {desc && <span>{desc}</span>}
                     </div>
                     {appendContent && <div>{appendContent}</div>}

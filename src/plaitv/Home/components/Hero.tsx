@@ -9,12 +9,12 @@ export default function Hero() {
   return (
     <div className={styles.Hero}>
       <div className={styles.Hero__Inner}>
-        <h1 className="!leading-[65px] lg:!leading-[72px]">
-          Create Playlists Of Your Favourite Videos From Any Site.
+        <h1 className="!leading-[65px] lg:!leading-[64px]">
+          Create public and private video playlists of your favorite content.{" "}
         </h1>
         <span>
-          Private playlists to enjoy your favorite video content across the
-          internet.
+          Upload videos or fetch them from any URL to rewatch, share and enjoy
+          your favorite moments.
         </span>
         <div className={styles.Hero__InnerContent}>
           <Button
@@ -25,7 +25,12 @@ export default function Hero() {
             className="!h-[58px] !font-bold !capitalize !text-sm !font-semibold w-auto"
           />
           <div>
-            <a href="/">Learn more</a>
+            <a
+              href="https://persistent-trapezoid-f8e.notion.site/Plai-tv-10527e6f65e041c1b493d9a99548d3b8"
+              target="_blank"
+            >
+              Learn more
+            </a>
             <span>Read about Plai.tv in our docs.</span>
           </div>
         </div>

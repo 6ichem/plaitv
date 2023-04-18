@@ -20,6 +20,7 @@ import { getLocalAccessToken } from "../../../../http/utils";
 import { DASHBOARD } from "../../constants";
 import NotificationsOverlay from "./NotificationsOverlay";
 import { SET_NOTIFICAITONS_MODAL } from "../../actionTypes";
+import { Tooltip } from "@mui/material";
 
 export default function Playlist({ userPlaylists, isPublicView = false }: any) {
   const dispatch = useDispatch();
@@ -75,7 +76,28 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
 
   const openMobileNotifications = () => {
     dispatch(setNotificationModal(true));
+    dispatch(getMediaStatus());
   };
+
+  const ToogleNSFW = () => (
+    <div className="flex items-center">
+      <h1 className="mr-4 text-xs font-normal">NSFW</h1>
+
+      <Tooltip
+        title="Content not suitable for minors must be clearly marked or will be removed."
+        placement="top"
+      >
+        <div>
+          <Icon name="info" />
+        </div>
+      </Tooltip>
+      <Switch
+        color="warning"
+        checked={isNsfw}
+        onChange={(e: any) => setNsfw(e.target.checked)}
+      />
+    </div>
+  );
 
   const _editView = () => (
     <Transition
@@ -96,7 +118,10 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
             </div>
           ) : (
             <button onClick={updatePlaylist}>
-              <Icon name="save" />
+              <div className="flex items-center gap-2 text-white text-opacity-[80%]">
+                <Icon name="save" />
+                <span>Save</span>
+              </div>
             </button>
           )}
         </div>
@@ -125,36 +150,12 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
           }
         />
 
-        <div className="flex items-center">
-          <h1 className="mr-4 text-xs font-normal text-white">NSFW</h1>
-          <Switch
-            checked={isNsfw}
-            onChange={setNsfw}
-            className={`${
-              isNsfw ? "bg-[#CC8E45]" : "bg-white bg-opacity-20"
-            } relative inline-flex h-6 lg:w-11 items-center rounded-full`}
-          >
-            <span
-              className={`${
-                isNsfw ? "translate-x-6" : "translate-x-1"
-              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-            />
-          </Switch>
-          {/* <button
-            className="text-[#ffffff80] text-sm"
-            onClick={() => {
-              dispatch(setDeletePlaylistModal(true));
-              setEdit(false);
-            }}
-          >
-            <span>Delete Playlist</span>
-          </button> */}
-        </div>
+        <ToogleNSFW />
       </div>
     </Transition>
   );
 
-  const _listView = () =>
+  const _listView = (children: any) =>
     !isEdit && (
       <div className={styles.Playlist__Header}>
         {!isLoading && (
@@ -212,16 +213,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
             </Menu>
 
             <div className="flex items-center">
-              <div className="hidden lg:inline-block">
-                <Notifications />
-              </div>
-              <div className="inline-block lg:hidden">
-                <button onClick={openMobileNotifications}>
-                  <Icon name="notification" />
-                </button>
-
-                <NotificationsOverlay />
-              </div>
+              {children}
               <button onClick={() => setEdit(true)}>
                 <Icon name="edit" />
                 Edit
@@ -302,17 +294,17 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
     if (isEditLoading) setEditLoading(false);
   }, [currentPlaylist]);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      if (currentPlaylist && "playlist_id" in currentPlaylist && !isLoading)
-        dispatch(getMediaStatus());
-    }
-  }, [currentPlaylist, isLoading]);
-
   return (
     <div className={styles.Playlist}>
       {!isPublicView && _editView()}
-      {!isPublicView && _listView()}
+      {!isPublicView &&
+        _listView(
+          <>
+            <button onClick={openMobileNotifications}>
+              <Icon name="notification" />
+            </button>
+          </>
+        )}
       <div className={`${styles.Playlist__Sub} ${isEdit ? "my-12" : ""}`}>
         {!isEdit && currentPlaylist && !isPublicView && (
           <div
@@ -331,6 +323,8 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
           _playlistView()
         )}
       </div>
+
+      <NotificationsOverlay />
     </div>
   );
 }

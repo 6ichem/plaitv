@@ -1,6 +1,5 @@
-import { ChangeEvent, Fragment, useState } from "react";
+import { ChangeEvent, Fragment, useEffect, useState } from "react";
 import { Tab } from "@headlessui/react";
-import { Switch, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   findMedia,
@@ -14,6 +13,15 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import OverlayModal from "../../../../components/OverlayModal/OverlayModal";
 import PlaylistItem from "../../../../components/PlaylistItem";
+import { Switch, Tooltip } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  switchRoot: {},
+  checked: {
+    color: "#000",
+  },
+});
 
 export default function AddVideo() {
   const [videoURL, setVideoURL] = useState<string>("");
@@ -21,6 +29,8 @@ export default function AddVideo() {
   const [videoTitle, setVideoTitle] = useState<string>("");
   const [videoDescription, setVideoDescription] = useState<string>("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const classes = useStyles();
 
   const dispatch = useDispatch();
 
@@ -44,12 +54,35 @@ export default function AddVideo() {
 
   const onClose = () => {
     dispatch(setAddVideoModal(false));
+  };
+
+  useEffect(() => {
     setVideoURL("");
     setVideoTitle("");
     setVideoDescription("");
     setSelectedFile(null);
     setNsfw(false);
-  };
+  }, [isModalOpen]);
+
+  const ToogleNSFW = () => (
+    <div className="flex items-center">
+      <h1 className="mr-4 text-xs font-normal">NSFW</h1>
+
+      <Tooltip
+        title="Content not suitable for minors must be clearly marked or will be removed."
+        placement="top"
+      >
+        <div>
+          <Icon name="info" />
+        </div>
+      </Tooltip>
+      <Switch
+        color="warning"
+        checked={isNsfw}
+        onChange={(e) => setNsfw(e.target.checked)}
+      />
+    </div>
+  );
 
   const _initialView = () => (
     <>
@@ -67,20 +100,7 @@ export default function AddVideo() {
       </div>
 
       <div className="flex items-center">
-        <h1 className="mr-4 text-xs font-normal">NSFW</h1>
-        <Switch
-          checked={isNsfw}
-          onChange={setNsfw}
-          className={`${
-            isNsfw ? "bg-[#CC8E45]" : "bg-white bg-opacity-20"
-          } relative inline-flex h-6 lg:w-11 items-center rounded-full`}
-        >
-          <span
-            className={`${
-              isNsfw ? "translate-x-6" : "translate-x-1 bg-[#787878]"
-            } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-          />
-        </Switch>
+        <ToogleNSFW />
 
         <div className="justify-end w-full flex">
           <div className="w-full lg:w-auto lg:block flex place-content-end">
@@ -116,7 +136,8 @@ export default function AddVideo() {
       );
     }
   };
-  const _fromURL = () => (
+
+  const _upload = () => (
     <>
       <div className="flex flex-col lg:justify-between items-center gap-5 !my-5 pb-5">
         <Input
@@ -130,7 +151,7 @@ export default function AddVideo() {
         />
         <Input
           type="text"
-          placeholder="Select mp4 from device"
+          placeholder="My video"
           required
           label="Title (required)"
           className="!m-0 !h-auto"
@@ -140,7 +161,7 @@ export default function AddVideo() {
         />
         <Input
           type="text"
-          placeholder="Select mp4 from device"
+          placeholder="Watch on Plai.tv"
           required
           label="Description (required)"
           className="!m-0 !h-auto"
@@ -150,22 +171,7 @@ export default function AddVideo() {
         />
       </div>
 
-      <div className="flex items-center">
-        <h1 className="mr-4 text-xs font-normal">NSFW</h1>
-        <Switch
-          checked={isNsfw}
-          onChange={setNsfw}
-          className={`${
-            isNsfw ? "bg-[#CC8E45]" : "bg-white bg-opacity-20"
-          } relative inline-flex h-6 lg:w-11 items-center rounded-full`}
-        >
-          <span
-            className={`${
-              isNsfw ? "translate-x-6" : "translate-x-1"
-            } inline-block h-4 w-4 transform rounded-full bg-white transition`}
-          />
-        </Switch>
-      </div>
+      <ToogleNSFW />
 
       <div className="justify-end w-full flex">
         <div className="w-full lg:w-auto lg:block flex place-content-end">
@@ -216,7 +222,7 @@ export default function AddVideo() {
         <Tab.Panels className="mt-2">
           {tabs.map((tab, idx) => (
             <Tab.Panel key={idx}>
-              {idx == 0 ? _initialView() : _fromURL()}
+              {idx == 0 ? _initialView() : _upload()}
             </Tab.Panel>
           ))}
         </Tab.Panels>

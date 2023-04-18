@@ -32,22 +32,25 @@ export default function NotificationsOverlay({ isPublic, user }: any) {
   return (
     <OverlayModal
       title="My videos"
-      open={isModalOpen}
-      appendContent={
-        <button
-          className="text-white text-opacity-20 text-xs font-bold uppercase absolute right-5"
-          onClick={refresh}
-        >
-          {isRefreshing ? <Loader small /> : <Icon name="refresh" />}
-        </button>
+      appendTitle={
+        <>
+          <div className="my-auto">
+            <Icon name="refresh" />
+          </div>
+        </>
       }
+      open={isModalOpen}
       onClose={() => {
         dispatch(setNotificationModal(false));
       }}
       innerContentStyles="!mt-[16px]"
     >
       <>
-        <div className="absolute z-10 mt-1.5 right-0 w-auto lg:w-[719px] origin-top-right rounded-md bg-tertiary shadow-lg">
+        {isRefreshing ? (
+          <div className="my-32">
+            <Loader type="spinner" />
+          </div>
+        ) : (
           <div
             className="py-3 flex flex-col divide-y divide-white divide-opacity-10 max-h-[460px] overflow-y-scroll"
             style={{ color: "rgba(255, 255, 255, 0.6)" }}
@@ -63,7 +66,7 @@ export default function NotificationsOverlay({ isPublic, user }: any) {
                     <div className="w-full h-[65px]">
                       {i.image ? (
                         <img
-                          className="w-full h-[65px] object-contain"
+                          className="w-full h-[65px] object-cover"
                           src={i.image}
                         />
                       ) : (
@@ -88,7 +91,7 @@ export default function NotificationsOverlay({ isPublic, user }: any) {
                 </div>
               ))}
           </div>
-        </div>
+        )}
       </>
     </OverlayModal>
   );
