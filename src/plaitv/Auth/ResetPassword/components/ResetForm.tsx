@@ -39,6 +39,10 @@ export default function ResetForm({ password_reset_token, dispatch }: any) {
         style: { background: "#333", color: "#fff" },
       });
 
+      setTimeout(() => {
+        location.href = "/login";
+      }, 1500);
+
       setLoading(false);
     } else if (resetPasswordData?.detail) {
       toast.error(resetPasswordData.detail, {
