@@ -25,19 +25,6 @@ function App() {
   const isAuthenticated = getLocalAccessToken();
 
   useEffect(() => {
-    const tokenExpireDate = new Date(getLocalAccessToken()).valueOf();
-    const currDate = new Date().valueOf();
-    if (
-      tokenExpireDate === currDate ||
-      currDate - tokenExpireDate > 1 * 60 * 1000
-    ) {
-      newAccessToken();
-
-      location.reload();
-    }
-  }, []);
-
-  useEffect(() => {
     const appHeight = () => {
       const doc = document.documentElement;
       doc.style.setProperty("--app-height", `${window.innerHeight}px`);

@@ -22,15 +22,11 @@ export function* getUser() {
       style: { background: "#333", color: "#fff" },
     });
     yield put(setUser(e?.response?.data));
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("access_token_expiry");
-    localStorage.removeItem("allow_nsfw");
-
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 500);
+    // localStorage.removeItem("access_token");
+    // localStorage.removeItem("refresh_token");
+    // localStorage.removeItem("user");
+    // localStorage.removeItem("access_token_expiry");
+    // localStorage.removeItem("allow_nsfw");
   }
 }
 

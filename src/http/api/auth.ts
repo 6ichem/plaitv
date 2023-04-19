@@ -58,22 +58,30 @@ export const resetPassword = async (params: resetPasswordPayload) => {
   return data;
 };
 
-export const getRefreshToken = async (params: getRefreshTokenPayload) => {
-  const { data } = await instance.get(`${BASE_URL}/auth/get-refresh-token`, {
-    params,
-  });
+export const getRefreshToken = async (payload: getRefreshTokenPayload) => {
+  try {
+    const { data } = await instance.get(`${BASE_URL}/auth/get-refresh-token`, {
+      params: payload,
+    });
 
-  return data;
+    return data;
+  } catch (e) {
+    throw e;
+  }
 };
 
-export const issueAccessToken = async (params: issueAccessTokenPayload) => {
-  const { data } = await instance.post(
-    `${BASE_URL}/auth/issue-new-access-token`,
-    null,
-    { params }
-  );
+export const issueAccessToken = async (payload: issueAccessTokenPayload) => {
+  try {
+    const { data } = await instance.post(
+      `${BASE_URL}/auth/issue-new-access-token`,
+      null,
+      { params: payload }
+    );
 
-  return data;
+    return data;
+  } catch (e) {
+    throw e;
+  }
 };
 
 export const httpChangePassword = async (payload: changePasswordPayload) => {
@@ -86,7 +94,11 @@ export const httpChangePassword = async (payload: changePasswordPayload) => {
 };
 
 export const httpCheckToken = async () => {
-  const { data } = await instance.post(`${BASE_URL}/auth/check-token`);
+  try {
+    const { data } = await instance.post(`${BASE_URL}/auth/check-token`);
 
-  return data;
+    return data;
+  } catch (e) {
+    throw e;
+  }
 };
