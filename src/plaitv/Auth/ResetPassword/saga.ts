@@ -21,6 +21,10 @@ export function* postResetPassword({ payload }: any) {
     const resp: ResponseGenerator = yield call(resetPassword, payload);
 
     yield put(setResetData(resp));
+
+    setTimeout(() => {
+      location.href = "/login";
+    }, 1500);
   } catch (e: any) {
     yield put(setResetData(e?.response?.data));
   }

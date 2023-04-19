@@ -38,20 +38,21 @@ instance.interceptors.response.use(
     const originalRequest = config;
 
     if (status === 403) {
-      if (!isRefreshing) {
-        isRefreshing = true;
-        const newToken = await refreshToken();
-        isRefreshing = false;
-        onRefreshed(newToken);
-        refreshSubscribers = [];
-      }
+      store.dispatch(userLogout());
+      // if (!isRefreshing) {
+      //   isRefreshing = true;
+      //   const newToken = await refreshToken();
+      //   isRefreshing = false;
+      //   onRefreshed(newToken);
+      //   refreshSubscribers = [];
+      // }
 
-      return new Promise((resolve) => {
-        refreshSubscribers.push((token: any) => {
-          originalRequest.headers.Authorization = `Bearer ${token}`;
-          resolve(axios(originalRequest));
-        });
-      });
+      // return new Promise((resolve) => {
+      //   refreshSubscribers.push((token: any) => {
+      //     originalRequest.headers.Authorization = `Bearer ${token}`;
+      //     resolve(axios(originalRequest));
+      //   });
+      // });
     }
 
     return Promise.reject(error);

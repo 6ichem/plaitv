@@ -7,7 +7,7 @@ import { postCheckToken, postResetPassword } from "./ResetPassword/saga";
 import { postValidate } from "./ValidateEmail/saga";
 import { ResponseGenerator } from "../../http/types";
 import { httpCheckToken } from "../../http/api/auth";
-import { setUser } from "./Login/actions";
+import { setUser, userLogout } from "./Login/actions";
 import { toast } from "react-hot-toast";
 
 export function* getUser() {
@@ -22,11 +22,7 @@ export function* getUser() {
       style: { background: "#333", color: "#fff" },
     });
     yield put(setUser(e?.response?.data));
-    // localStorage.removeItem("access_token");
-    // localStorage.removeItem("refresh_token");
-    // localStorage.removeItem("user");
-    // localStorage.removeItem("access_token_expiry");
-    // localStorage.removeItem("allow_nsfw");
+    yield put(userLogout());
   }
 }
 
