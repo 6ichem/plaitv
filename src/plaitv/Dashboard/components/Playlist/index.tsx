@@ -26,10 +26,13 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles({
   root: {
     "& .MuiSwitch-switchBase": {
-      backgr: "#787878",
+      color: "#787878",
     },
     "& .MuiSwitch-switchBase.Mui-checked": {
-      backgr: "orange",
+      color: "orange",
+    },
+    "& .MuiSwitch-track": {
+      backgroundColor: "#787878",
     },
   },
   checked: {
