@@ -28,9 +28,6 @@ const useStyles = makeStyles({
     "& .MuiSwitch-switchBase": {
       color: "#787878",
     },
-    "& .MuiSwitch-switchBase.Mui-checked": {
-      color: "orange",
-    },
     "& .MuiSwitch-track": {
       backgroundColor: "#787878",
     },
@@ -117,7 +114,7 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
 
       <Switch
         className={classes.root}
-        color="default"
+        color="warning"
         checked={isNsfw}
         classes={{
           checked: classes.checked,
