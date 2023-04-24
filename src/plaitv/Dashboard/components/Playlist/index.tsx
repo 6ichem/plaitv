@@ -3,7 +3,7 @@ import styles from "./Playlist.module.scss";
 import PlaylistItem from "../../../../components/PlaylistItem";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import Input from "../../../../components/Input";
-import { Menu, Switch, Transition } from "@headlessui/react";
+import { Menu, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getMediaStatus,
@@ -20,7 +20,25 @@ import { getLocalAccessToken } from "../../../../http/utils";
 import { DASHBOARD } from "../../constants";
 import NotificationsOverlay from "./NotificationsOverlay";
 import { SET_NOTIFICAITONS_MODAL } from "../../actionTypes";
-import { Tooltip } from "@mui/material";
+import { Switch, Tooltip } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  root: {
+    "& .MuiSwitch-switchBase": {
+      backgr: "#787878",
+    },
+    "& .MuiSwitch-switchBase.Mui-checked": {
+      backgr: "orange",
+    },
+  },
+  checked: {
+    "& .MuiSwitch-track": {
+      backgroundColor: "white",
+      backgroundOpacity: "15%",
+    },
+  },
+});
 
 export default function Playlist({ userPlaylists, isPublicView = false }: any) {
   const dispatch = useDispatch();
@@ -79,9 +97,11 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
     dispatch(getMediaStatus());
   };
 
-  const ToogleNSFW = () => (
+  const classes = useStyles();
+
+  const ToggleNSFW = () => (
     <div className="flex items-center">
-      <h1 className="mr-4 text-xs font-normal">NSFW</h1>
+      <h1 className="mr-4 text-xs font-normal text-white">NSFW</h1>
 
       <Tooltip
         title="Content not suitable for minors must be clearly marked or will be removed."
@@ -91,9 +111,15 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
           <Icon name="info" />
         </div>
       </Tooltip>
+
       <Switch
-        color="warning"
+        className={classes.root}
+        color="default"
         checked={isNsfw}
+        classes={{
+          checked: classes.checked,
+        }}
+        name="checked"
         onChange={(e: any) => setNsfw(e.target.checked)}
       />
     </div>
@@ -150,7 +176,18 @@ export default function Playlist({ userPlaylists, isPublicView = false }: any) {
           }
         />
 
-        <ToogleNSFW />
+        <div className="flex items-center justify-between">
+          <ToggleNSFW />
+          <button
+            className="text-[#ffffff80] text-sm"
+            onClick={() => {
+              dispatch(setDeletePlaylistModal(true));
+              setEdit(false);
+            }}
+          >
+            <span>Delete Playlist</span>
+          </button>
+        </div>
       </div>
     </Transition>
   );
