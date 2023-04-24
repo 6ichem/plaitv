@@ -34,7 +34,7 @@ export const httpUpdatePlaylist = async (payload: editPlaylistPayload) => {
 export const httpDeletePlaylist = async (payload: any) => {
   const { playlist_id } = payload;
   const { data } = await instance.delete(
-    `${BASE_URL}/playlist/${playlist_id}`,
+    `${BASE_URL}/playlist/delete-playlist/${playlist_id}`,
     { params: { playlist_id } }
   );
 
